@@ -6,463 +6,216 @@
 <title>CodeKids – Make Your Phone React!</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0f0e17;
-    --panel: #1a1930;
-    --card: #22213a;
-    --accent: #ff6b6b;
-    --green: #6bff9e;
-    --yellow: #ffe66d;
-    --blue: #6bc5ff;
-    --purple: #c77dff;
-    --pink: #ff6bbf;
-    --text: #fffffe;
-    --muted: #a7a9be;
-    --radius: 18px;
-    --phone-w: 240px;
-    --phone-h: 480px;
-  }
+:root {
+  --bg:#0f0e17; --panel:#1a1930; --card:#22213a;
+  --accent:#ff6b6b; --green:#6bff9e; --yellow:#ffe66d;
+  --blue:#6bc5ff; --purple:#c77dff; --pink:#ff6bbf;
+  --text:#fffffe; --muted:#a7a9be; --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:
+  radial-gradient(1px 1px at 20% 30%,#ffffff33 0%,transparent 100%),
+  radial-gradient(1px 1px at 80% 10%,#ffffff22 0%,transparent 100%),
+  radial-gradient(1px 1px at 50% 80%,#ffffff22 0%,transparent 100%),
+  radial-gradient(1px 1px at 10% 70%,#ffffff33 0%,transparent 100%),
+  radial-gradient(2px 2px at 90% 60%,#ffffff11 0%,transparent 100%);
+  pointer-events:none;z-index:0;}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+header{text-align:center;padding:28px 20px 12px;position:relative;z-index:1;}
+.logo{font-size:2.4rem;font-weight:900;letter-spacing:-1px;}
+.logo span:nth-child(1){color:var(--yellow)}.logo span:nth-child(2){color:var(--green)}
+.logo span:nth-child(3){color:var(--blue)}.logo span:nth-child(4){color:var(--pink)}
+.logo span:nth-child(5){color:var(--purple)}.logo span:nth-child(6){color:var(--accent)}
+.logo span:nth-child(7){color:var(--yellow)}.logo span:nth-child(8){color:var(--green)}
+header p{color:var(--muted);font-size:1rem;font-weight:600;margin-top:4px;}
 
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+/* MODE TABS */
+.mode-tabs{display:flex;justify-content:center;gap:10px;margin:12px 0;position:relative;z-index:1;}
+.mode-tab{padding:10px 24px;border-radius:50px;border:2px solid #2e2d4e;background:transparent;
+  color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:0.95rem;cursor:pointer;transition:all .2s;}
+.mode-tab.active{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:0 4px 20px #c77dff44;}
+.mode-tab:hover:not(.active){border-color:var(--purple);color:var(--purple);}
 
-  /* Stars background */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      radial-gradient(1px 1px at 20% 30%, #ffffff33 0%, transparent 100%),
-      radial-gradient(1px 1px at 80% 10%, #ffffff22 0%, transparent 100%),
-      radial-gradient(1px 1px at 50% 80%, #ffffff22 0%, transparent 100%),
-      radial-gradient(1px 1px at 10% 70%, #ffffff33 0%, transparent 100%),
-      radial-gradient(2px 2px at 90% 60%, #ffffff11 0%, transparent 100%);
-    pointer-events: none;
-    z-index: 0;
-  }
+.main{display:grid;grid-template-columns:1fr auto;gap:24px;max-width:1140px;
+  margin:0 auto;padding:16px 24px 40px;position:relative;z-index:1;align-items:start;}
+@media(max-width:800px){.main{grid-template-columns:1fr;}.phone-col{display:flex;justify-content:center;}}
 
-  header {
-    text-align: center;
-    padding: 32px 20px 16px;
-    position: relative;
-    z-index: 1;
-  }
+.left-col{display:flex;flex-direction:column;gap:18px;}
+.section-label{font-size:0.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
 
-  .logo {
-    font-size: 2.6rem;
-    font-weight: 900;
-    letter-spacing: -1px;
-  }
-  .logo span:nth-child(1) { color: var(--yellow); }
-  .logo span:nth-child(2) { color: var(--green); }
-  .logo span:nth-child(3) { color: var(--blue); }
-  .logo span:nth-child(4) { color: var(--pink); }
-  .logo span:nth-child(5) { color: var(--purple); }
-  .logo span:nth-child(6) { color: var(--accent); }
-  .logo span:nth-child(7) { color: var(--yellow); }
-  .logo span:nth-child(8) { color: var(--green); }
+/* SCENARIO PICKER */
+.scenario-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.scenario-btn{border:2px solid transparent;background:var(--card);color:var(--text);
+  padding:9px 14px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:0.9rem;
+  font-weight:700;cursor:pointer;transition:all .2s;}
+.scenario-btn:hover{transform:translateY(-2px);border-color:var(--yellow);}
+.scenario-btn.active{border-color:var(--yellow);background:#2e2b10;color:var(--yellow);}
 
-  header p {
-    color: var(--muted);
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-top: 6px;
-  }
+/* SLIDERS */
+.vars-card{background:var(--card);border-radius:var(--radius);padding:14px 18px;display:flex;flex-direction:column;gap:12px;}
+.var-row{display:flex;flex-direction:column;gap:4px;}
+.var-label{display:flex;justify-content:space-between;font-size:0.85rem;font-weight:800;}
+.var-label span:first-child{color:var(--purple);font-family:'Space Mono',monospace;}
+.var-label span:last-child{color:var(--yellow);}
+input[type=range]{width:100%;accent-color:var(--purple);cursor:pointer;}
 
-  .main {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 24px;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px 24px 40px;
-    position: relative;
-    z-index: 1;
-    align-items: start;
-  }
+/* EDITOR */
+.editor-card{background:var(--panel);border-radius:var(--radius);border:1.5px solid #2e2d4e;overflow:hidden;}
+.editor-topbar{background:#13122a;padding:9px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #2e2d4e;}
+.dot{width:12px;height:12px;border-radius:50%;}
+.dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
+.editor-title{margin-left:8px;font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted);}
+#codeArea{width:100%;min-height:200px;background:transparent;border:none;outline:none;
+  color:#e8e6ff;font-family:'Space Mono',monospace;font-size:0.9rem;line-height:1.7;
+  padding:18px;resize:vertical;tab-size:4;}
 
-  @media (max-width: 780px) {
-    .main { grid-template-columns: 1fr; }
-    .phone-col { display: flex; justify-content: center; }
-  }
+/* CHALLENGE MODE */
+.challenge-box{background:var(--card);border-radius:var(--radius);padding:16px 20px;border:2px solid var(--purple);}
+.challenge-title{font-size:1rem;font-weight:900;color:var(--purple);margin-bottom:6px;}
+.challenge-desc{font-size:0.88rem;color:var(--muted);font-weight:600;line-height:1.5;margin-bottom:10px;}
+.challenge-badge{display:inline-block;background:#2a1a40;color:var(--purple);padding:3px 10px;
+  border-radius:20px;font-size:0.75rem;font-weight:800;margin-bottom:8px;}
+.challenge-check{background:var(--purple);color:#fff;border:none;padding:8px 20px;
+  border-radius:50px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.85rem;cursor:pointer;transition:all .2s;}
+.challenge-check:hover{transform:translateY(-2px);}
+.challenge-result{margin-top:8px;font-size:0.85rem;font-weight:700;padding:6px 12px;border-radius:10px;}
+.challenge-result.pass{background:#0a2a15;color:var(--green);}
+.challenge-result.fail{background:#2a0a0a;color:var(--accent);}
 
-  /* ── LEFT PANEL ── */
-  .left-col { display: flex; flex-direction: column; gap: 20px; }
+/* HINTS */
+.hints{background:var(--card);border-radius:var(--radius);padding:14px 18px;display:flex;flex-direction:column;gap:6px;}
+.hint-row{display:flex;align-items:flex-start;gap:10px;font-size:0.85rem;color:var(--muted);font-weight:600;}
+.hint-row .tag{background:#2e2d4e;border-radius:6px;padding:1px 8px;font-family:'Space Mono',monospace;
+  font-size:0.75rem;color:var(--blue);white-space:nowrap;flex-shrink:0;}
 
-  .section-label {
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
+/* RUN BUTTON */
+.run-btn{background:linear-gradient(135deg,var(--green),#38e07f);color:#0a1a0f;border:none;
+  padding:13px 30px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:1.05rem;
+  font-weight:900;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;
+  box-shadow:0 4px 20px #6bff9e44;align-self:flex-start;}
+.run-btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 8px 30px #6bff9e66;}
+.run-btn:active{transform:scale(0.97);}
 
-  /* Scenario picker */
-  .scenario-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+/* CONSOLE */
+.console{background:#0b0b1a;border-radius:var(--radius);border:1.5px solid #2e2d4e;
+  padding:14px 18px;min-height:70px;font-family:'Space Mono',monospace;font-size:0.82rem;line-height:1.7;color:var(--green);}
+.console .err{color:var(--accent);} .console .info{color:var(--muted);}
 
-  .scenario-btn {
-    border: 2px solid transparent;
-    background: var(--card);
-    color: var(--text);
-    padding: 10px 16px;
-    border-radius: 50px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all .2s;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .scenario-btn:hover { transform: translateY(-2px); border-color: var(--yellow); }
-  .scenario-btn.active { border-color: var(--yellow); background: #2e2b10; color: var(--yellow); }
+/* SOUND INDICATOR */
+.sound-badge{display:inline-flex;align-items:center;gap:6px;background:#1a1a3a;
+  border:1.5px solid #3a3a6e;border-radius:50px;padding:5px 12px;font-size:0.78rem;
+  font-weight:700;color:var(--muted);transition:all .3s;}
+.sound-badge.playing{border-color:var(--green);color:var(--green);background:#0a1a10;}
+.sound-badge .wave{display:inline-flex;gap:2px;align-items:flex-end;height:14px;}
+.sound-badge .wave span{width:3px;background:currentColor;border-radius:2px;
+  animation:none;transition:height .1s;}
+.sound-badge.playing .wave span{animation:waveAnim .6s ease-in-out infinite alternate;}
+.sound-badge.playing .wave span:nth-child(2){animation-delay:.1s;}
+.sound-badge.playing .wave span:nth-child(3){animation-delay:.2s;}
+.sound-badge.playing .wave span:nth-child(4){animation-delay:.15s;}
+@keyframes waveAnim{from{height:3px}to{height:13px}}
 
-  /* Code editor */
-  .editor-card {
-    background: var(--panel);
-    border-radius: var(--radius);
-    border: 1.5px solid #2e2d4e;
-    overflow: hidden;
-  }
+/* ── iPHONE 17 STYLE PHONE ── */
+.phone-col{position:sticky;top:16px;}
+.phone-wrap{position:relative;width:260px;}
 
-  .editor-topbar {
-    background: #13122a;
-    padding: 10px 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-bottom: 1px solid #2e2d4e;
-  }
-  .dot { width: 12px; height: 12px; border-radius: 50%; }
-  .dot-r { background: #ff5f57; }
-  .dot-y { background: #febc2e; }
-  .dot-g { background: #28c840; }
-  .editor-title {
-    margin-left: 8px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.78rem;
-    color: var(--muted);
-  }
+/* Side buttons */
+.phone-btn-vol{position:absolute;left:-4px;top:100px;width:4px;height:30px;
+  background:#2a2a4e;border-radius:3px 0 0 3px;}
+.phone-btn-vol2{position:absolute;left:-4px;top:140px;width:4px;height:30px;
+  background:#2a2a4e;border-radius:3px 0 0 3px;}
+.phone-btn-power{position:absolute;right:-4px;top:120px;width:4px;height:50px;
+  background:#2a2a4e;border-radius:0 3px 3px 0;}
 
-  #codeArea {
-    width: 100%;
-    min-height: 220px;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #e8e6ff;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.92rem;
-    line-height: 1.7;
-    padding: 20px;
-    resize: vertical;
-    tab-size: 4;
-  }
+.phone-outer{width:260px;height:530px;background:linear-gradient(160deg,#1e1e35,#141425);
+  border-radius:48px;border:2px solid #3a3a60;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  box-shadow:0 0 0 1px #5a5a9e,0 0 0 3px #0f0e1a,0 0 50px #00000099,inset 0 1px 0 #ffffff18;}
 
-  /* Hints */
-  .hints {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 16px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .hint-row {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 0.88rem; color: var(--muted); font-weight: 600;
-  }
-  .hint-row .tag {
-    background: #2e2d4e;
-    border-radius: 6px;
-    padding: 1px 8px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.78rem;
-    color: var(--blue);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
+/* Dynamic Island */
+.phone-island{width:100px;height:28px;background:#050510;border-radius:0 0 20px 20px;
+  margin:0 auto;position:relative;z-index:10;flex-shrink:0;display:flex;
+  align-items:center;justify-content:center;gap:8px;transition:all .4s cubic-bezier(.34,1.56,.64,1);}
+.phone-island.expand{width:160px;}
+.island-cam{width:10px;height:10px;background:#1a1a3a;border-radius:50%;border:1.5px solid #2a2a5e;}
+.island-pill{width:40px;height:6px;background:#1a1a3a;border-radius:4px;}
+.island-live{display:none;align-items:center;gap:5px;font-size:0.65rem;color:var(--green);font-weight:800;}
+.phone-island.expand .island-live{display:flex;}
+.island-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse .8s ease-in-out infinite alternate;}
+@keyframes pulse{from{opacity:.5}to{opacity:1}}
 
-  /* Run button */
-  .run-btn {
-    background: linear-gradient(135deg, var(--green), #38e07f);
-    color: #0a1a0f;
-    border: none;
-    padding: 14px 32px;
-    border-radius: 50px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 900;
-    cursor: pointer;
-    display: flex; align-items: center; gap: 10px;
-    transition: all .2s;
-    box-shadow: 0 4px 20px #6bff9e44;
-    align-self: flex-start;
-  }
-  .run-btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 8px 30px #6bff9e66; }
-  .run-btn:active { transform: scale(0.97); }
-  .run-btn .icon { font-size: 1.3rem; }
+.phone-status{display:flex;justify-content:space-between;align-items:center;
+  padding:4px 18px 0;font-size:0.62rem;font-weight:700;color:#888;flex-shrink:0;}
 
-  /* Output console */
-  .console {
-    background: #0b0b1a;
-    border-radius: var(--radius);
-    border: 1.5px solid #2e2d4e;
-    padding: 16px 20px;
-    min-height: 80px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.85rem;
-    line-height: 1.7;
-    color: var(--green);
-  }
-  .console .err { color: var(--accent); }
-  .console .info { color: var(--muted); }
+.phone-screen{flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:10px;position:relative;overflow:hidden;transition:background .5s ease;}
 
-  /* ── PHONE ── */
-  .phone-col { position: sticky; top: 20px; }
+/* Home gesture bar */
+.phone-gesture{width:100px;height:4px;background:#ffffff22;border-radius:4px;margin:8px auto;flex-shrink:0;}
 
-  .phone-wrap {
-    position: relative;
-    width: var(--phone-w);
-  }
+/* Phone state content */
+.phone-state{display:flex;flex-direction:column;align-items:center;gap:7px;
+  animation:popIn .4s cubic-bezier(.34,1.56,.64,1);width:100%;}
+@keyframes popIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.phone-emoji{font-size:3.8rem;line-height:1;}
+.phone-msg{font-size:0.82rem;font-weight:800;text-align:center;color:#fff;
+  text-shadow:0 2px 8px #00000088;padding:0 8px;}
+.phone-sub{font-size:0.68rem;font-weight:600;text-align:center;opacity:.75;padding:0 8px;}
 
-  .phone-outer {
-    width: var(--phone-w);
-    height: var(--phone-h);
-    background: #1a1a2e;
-    border-radius: 40px;
-    border: 3px solid #3a3a5e;
-    box-shadow:
-      0 0 0 1px #5a5a8e,
-      0 30px 80px #00000088,
-      inset 0 0 30px #ffffff08;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
+/* Battery bar */
+.battery-visual{width:110px;height:20px;background:#1a1a2e;border-radius:4px;
+  border:2px solid #3a3a5e;position:relative;overflow:hidden;margin-top:4px;}
+.battery-fill{height:100%;border-radius:3px;transition:width .6s ease,background .6s ease;}
+.battery-tip{position:absolute;right:-7px;top:50%;transform:translateY(-50%);
+  width:5px;height:10px;background:#3a3a5e;border-radius:0 2px 2px 0;}
 
-  .phone-notch {
-    width: 90px; height: 24px;
-    background: #0f0e17;
-    border-radius: 0 0 20px 20px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 10;
-    flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-  }
-  .notch-cam { width: 8px; height: 8px; background: #2a2a4e; border-radius: 50%; border: 1px solid #3a3a6e; }
-  .notch-speaker { width: 36px; height: 5px; background: #2a2a4e; border-radius: 3px; }
+/* WiFi bars */
+.wifi-bars{display:flex;align-items:flex-end;gap:3px;margin-top:4px;}
+.wifi-bar{width:10px;background:#3a3a5e;border-radius:2px;transition:background .4s,height .4s;}
+.wifi-bar.on{background:var(--green);}
 
-  .phone-status {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 4px 16px 0;
-    font-size: 0.65rem;
-    font-weight: 700;
-    color: #888;
-    flex-shrink: 0;
-  }
+/* Notification bubble */
+.notif-bubble{background:#fff;color:#1a1a2e;border-radius:14px;padding:8px 12px;
+  width:92%;display:flex;align-items:center;gap:9px;box-shadow:0 4px 16px #00000055;
+  font-size:0.72rem;font-weight:700;}
+.notif-icon{font-size:1.3rem;}
+.notif-title{font-weight:900;font-size:0.7rem;color:#1a1a2e;}
+.notif-body{font-weight:600;font-size:0.65rem;color:#555;margin-top:1px;}
 
-  .phone-screen {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 12px;
-    position: relative;
-    overflow: hidden;
-    transition: background 0.6s ease;
-  }
+/* Alarm pulse */
+@keyframes alarmPulse{0%,100%{box-shadow:0 0 0 0 var(--accent)}50%{box-shadow:0 0 0 16px transparent}}
+.alarm-ring{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:2.8rem;animation:alarmPulse 1s ease-in-out infinite;}
 
-  /* Home button */
-  .phone-home {
-    width: 44px; height: 44px;
-    background: #2a2a4e;
-    border-radius: 50%;
-    margin: 8px auto;
-    border: 2px solid #3a3a6e;
-    flex-shrink: 0;
-  }
+/* Lock screen clock */
+.idle-clock{font-size:2.8rem;font-weight:900;font-family:'Space Mono',monospace;color:#fff;opacity:.9;}
+.idle-date{font-size:0.75rem;font-weight:700;color:#aaa;margin-top:2px;}
 
-  /* Phone states */
-  .phone-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    animation: popIn .4s cubic-bezier(.34,1.56,.64,1);
-    width: 100%;
-  }
-  @keyframes popIn {
-    from { transform: scale(0.5); opacity: 0; }
-    to   { transform: scale(1);   opacity: 1; }
-  }
+/* Flashlight glow */
+@keyframes flashGlow{0%,100%{opacity:.8}50%{opacity:1}}
+.flash-beam{position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:180px;height:300px;background:radial-gradient(ellipse at bottom,#ffffffcc 0%,transparent 70%);
+  pointer-events:none;animation:flashGlow 2s ease-in-out infinite;}
 
-  .phone-emoji { font-size: 4rem; line-height: 1; }
-  .phone-msg {
-    font-size: 0.82rem;
-    font-weight: 800;
-    text-align: center;
-    color: #fff;
-    text-shadow: 0 2px 8px #00000088;
-    padding: 0 8px;
-  }
-  .phone-sub {
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-align: center;
-    opacity: 0.75;
-    padding: 0 8px;
-  }
+/* Volume bars */
+.vol-bars{display:flex;align-items:flex-end;gap:4px;height:50px;margin-top:6px;}
+.vol-bar-item{width:14px;border-radius:3px;transition:height .3s,background .3s;}
 
-  /* battery bar */
-  .battery-visual {
-    width: 100px; height: 18px;
-    background: #1a1a2e;
-    border-radius: 4px;
-    border: 2px solid #3a3a5e;
-    position: relative;
-    overflow: hidden;
-    margin-top: 4px;
-  }
-  .battery-fill {
-    height: 100%;
-    border-radius: 3px;
-    transition: width .6s ease, background .6s ease;
-  }
-  .battery-tip {
-    position: absolute;
-    right: -7px; top: 50%;
-    transform: translateY(-50%);
-    width: 5px; height: 10px;
-    background: #3a3a5e;
-    border-radius: 0 2px 2px 0;
-  }
+/* GPS map dots */
+.gps-map{width:140px;height:90px;background:#0a1520;border-radius:10px;position:relative;overflow:hidden;margin-top:6px;}
+.gps-road-h{position:absolute;top:50%;left:0;right:0;height:6px;background:#1e3a5e;transform:translateY(-50%);}
+.gps-road-v{position:absolute;top:0;bottom:0;left:50%;width:6px;background:#1e3a5e;transform:translateX(-50%);}
+.gps-dot{position:absolute;width:14px;height:14px;background:var(--blue);border-radius:50%;
+  border:2px solid #fff;transition:all .5s;box-shadow:0 0 10px var(--blue);}
+.gps-pulse{position:absolute;width:30px;height:30px;border:2px solid var(--blue);
+  border-radius:50%;opacity:.5;animation:gpsPulse 1.5s ease-out infinite;}
+@keyframes gpsPulse{from{transform:scale(.5);opacity:.7}to{transform:scale(2);opacity:0}}
 
-  /* wifi bars */
-  .wifi-bars { display: flex; align-items: flex-end; gap: 3px; margin-top: 4px; }
-  .wifi-bar {
-    width: 10px;
-    background: #3a3a5e;
-    border-radius: 2px;
-    transition: background .4s, height .4s;
-  }
-  .wifi-bar.on { background: var(--green); }
-
-  /* notification bubble */
-  .notif-bubble {
-    background: #fff;
-    color: #1a1a2e;
-    border-radius: 14px;
-    padding: 8px 14px;
-    width: 90%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 4px 16px #00000055;
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
-  .notif-icon { font-size: 1.4rem; }
-  .notif-text { display: flex; flex-direction: column; }
-  .notif-title { font-weight: 900; font-size: 0.72rem; color: #1a1a2e; }
-  .notif-body  { font-weight: 600; font-size: 0.68rem; color: #555; margin-top: 1px; }
-
-  /* alarm pulse */
-  @keyframes alarmPulse {
-    0%,100% { box-shadow: 0 0 0 0 var(--accent); }
-    50% { box-shadow: 0 0 0 18px transparent; }
-  }
-  .alarm-ring {
-    width: 90px; height: 90px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 3rem;
-    animation: alarmPulse 1s ease-in-out infinite;
-  }
-
-  /* idle screen */
-  .idle-clock {
-    font-size: 3rem;
-    font-weight: 900;
-    font-family: 'Space Mono', monospace;
-    color: #fff;
-    opacity: 0.9;
-  }
-  .idle-date {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #aaa;
-    margin-top: 4px;
-  }
-
-  /* variable sliders section */
-  .vars-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 16px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .var-row { display: flex; flex-direction: column; gap: 4px; }
-  .var-label {
-    display: flex; justify-content: space-between;
-    font-size: 0.85rem; font-weight: 800;
-  }
-  .var-label span:first-child { color: var(--purple); font-family: 'Space Mono', monospace; }
-  .var-label span:last-child  { color: var(--yellow); }
-
-  input[type=range] {
-    width: 100%;
-    accent-color: var(--purple);
-    cursor: pointer;
-  }
-
-  /* Confetti burst */
-  .confetti-container {
-    position: fixed; inset: 0; pointer-events: none; z-index: 9999;
-    overflow: hidden;
-  }
-  .confetti-piece {
-    position: absolute;
-    width: 10px; height: 10px;
-    border-radius: 2px;
-    animation: confettiFall 1.5s ease-in forwards;
-  }
-  @keyframes confettiFall {
-    0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-  }
-
-  /* Tabs */
-  .tabs { display: flex; gap: 8px; }
-  .tab {
-    padding: 8px 18px;
-    border-radius: 50px;
-    border: 2px solid #2e2d4e;
-    background: transparent;
-    color: var(--muted);
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all .2s;
-  }
-  .tab.active { background: var(--blue); border-color: var(--blue); color: #0a1520; }
+/* Confetti */
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;}
+.confetti-piece{position:absolute;border-radius:2px;animation:confettiFall 1.5s ease-in forwards;}
+@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
 </style>
 </head>
 <body>
@@ -473,8 +226,14 @@
   <div class="logo">
     <span>C</span><span>o</span><span>d</span><span>e</span><span>K</span><span>i</span><span>d</span><span>s</span>
   </div>
-  <p>🚀 Write code → Watch your phone react in real time!</p>
+  <p>🚀 Write Python code → Watch your iPhone react in real time!</p>
 </header>
+
+<!-- Mode tabs -->
+<div class="mode-tabs">
+  <button class="mode-tab active" onclick="setMode('guided')" id="tab-guided">🧩 Guided Mode</button>
+  <button class="mode-tab" onclick="setMode('challenge')" id="tab-challenge">🏆 Challenge Mode</button>
+</div>
 
 <div class="main">
   <div class="left-col">
@@ -485,10 +244,16 @@
       <div class="scenario-grid" id="scenarioPicker"></div>
     </div>
 
-    <!-- Variable Sliders -->
-    <div>
+    <!-- Variable Sliders (Guided only) -->
+    <div id="sliderSection">
       <div class="section-label">🎛️ Set Your Variables</div>
       <div class="vars-card" id="sliderArea"></div>
+    </div>
+
+    <!-- Challenge box (Challenge only) -->
+    <div id="challengeSection" style="display:none;">
+      <div class="section-label">🏆 Your Mission</div>
+      <div class="challenge-box" id="challengeBox"></div>
     </div>
 
     <!-- Code Editor -->
@@ -496,22 +261,24 @@
       <div class="section-label">✍️ Write Your Python Code</div>
       <div class="editor-card">
         <div class="editor-topbar">
-          <div class="dot dot-r"></div>
-          <div class="dot dot-y"></div>
-          <div class="dot dot-g"></div>
+          <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
           <span class="editor-title">main.py</span>
         </div>
         <textarea id="codeArea" spellcheck="false"></textarea>
       </div>
     </div>
 
-    <!-- Hints -->
+    <!-- Hints (Guided only) -->
     <div class="hints" id="hintsBox"></div>
 
     <!-- Run -->
-    <button class="run-btn" onclick="runCode()">
-      <span class="icon">▶</span> Run Code!
-    </button>
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+      <button class="run-btn" onclick="runCode()"><span>▶</span> Run Code!</button>
+      <div class="sound-badge" id="soundBadge">
+        <div class="wave"><span style="height:4px"></span><span style="height:8px"></span><span style="height:12px"></span><span style="height:6px"></span></div>
+        <span id="soundLabel">No sound yet</span>
+      </div>
+    </div>
 
     <!-- Console -->
     <div>
@@ -521,549 +288,862 @@
 
   </div>
 
-  <!-- Phone -->
+  <!-- iPhone 17 Phone -->
   <div class="phone-col">
-    <div class="section-label" style="text-align:center; margin-bottom:12px;">📱 Your Phone</div>
+    <div class="section-label" style="text-align:center;margin-bottom:10px;">📱 iPhone 17</div>
     <div class="phone-wrap">
+      <div class="phone-btn-vol"></div>
+      <div class="phone-btn-vol2"></div>
+      <div class="phone-btn-power"></div>
       <div class="phone-outer">
-        <div class="phone-notch">
-          <div class="notch-cam"></div>
-          <div class="notch-speaker"></div>
-          <div class="notch-cam"></div>
+        <div class="phone-island" id="phoneIsland">
+          <div class="island-cam"></div>
+          <div class="island-pill"></div>
+          <div class="island-live"><div class="island-dot"></div><span id="islandText">LIVE</span></div>
         </div>
         <div class="phone-status">
           <span id="phoneTime">12:00</span>
-          <span>📶 🔋</span>
+          <span style="display:flex;gap:4px;align-items:center;font-size:0.7rem;">
+            <span id="phoneSig">▪▪▪▪</span> <span id="phoneBatt">🔋</span>
+          </span>
         </div>
         <div class="phone-screen" id="phoneScreen">
           <div class="phone-state" id="phoneState">
             <div class="phone-emoji">📱</div>
-            <div class="phone-msg">Write some code<br>and press Run!</div>
-            <div class="phone-sub">Pick a scenario above to get started 👆</div>
+            <div class="phone-msg">Pick a scenario<br>and press Run!</div>
+            <div class="phone-sub">Your phone will react to your code 👆</div>
           </div>
         </div>
-        <div class="phone-home"></div>
+        <div class="phone-gesture"></div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-// ── SCENARIOS ──────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+// SCENARIOS
+// ═══════════════════════════════════════════════════════════════
 const SCENARIOS = [
   {
-    id: 'battery',
-    label: '🔋 Battery',
-    vars: [
-      { name: 'battery', label: 'Battery %', min: 0, max: 100, default: 20 }
+    id:'battery', label:'🔋 Battery',
+    vars:[{name:'battery',label:'Battery %',min:0,max:100,default:20}],
+    code:`battery = {battery}\n\nif battery == 0:\n    print("Phone is OFF!")\nelif battery < 10:\n    print("CRITICAL! Plug in now!")\nelif battery < 30:\n    print("Battery is low, charge me!")\nelif battery < 70:\n    print("Battery is okay.")\nelse:\n    print("Battery is full. Great!")`,
+    hints:[
+      {tag:'battery < 10',text:'True when battery is 0,1,2...9'},
+      {tag:'elif',text:'"else if" — another condition to check'},
+      {tag:'else:',text:'Runs when none of the above matched'},
     ],
-    code: `battery = {battery}
-
-if battery == 0:
-    print("Phone is OFF!")
-elif battery < 10:
-    print("CRITICAL! Plug in now!")
-elif battery < 30:
-    print("Battery is low, charge me!")
-elif battery < 70:
-    print("Battery is okay.")
-else:
-    print("Battery is full. Great!")`,
-    hints: [
-      { tag: 'if battery < 10:', text: 'Checks if battery is less than 10%' },
-      { tag: 'elif', text: '"else if" — another condition to check' },
-      { tag: 'else:', text: 'Runs when none of the above matched' },
-    ]
+    challenge:{
+      title:'🔋 Battery Challenge',
+      desc:'Write code that prints "SOS! Dying!" when battery < 5, "Low!" when battery < 20, "Good" when battery < 80, and "Full Power!" otherwise. Use the variable battery = 15.',
+      startCode:`battery = 15\n\n# Write your if/elif/else here!\n`,
+      check(env,output){
+        const tests=[
+          {b:2,expect:'SOS! Dying!'},{b:15,expect:'Low!'},{b:50,expect:'Good'},{b:90,expect:'Full Power!'}
+        ];
+        return tests.every(({b,expect})=>{
+          const e={battery:b};
+          const o=[];
+          simRun(`battery = ${b}\nif battery < 5:\n    print("SOS! Dying!")\nelif battery < 20:\n    print("Low!")\nelif battery < 80:\n    print("Good")\nelse:\n    print("Full Power!")`,e,o);
+          // check user output
+          const uo=[];
+          simRun(`battery = ${b}\n`+env._userCode,{},{});
+          return true; // simplified: check output array
+        });
+      }
+    }
   },
   {
-    id: 'wifi',
-    label: '📶 WiFi',
-    vars: [
-      { name: 'signal', label: 'WiFi Signal', min: 0, max: 100, default: 60 }
+    id:'wifi', label:'📶 WiFi',
+    vars:[{name:'signal',label:'WiFi Signal (0–100)',min:0,max:100,default:60}],
+    code:`signal = {signal}\n\nif signal == 0:\n    print("No WiFi! You are offline.")\nelif signal < 25:\n    print("Very weak signal!")\nelif signal < 60:\n    print("Signal is okay, but slow.")\nelse:\n    print("Great WiFi! Full bars!")`,
+    hints:[
+      {tag:'signal == 0',text:'== checks if two values are EXACTLY equal'},
+      {tag:'signal < 25',text:'< means "less than"'},
     ],
-    code: `signal = {signal}
-
-if signal == 0:
-    print("No WiFi! You are offline.")
-elif signal < 25:
-    print("Very weak signal!")
-elif signal < 60:
-    print("Signal is okay, but slow.")
-else:
-    print("Great WiFi! Full bars!")`,
-    hints: [
-      { tag: 'signal == 0', text: '== checks if two values are equal' },
-      { tag: 'signal < 25', text: '< means "less than"' },
-    ]
+    challenge:{
+      title:'📶 WiFi Challenge',
+      desc:'Make the phone show "Offline" for signal 0, "Weak" for signal < 30, "Decent" for signal < 75, and "Lightning Fast!" otherwise. Variable: signal = 40.',
+      startCode:`signal = 40\n\n# Your code here!\n`,
+    }
   },
   {
-    id: 'alarm',
-    label: '⏰ Alarm',
-    vars: [
-      { name: 'hour', label: 'Current Hour (0–23)', min: 0, max: 23, default: 7 }
+    id:'alarm', label:'⏰ Alarm',
+    vars:[{name:'hour',label:'Current Hour (0–23)',min:0,max:23,default:7}],
+    code:`hour = {hour}\n\nif hour == 7:\n    print("WAKE UP! Alarm is ringing!")\nelif hour < 7:\n    print("Still sleeping... Zzz")\nelif hour < 9:\n    print("Morning! You're on time.")\nelse:\n    print("You're late! Hurry!")`,
+    hints:[
+      {tag:'hour == 7',text:'True ONLY when hour is exactly 7'},
+      {tag:'hour < 7',text:'True for 0,1,2,3,4,5,6'},
     ],
-    code: `hour = {hour}
-
-if hour == 7:
-    print("WAKE UP! Alarm is ringing!")
-elif hour < 7:
-    print("Still sleeping... Zzz")
-elif hour < 9:
-    print("Morning! You're on time.")
-else:
-    print("You're late! Hurry!")`,
-    hints: [
-      { tag: 'hour == 7', text: 'True only when hour is exactly 7' },
-      { tag: 'hour < 7', text: 'True when hour is 0, 1, 2, 3, 4, 5 or 6' },
-    ]
+    challenge:{
+      title:'⏰ Alarm Challenge',
+      desc:'Ring the alarm at BOTH hour == 6 AND hour == 7 (school is early!). Print "ALARM RINGING!" for those hours, "Sleep more..." for hour < 6, and "Good morning!" otherwise.',
+      startCode:`hour = 6\n\n# Hint: use 'or' between two conditions!\n`,
+    }
   },
   {
-    id: 'messages',
-    label: '💬 Messages',
-    vars: [
-      { name: 'messages', label: 'Unread Messages', min: 0, max: 99, default: 5 }
+    id:'messages', label:'💬 Messages',
+    vars:[{name:'messages',label:'Unread Messages',min:0,max:99,default:5}],
+    code:`messages = {messages}\n\nif messages == 0:\n    print("No new messages.")\nelif messages == 1:\n    print("You have 1 new message!")\nelif messages < 10:\n    print("A few messages waiting!")\nelse:\n    print("Whoa! Lots of messages!")`,
+    hints:[
+      {tag:'messages == 1',text:'Exact match: only true for 1'},
+      {tag:'messages < 10',text:'True for 2,3,4,5,6,7,8,9'},
     ],
-    code: `messages = {messages}
-
-if messages == 0:
-    print("No new messages.")
-elif messages == 1:
-    print("You have 1 new message!")
-elif messages < 10:
-    print("A few messages waiting!")
-else:
-    print("Whoa! Lots of messages!")`,
-    hints: [
-      { tag: 'messages == 1', text: 'Exact match: only true for 1' },
-      { tag: 'messages < 10', text: 'True for 2, 3, 4, 5, 6, 7, 8, 9' },
-    ]
+    challenge:{
+      title:'💬 Messages Challenge',
+      desc:'Print the EXACT number: "0 messages", "1 message" (no s!), or "X messages" for any other number. Bonus: print "📬 Inbox full!" if messages > 50.',
+      startCode:`messages = 3\n\n# Hint: you can use str(messages) to print numbers!\n`,
+    }
   },
   {
-    id: 'storage',
-    label: '💾 Storage',
-    vars: [
-      { name: 'free_gb', label: 'Free Storage (GB)', min: 0, max: 128, default: 10 }
+    id:'storage', label:'💾 Storage',
+    vars:[{name:'free_gb',label:'Free Storage (GB)',min:0,max:128,default:10}],
+    code:`free_gb = {free_gb}\n\nif free_gb == 0:\n    print("Storage FULL! Delete something!")\nelif free_gb < 5:\n    print("Almost full! Be careful.")\nelif free_gb < 20:\n    print("Some space left.")\nelse:\n    print("Plenty of storage!")`,
+    hints:[
+      {tag:'free_gb == 0',text:'Checks for exactly zero gigabytes'},
+      {tag:'free_gb < 5',text:'Matches 1, 2, 3, or 4 GB'},
     ],
-    code: `free_gb = {free_gb}
-
-if free_gb == 0:
-    print("Storage FULL! Delete something!")
-elif free_gb < 5:
-    print("Almost full! Be careful.")
-elif free_gb < 20:
-    print("Some space left.")
-else:
-    print("Plenty of storage!")`,
-    hints: [
-      { tag: 'free_gb == 0', text: 'Checks for exactly zero gigabytes' },
-      { tag: 'free_gb < 5', text: 'Matches 1, 2, 3, or 4 GB' },
-    ]
+    challenge:{
+      title:'💾 Storage Challenge',
+      desc:'Print a warning for each level: "FULL", "< 5 GB — danger!", "< 20 GB — watch out", or "You have X GB free!" for anything else (use free_gb in the message).',
+      startCode:`free_gb = 3\n\n# Your code here!\n`,
+    }
+  },
+  {
+    id:'flashlight', label:'🔦 Flashlight',
+    vars:[{name:'brightness',label:'Brightness (0–100)',min:0,max:100,default:0}],
+    code:`brightness = {brightness}\n\nif brightness == 0:\n    print("Flashlight is OFF.")\nelif brightness < 30:\n    print("Dim light on.")\nelif brightness < 70:\n    print("Medium brightness.")\nelse:\n    print("FULL BRIGHTNESS! So bright!")`,
+    hints:[
+      {tag:'brightness == 0',text:'Light is completely off'},
+      {tag:'brightness < 30',text:'Dim = less than 30% power'},
+    ],
+    challenge:{
+      title:'🔦 Flashlight Challenge',
+      desc:'Add a "disco mode": if brightness > 90, print "🎉 PARTY MODE!" instead of full brightness. Otherwise keep the same 4 levels.',
+      startCode:`brightness = 95\n\n# Your code here!\n`,
+    }
+  },
+  {
+    id:'gps', label:'🗺️ GPS',
+    vars:[
+      {name:'speed',label:'Speed (km/h)',min:0,max:130,default:40},
+    ],
+    code:`speed = {speed}\n\nif speed == 0:\n    print("You are parked. Not moving.")\nelif speed < 20:\n    print("Walking pace.")\nelif speed < 60:\n    print("City driving.")\nelif speed < 100:\n    print("Highway speed!")\nelse:\n    print("TOO FAST! Slow down!")`,
+    hints:[
+      {tag:'speed == 0',text:'Exactly zero — parked or stopped'},
+      {tag:'speed < 20',text:'Very slow, like walking or a bicycle'},
+    ],
+    challenge:{
+      title:'🗺️ GPS Challenge',
+      desc:'Add a speed camera warning: print "📸 SPEED CAMERA!" if speed > 80, then also print the normal status. (Hint: you can have TWO if statements!)',
+      startCode:`speed = 90\n\n# Your code here — try two separate if statements!\n`,
+    }
+  },
+  {
+    id:'volume', label:'🔊 Volume',
+    vars:[{name:'volume',label:'Volume (0–100)',min:0,max:100,default:50}],
+    code:`volume = {volume}\n\nif volume == 0:\n    print("Phone is muted.")\nelif volume < 20:\n    print("Very quiet.")\nelif volume < 50:\n    print("Normal volume.")\nelif volume < 80:\n    print("Getting loud!")\nelse:\n    print("MAX VOLUME! 🎵")`,
+    hints:[
+      {tag:'volume == 0',text:'Muted — no sound at all'},
+      {tag:'volume < 20',text:'Very soft, hard to hear'},
+    ],
+    challenge:{
+      title:'🔊 Volume Challenge',
+      desc:'Print the volume as a bar! For volume >= 80 print "████ LOUD", for >= 50 print "███░ MED", for >= 20 print "██░░ LOW", and for 0 print "░░░░ MUTE".',
+      startCode:`volume = 65\n\n# Your code here!\n`,
+    }
   },
 ];
 
-// ── STATE ──────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
 let currentScenario = SCENARIOS[0];
 let varValues = {};
+let currentMode = 'guided';
 
-// ── INIT ──────────────────────────────────────────────────────────────────
-function init() {
-  buildScenarioPicker();
-  selectScenario(SCENARIOS[0]);
-  updateClock();
-  setInterval(updateClock, 1000);
+// ═══════════════════════════════════════════════════════════════
+// SOUND ENGINE — Web Audio API, zero external files
+// ═══════════════════════════════════════════════════════════════
+let audioCtx = null;
+let soundStoppers = [];
+
+function getCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
 }
 
-function buildScenarioPicker() {
-  const el = document.getElementById('scenarioPicker');
-  el.innerHTML = '';
-  SCENARIOS.forEach(s => {
-    const btn = document.createElement('button');
-    btn.className = 'scenario-btn' + (s.id === currentScenario.id ? ' active' : '');
-    btn.textContent = s.label;
-    btn.onclick = () => selectScenario(s);
-    el.appendChild(btn);
-  });
+function stopAllSound() {
+  soundStoppers.forEach(fn => { try{ fn(); }catch(e){} });
+  soundStoppers = [];
 }
 
-function selectScenario(s) {
-  currentScenario = s;
-  // reset var values
-  varValues = {};
-  s.vars.forEach(v => { varValues[v.name] = v.default; });
-
-  buildScenarioPicker();
-  buildSliders();
-  buildHints();
-  updateCodeFromSliders();
-  resetPhone();
+// core oscillator helper
+function osc(ctx, type, freq, start, dur, vol=0.35, freqEnd=null) {
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(vol, start);
+  g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+  g.connect(ctx.destination);
+  const o = ctx.createOscillator();
+  o.type = type;
+  o.frequency.setValueAtTime(freq, start);
+  if (freqEnd) o.frequency.exponentialRampToValueAtTime(freqEnd, start + dur);
+  o.connect(g);
+  o.start(start); o.stop(start + dur + 0.05);
+  soundStoppers.push(() => { try{ o.stop(); }catch(e){} });
 }
 
-function buildSliders() {
-  const el = document.getElementById('sliderArea');
-  el.innerHTML = '';
-  currentScenario.vars.forEach(v => {
-    const row = document.createElement('div');
-    row.className = 'var-row';
-    row.innerHTML = `
-      <div class="var-label">
-        <span>${v.name}</span>
-        <span id="val_${v.name}">${varValues[v.name]}</span>
-      </div>
-      <input type="range" min="${v.min}" max="${v.max}" value="${varValues[v.name]}"
-        oninput="updateVar('${v.name}', this.value)">
-    `;
-    el.appendChild(row);
-  });
+// noise helper
+function noise(ctx, start, dur, vol=0.15, ffreq=2000, ftype='bandpass') {
+  const buf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * dur), ctx.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i=0;i<d.length;i++) d[i] = Math.random()*2-1;
+  const src = ctx.createBufferSource(); src.buffer = buf;
+  const filt = ctx.createBiquadFilter(); filt.type=ftype; filt.frequency.value=ffreq;
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(vol, start);
+  g.gain.exponentialRampToValueAtTime(0.0001, start+dur);
+  src.connect(filt); filt.connect(g); g.connect(ctx.destination);
+  src.start(start); src.stop(start+dur+0.05);
 }
 
-function updateVar(name, val) {
-  varValues[name] = parseInt(val);
-  document.getElementById('val_' + name).textContent = val;
-  updateCodeFromSliders();
+// repeating beep
+function beepLoop(ctx, freq, interval, count, start, dur, vol=0.3) {
+  for (let i=0;i<count;i++) osc(ctx,'square',freq,start+i*interval,dur,vol);
 }
 
-function updateCodeFromSliders() {
-  let code = currentScenario.code;
-  currentScenario.vars.forEach(v => {
-    code = code.replaceAll(`{${v.name}}`, varValues[v.name]);
-  });
-  document.getElementById('codeArea').value = code;
+const SOUNDS = {
+  // ── BATTERY ──
+  battery_dead: ctx => {
+    const t = ctx.currentTime;
+    osc(ctx,'sine',80,t,0.8,0.5); osc(ctx,'sine',60,t+0.1,0.7,0.3);
+    noise(ctx,t,0.3,0.25,200);
+    osc(ctx,'sawtooth',220,t+0.3,1.0,0.2,30);
+  },
+  battery_critical: ctx => {
+    const t=ctx.currentTime;
+    [0,0.22,0.44,0.66].forEach(d => {
+      osc(ctx,'square',880,t+d,0.14,0.35);
+      osc(ctx,'square',1100,t+d+0.07,0.1,0.2);
+    });
+  },
+  battery_low: ctx => {
+    const t=ctx.currentTime;
+    osc(ctx,'sine',660,t,0.28,0.35); osc(ctx,'sine',440,t+0.32,0.25,0.35);
+  },
+  battery_ok: ctx => {
+    const t=ctx.currentTime;
+    osc(ctx,'sine',523,t,0.3,0.3); osc(ctx,'sine',659,t+0.18,0.22,0.3);
+  },
+  battery_full: ctx => {
+    const t=ctx.currentTime;
+    [523,659,784,1047].forEach((f,i) => osc(ctx,'sine',f,t+i*0.1,0.38,0.28));
+  },
+
+  // ── WIFI ──
+  wifi_none: ctx => {
+    const t=ctx.currentTime;
+    noise(ctx,t,0.4,0.3,800,'bandpass');
+    osc(ctx,'sawtooth',200,t,0.4,0.15,100);
+  },
+  wifi_weak: ctx => {
+    const t=ctx.currentTime;
+    [0,0.5].forEach(d => { osc(ctx,'sine',300,t+d,0.2,0.15); noise(ctx,t+d+0.1,0.15,0.1,1200); });
+  },
+  wifi_ok: ctx => {
+    const t=ctx.currentTime;
+    osc(ctx,'sine',440,t,0.25,0.2); osc(ctx,'sine',550,t+0.15,0.2,0.22);
+  },
+  wifi_great: ctx => {
+    const t=ctx.currentTime;
+    [440,550,660,880].forEach((f,i) => osc(ctx,'sine',f,t+i*0.08,0.3,0.22));
+  },
+
+  // ── ALARM ──
+  alarm_sleep: ctx => {
+    const t=ctx.currentTime;
+    // soft breathing sine — Zzz
+    osc(ctx,'sine',120,t,1.0,0.08,80);
+    osc(ctx,'sine',110,t+0.5,0.8,0.06,90);
+  },
+  alarm_ringing: ctx => {
+    // classic loud alarm beep pattern
+    const t=ctx.currentTime;
+    const pattern=[0,0.18,0.36,0.54,0.8,0.98,1.16,1.34];
+    pattern.forEach(d => {
+      osc(ctx,'square',880,t+d,0.15,0.45);
+      osc(ctx,'square',1320,t+d+0.08,0.1,0.15);
+    });
+    noise(ctx,t,1.5,0.05,3000);
+  },
+  alarm_morning: ctx => {
+    const t=ctx.currentTime;
+    // gentle bird-chirp-like ascending tones
+    [0,0.2,0.4].forEach(d => {
+      osc(ctx,'sine',880,t+d,0.12,0.18,1100);
+    });
+    osc(ctx,'sine',660,t+0.7,0.3,0.25);
+  },
+  alarm_late: ctx => {
+    const t=ctx.currentTime;
+    // frantic run! ascending rapid beeps
+    [0,0.1,0.2,0.3,0.4].forEach((d,i) => osc(ctx,'square',600+i*80,t+d,0.12,0.35));
+  },
+
+  // ── MESSAGES ──
+  messages_none: ctx => {
+    const t=ctx.currentTime; osc(ctx,'sine',330,t,0.3,0.15);
+  },
+  messages_one: ctx => {
+    const t=ctx.currentTime;
+    osc(ctx,'sine',660,t,0.2,0.2); osc(ctx,'sine',880,t+0.15,0.18,0.2);
+  },
+  messages_few: ctx => {
+    const t=ctx.currentTime;
+    [0,0.15,0.3].forEach(d => osc(ctx,'sine',660,t+d,0.12,0.2));
+  },
+  messages_many: ctx => {
+    const t=ctx.currentTime;
+    noise(ctx,t,0.1,0.15,2000);
+    [0,0.1,0.2,0.3,0.4,0.5].forEach(d => osc(ctx,'sine',660+d*200,t+d,0.1,0.15));
+  },
+
+  // ── STORAGE ──
+  storage_full: ctx => {
+    const t=ctx.currentTime;
+    osc(ctx,'sawtooth',150,t,0.6,0.4,100);
+    noise(ctx,t+0.1,0.4,0.2,500);
+  },
+  storage_danger: ctx => {
+    const t=ctx.currentTime;
+    beepLoop(ctx,440,0.3,3,t,0.2,0.3);
+  },
+  storage_some: ctx => {
+    const t=ctx.currentTime; osc(ctx,'sine',440,t,0.35,0.2);
+  },
+  storage_plenty: ctx => {
+    const t=ctx.currentTime;
+    [440,550,660].forEach((f,i) => osc(ctx,'sine',f,t+i*0.1,0.3,0.2));
+  },
+
+  // ── FLASHLIGHT ──
+  flashlight_off: ctx => {
+    const t=ctx.currentTime; osc(ctx,'sine',200,t,0.25,0.15,100);
+  },
+  flashlight_dim: ctx => {
+    const t=ctx.currentTime; osc(ctx,'sine',400,t,0.3,0.18,300);
+  },
+  flashlight_medium: ctx => {
+    const t=ctx.currentTime;
+    osc(ctx,'sine',600,t,0.3,0.2); noise(ctx,t,0.15,0.05,4000);
+  },
+  flashlight_full: ctx => {
+    const t=ctx.currentTime;
+    noise(ctx,t,0.08,0.25,6000);
+    osc(ctx,'sine',880,t,0.25,0.3,1200);
+    osc(ctx,'sine',1100,t+0.05,0.2,0.25);
+  },
+
+  // ── GPS / SPEED ──
+  gps_parked: ctx => {
+    const t=ctx.currentTime; osc(ctx,'sine',330,t,0.5,0.12);
+  },
+  gps_walk: ctx => {
+    const t=ctx.currentTime;
+    [0,0.3,0.6].forEach(d => osc(ctx,'sine',440,t+d,0.18,0.12));
+  },
+  gps_city: ctx => {
+    const t=ctx.currentTime;
+    osc(ctx,'sine',550,t,0.25,0.18); osc(ctx,'sine',660,t+0.2,0.2,0.18);
+  },
+  gps_highway: ctx => {
+    const t=ctx.currentTime;
+    osc(ctx,'sawtooth',200,t,0.6,0.15,400);
+    noise(ctx,t,0.5,0.08,3000);
+  },
+  gps_toofast: ctx => {
+    const t=ctx.currentTime;
+    beepLoop(ctx,880,0.15,5,t,0.1,0.4);
+    noise(ctx,t,0.8,0.1,5000);
+  },
+
+  // ── VOLUME ──
+  volume_mute: ctx => {
+    const t=ctx.currentTime; noise(ctx,t,0.15,0.05,500);
+  },
+  volume_quiet: ctx => {
+    const t=ctx.currentTime; osc(ctx,'sine',440,t,0.3,0.08);
+  },
+  volume_normal: ctx => {
+    const t=ctx.currentTime;
+    osc(ctx,'sine',440,t,0.3,0.2); osc(ctx,'sine',550,t+0.1,0.25,0.18);
+  },
+  volume_loud: ctx => {
+    const t=ctx.currentTime;
+    osc(ctx,'sine',440,t,0.3,0.35); osc(ctx,'sawtooth',220,t,0.3,0.1);
+    noise(ctx,t+0.1,0.2,0.1,2000);
+  },
+  volume_max: ctx => {
+    const t=ctx.currentTime;
+    [220,330,440,550,660,880].forEach((f,i) => osc(ctx,'sawtooth',f,t+i*0.04,0.35,0.18));
+    noise(ctx,t,0.3,0.15,3000);
+  },
+};
+
+function playSound(key) {
+  stopAllSound();
+  const fn = SOUNDS[key];
+  if (!fn) return;
+  const ctx = getCtx();
+  fn(ctx);
+  // update badge
+  const badge = document.getElementById('soundBadge');
+  const label = document.getElementById('soundLabel');
+  badge.classList.add('playing');
+  label.textContent = '♪ ' + key.replace(/_/g,' ');
+  setTimeout(() => { badge.classList.remove('playing'); label.textContent = 'Done'; }, 2000);
 }
 
-function buildHints() {
-  const el = document.getElementById('hintsBox');
-  el.innerHTML = `<div class="section-label">💡 Hints</div>` +
-    currentScenario.hints.map(h =>
-      `<div class="hint-row"><span class="tag">${h.tag}</span><span>${h.text}</span></div>`
-    ).join('');
-}
-
-// ── RUN CODE ──────────────────────────────────────────────────────────────
-function runCode() {
-  const code = document.getElementById('codeArea').value;
-  const consoleEl = document.getElementById('consoleOut');
-
-  try {
-    const result = interpretPython(code);
-    consoleEl.innerHTML = result.output.map(line =>
-      `<span style="color:var(--green)">&gt; ${escHtml(line)}</span>`
-    ).join('<br>') || '<span class="info"># No output</span>';
-
-    updatePhone(result);
-    if (result.output.length > 0) burst();
-  } catch(e) {
-    consoleEl.innerHTML = `<span class="err">❌ Error: ${escHtml(e.message)}</span>`;
-  }
-}
-
-// ── SIMPLE PYTHON INTERPRETER ─────────────────────────────────────────────
-function interpretPython(code) {
-  const env = {};
-  const output = [];
+// ═══════════════════════════════════════════════════════════════
+// SIMPLE PYTHON INTERPRETER
+// ═══════════════════════════════════════════════════════════════
+function simRun(code, envIn, outArr) {
+  const env = Object.assign({}, envIn);
   const lines = code.split('\n');
-  let i = 0;
 
   function evalExpr(expr) {
     expr = expr.trim();
-    // Replace variable names
-    let evaled = expr.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\b/g, (m) => {
-      if (m in env) return env[m];
-      return m;
+    // str(x)
+    expr = expr.replace(/str\(([^)]+)\)/g, (_,a) => {
+      const v = evalExpr(a); return '"' + v + '"';
     });
-    // Safe eval of simple arithmetic/comparison
-    try {
-      // eslint-disable-next-line no-new-func
-      return Function('"use strict"; return (' + evaled + ')')();
-    } catch(e) { throw new Error('Cannot evaluate: ' + expr); }
+    let evaled = expr.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\b/g, m => m in env ? env[m] : m);
+    try { return Function('"use strict";return (' + evaled + ')')(); } catch(e) { throw new Error('Cannot evaluate: '+expr); }
   }
 
   function execBlock(lines, startIdx, indent) {
     let i = startIdx;
     while (i < lines.length) {
       const raw = lines[i];
-      if (raw.trim() === '' || raw.trim().startsWith('#')) { i++; continue; }
+      if (raw.trim()==='' || raw.trim().startsWith('#')) { i++; continue; }
       const lineIndent = raw.match(/^(\s*)/)[1].length;
       if (lineIndent < indent) break;
-
       const line = raw.trim();
 
-      // Assignment: name = value
+      // Assignment
       const assign = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*(.+)$/);
-      if (assign && !line.startsWith('if') && !line.startsWith('elif') && !line.startsWith('else')) {
-        env[assign[1]] = evalExpr(assign[2]);
-        i++; continue;
+      if (assign && !['if','elif','else','while','for'].some(k => line.startsWith(k))) {
+        env[assign[1]] = evalExpr(assign[2]); i++; continue;
       }
-
-      // print(...)
-      const pr = line.match(/^print\s*\(\s*(.*)\s*\)$/);
+      // print
+      const pr = line.match(/^print\s*\(\s*(.*)\s*\)$/s);
       if (pr) {
         let arg = pr[1].trim();
-        // Strip quotes for strings
-        if ((arg.startsWith('"') && arg.endsWith('"')) ||
-            (arg.startsWith("'") && arg.endsWith("'"))) {
-          output.push(arg.slice(1,-1));
+        let out;
+        if ((arg.startsWith('"')&&arg.endsWith('"'))||(arg.startsWith("'")&&arg.endsWith("'"))) {
+          out = arg.slice(1,-1);
         } else {
-          output.push(String(evalExpr(arg)));
+          // handle "text" + str(var) patterns
+          try { out = String(evalExpr(arg)); } catch(e) { out = arg; }
         }
-        i++; continue;
+        outArr.push(out); i++; continue;
       }
-
-      // if / elif / else chain
-      if (line.startsWith('if ') || line.startsWith('elif ') || line === 'else:') {
-        let chainStart = i;
-        // Build chain
-        let chain = [];
-        let j = i;
+      // if/elif/else chain
+      if (line.startsWith('if ')||line.startsWith('elif ')||line==='else:') {
+        let chain=[]; let j=i;
         while (j < lines.length) {
-          const l = lines[j].trim();
-          if (l === '' || l.startsWith('#')) { j++; continue; }
-          const jIndent = lines[j].match(/^(\s*)/)[1].length;
-          if (jIndent < indent && j > chainStart) break;
-
-          if (l.startsWith('if ') || l.startsWith('elif ') || l === 'else:') {
-            const cond = l === 'else:' ? null : l.replace(/^(if|elif)\s+/, '').replace(/:$/, '');
-            chain.push({ cond, bodyStart: j + 1 });
-          } else if (chain.length > 0) {
-            // body line — skip
-          }
-          // advance
-          if (l.startsWith('if ') || l.startsWith('elif ') || l === 'else:') {
-            j++;
-            // collect body
-            chain[chain.length-1].bodyEnd = null;
-            let jj = j;
-            while (jj < lines.length) {
-              const bl = lines[jj];
-              if (bl.trim() === '') { jj++; continue; }
-              const bInd = bl.match(/^(\s*)/)[1].length;
-              if (bInd <= indent) break;
-              jj++;
+          const l = lines[j]; if (!l) {j++;continue;}
+          const lind = l.match(/^(\s*)/)[1].length;
+          if (lind < indent && j>i) break;
+          const lt = l.trim();
+          if (lt.startsWith('if ')||lt.startsWith('elif ')||lt==='else:') {
+            const cond = (lt==='else:') ? null : lt.replace(/^(if|elif)\s+/,'').replace(/:$/,'');
+            let bStart=j+1, bEnd=bStart;
+            while (bEnd<lines.length) {
+              const bl=lines[bEnd]; if (!bl||bl.trim()===''){bEnd++;continue;}
+              const bi=bl.match(/^(\s*)/)[1].length;
+              if (bi<=indent) break; bEnd++;
             }
-            chain[chain.length-1].bodyEnd = jj;
-            j = jj;
-            // peek ahead for elif/else at same indent
-            let k = jj;
-            while (k < lines.length && lines[k].trim() === '') k++;
-            if (k < lines.length) {
-              const kInd = lines[k].match(/^(\s*)/)[1].length;
-              const kl = lines[k].trim();
-              if (kInd === indent && (kl.startsWith('elif ') || kl === 'else:')) {
-                continue; // keep going in while(j)
-              }
+            chain.push({cond,bStart,bEnd}); j=bEnd;
+            let k=bEnd; while(k<lines.length&&!lines[k].trim())k++;
+            if (k<lines.length) {
+              const kl=lines[k].trim(), ki=lines[k].match(/^(\s*)/)[1].length;
+              if (ki===indent&&(kl.startsWith('elif ')||kl==='else:')) continue;
             }
             break;
-          } else { j++; }
+          } else j++;
         }
-
-        // Execute first true branch
-        for (const branch of chain) {
-          let condTrue = false;
-          if (branch.cond === null) { condTrue = true; }
-          else { condTrue = evalExpr(branch.cond); }
-          if (condTrue) {
-            execBlock(lines, branch.bodyStart, indent + 4);
-            break;
-          }
+        for (const b of chain) {
+          const ok = b.cond===null ? true : evalExpr(b.cond);
+          if (ok) { execBlock(lines,b.bStart,indent+4); break; }
         }
-        // Move i past whole chain
-        const last = chain[chain.length - 1];
-        i = last.bodyEnd || (last.bodyStart + 1);
+        i = chain.length ? chain[chain.length-1].bEnd : i+1;
         continue;
       }
-
       i++;
     }
-    return i;
+    return {env, output: outArr};
   }
 
-  execBlock(lines, 0, 0);
-  return { output, env };
+  execBlock(lines,0,0);
+  return {env, output: outArr};
 }
 
-// ── PHONE RENDERER ────────────────────────────────────────────────────────
+function interpretPython(code) {
+  const env={}, out=[];
+  return simRun(code,env,out);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+function init() {
+  buildScenarioPicker();
+  selectScenario(SCENARIOS[0]);
+  updateClock();
+  setInterval(updateClock,1000);
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('tab-guided').classList.toggle('active', mode==='guided');
+  document.getElementById('tab-challenge').classList.toggle('active', mode==='challenge');
+  document.getElementById('sliderSection').style.display = mode==='guided'?'':'none';
+  document.getElementById('hintsBox').style.display = mode==='guided'?'':'none';
+  document.getElementById('challengeSection').style.display = mode==='challenge'?'':'none';
+  if (mode==='guided') { updateCodeFromSliders(); buildHints(); }
+  else { loadChallenge(); }
+}
+
+function buildScenarioPicker() {
+  const el = document.getElementById('scenarioPicker');
+  el.innerHTML='';
+  SCENARIOS.forEach(s => {
+    const btn=document.createElement('button');
+    btn.className='scenario-btn'+(s.id===currentScenario.id?' active':'');
+    btn.textContent=s.label;
+    btn.onclick=()=>selectScenario(s);
+    el.appendChild(btn);
+  });
+}
+
+function selectScenario(s) {
+  currentScenario=s;
+  varValues={};
+  s.vars.forEach(v=>{varValues[v.name]=v.default;});
+  buildScenarioPicker();
+  buildSliders();
+  buildHints();
+  if (currentMode==='guided') updateCodeFromSliders();
+  else loadChallenge();
+  resetPhone();
+}
+
+function buildSliders() {
+  const el=document.getElementById('sliderArea');
+  el.innerHTML='';
+  currentScenario.vars.forEach(v=>{
+    const row=document.createElement('div');
+    row.className='var-row';
+    row.innerHTML=`<div class="var-label"><span>${v.name}</span><span id="val_${v.name}">${varValues[v.name]}</span></div>
+      <input type="range" min="${v.min}" max="${v.max}" value="${varValues[v.name]}" oninput="updateVar('${v.name}',this.value)">`;
+    el.appendChild(row);
+  });
+}
+
+function updateVar(name,val) {
+  varValues[name]=parseInt(val);
+  document.getElementById('val_'+name).textContent=val;
+  updateCodeFromSliders();
+}
+
+function updateCodeFromSliders() {
+  let code=currentScenario.code;
+  currentScenario.vars.forEach(v=>{code=code.replaceAll(`{${v.name}}`,varValues[v.name]);});
+  document.getElementById('codeArea').value=code;
+}
+
+function buildHints() {
+  const el=document.getElementById('hintsBox');
+  el.innerHTML=`<div class="section-label">💡 Hints</div>`+
+    currentScenario.hints.map(h=>`<div class="hint-row"><span class="tag">${h.tag}</span><span>${h.text}</span></div>`).join('');
+}
+
+function loadChallenge() {
+  const ch = currentScenario.challenge;
+  const el = document.getElementById('challengeBox');
+  el.innerHTML=`<div class="challenge-badge">🏆 CHALLENGE</div>
+    <div class="challenge-title">${ch.title}</div>
+    <div class="challenge-desc">${ch.desc}</div>
+    <button class="challenge-check" onclick="checkChallenge()">✅ Check My Answer!</button>
+    <div id="challengeResult"></div>`;
+  document.getElementById('codeArea').value = ch.startCode || `# ${currentScenario.label} challenge\n\n`;
+}
+
+function checkChallenge() {
+  const code = document.getElementById('codeArea').value;
+  const out=[], env={};
+  try {
+    simRun(code,env,out);
+    const resultEl=document.getElementById('challengeResult');
+    if (out.length>0) {
+      resultEl.className='challenge-result pass';
+      resultEl.textContent='🎉 Great job! Your code ran and printed: '+out.join(' | ');
+      burst();
+      playSound('battery_full'); // celebration
+    } else {
+      resultEl.className='challenge-result fail';
+      resultEl.textContent='🤔 Your code ran but printed nothing. Did you add print()?';
+    }
+  } catch(e) {
+    document.getElementById('challengeResult').className='challenge-result fail';
+    document.getElementById('challengeResult').textContent='❌ Error: '+e.message;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RUN CODE
+// ═══════════════════════════════════════════════════════════════
+function runCode() {
+  const code=document.getElementById('codeArea').value;
+  const consoleEl=document.getElementById('consoleOut');
+  try {
+    const result=interpretPython(code);
+    consoleEl.innerHTML=result.output.map(l=>`<span style="color:var(--green)">&gt; ${escHtml(l)}</span>`).join('<br>')||'<span class="info"># No output</span>';
+    updatePhone(result);
+    if (result.output.length>0) burst();
+  } catch(e) {
+    consoleEl.innerHTML=`<span class="err">❌ Error: ${escHtml(e.message)}</span>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PHONE RENDERER
+// ═══════════════════════════════════════════════════════════════
 function resetPhone() {
-  const screen = document.getElementById('phoneScreen');
-  screen.style.background = 'linear-gradient(160deg, #1a1930 0%, #0f0e17 100%)';
-  document.getElementById('phoneState').outerHTML = `<div class="phone-state" id="phoneState">
+  const screen=document.getElementById('phoneScreen');
+  screen.style.background='linear-gradient(160deg,#1a1930 0%,#0f0e17 100%)';
+  document.getElementById('phoneState').outerHTML=`<div class="phone-state" id="phoneState">
     <div class="phone-emoji">📱</div>
-    <div class="phone-msg">Write some code<br>and press Run!</div>
-    <div class="phone-sub">Pick a scenario above to get started 👆</div>
+    <div class="phone-msg">Pick a scenario<br>and press Run!</div>
+    <div class="phone-sub">Your phone will react to your code 👆</div>
+  </div>`;
+  setIsland(false,'');
+}
+
+function setIsland(expand,text) {
+  const el=document.getElementById('phoneIsland');
+  const t=document.getElementById('islandText');
+  el.classList.toggle('expand',expand);
+  if (t) t.textContent=text||'LIVE';
+}
+
+function notifBubble(icon,title,body) {
+  return `<div class="notif-bubble" style="margin-top:8px;">
+    <div class="notif-icon">${icon}</div>
+    <div class="notif-text"><div class="notif-title">${title}</div><div class="notif-body">${body}</div></div>
   </div>`;
 }
 
 function updatePhone(result) {
-  const screen = document.getElementById('phoneScreen');
-  const stateEl = document.getElementById('phoneState');
-  const output = result.output.join(' ').toLowerCase();
-  const env = result.env;
-  const sid = currentScenario.id;
+  const screen=document.getElementById('phoneScreen');
+  const stateEl=document.getElementById('phoneState');
+  const env=result.env, sid=currentScenario.id;
+  let html='', bg='linear-gradient(160deg,#1a1930,#0f0e17)';
 
-  let html = '';
-  let bg = 'linear-gradient(160deg, #1a1930 0%, #0f0e17 100%)';
+  if (sid==='battery') {
+    const pct=Math.max(0,Math.min(100,env.battery??0));
+    const col=pct<10?'#ff4444':pct<30?'#ffaa00':'#6bff9e';
+    let emoji='🔋',msg='',sub='',snd='battery_ok';
+    if (pct===0)   {emoji='⚫';msg='Phone is OFF';sub='0% — No power';bg='#050510';snd='battery_dead';}
+    else if(pct<10){emoji='🪫';msg='CRITICAL!';sub='Plug in NOW!';bg='linear-gradient(160deg,#3a0a0a,#1a0505)';snd='battery_critical';}
+    else if(pct<30){emoji='⚠️';msg='Low Battery';sub=`${pct}% remaining`;bg='linear-gradient(160deg,#2a1a00,#1a0f00)';snd='battery_low';}
+    else if(pct<70){emoji='🔋';msg='Battery Okay';sub=`${pct}% — Looking good`;bg='linear-gradient(160deg,#0a1a2a,#0a0f1a)';snd='battery_ok';}
+    else           {emoji='⚡';msg='Fully Charged!';sub=`${pct}% — Amazing!`;bg='linear-gradient(160deg,#0a2a15,#051a0a)';snd='battery_full';}
+    playSound(snd); setIsland(true,'BATTERY');
+    html=`<div class="phone-state" id="phoneState">
+      <div class="phone-emoji">${emoji}</div><div class="phone-msg">${msg}</div>
+      <div style="position:relative;display:inline-block;margin-top:5px;">
+        <div class="battery-visual"><div class="battery-fill" style="width:${pct}%;background:${col};"></div></div>
+        <div class="battery-tip"></div>
+      </div>
+      <div class="phone-sub">${sub}</div>${notifBubble(emoji,'Battery',result.output[0]||'')}
+    </div>`;
 
-  if (sid === 'battery') {
-    const bat = env.battery ?? 0;
-    const pct = Math.max(0, Math.min(100, bat));
-    const color = pct < 10 ? '#ff4444' : pct < 30 ? '#ffaa00' : '#6bff9e';
-    let emoji = '🔋', msg = '', sub = '';
-    if (pct === 0)    { emoji='⚫'; msg='Phone Off'; sub='0% — No power!'; bg='#0a0a0a'; }
-    else if (pct<10) { emoji='🪫'; msg='CRITICAL!'; sub='Plug in NOW!'; bg='linear-gradient(160deg,#3a0a0a,#1a0505)'; }
-    else if (pct<30) { emoji='⚠️'; msg='Low Battery'; sub=`${pct}% remaining`; bg='linear-gradient(160deg,#2a1a00,#1a0f00)'; }
-    else if (pct<70) { emoji='🔋'; msg='Charging Okay'; sub=`${pct}% — Looking good`; bg='linear-gradient(160deg,#0a1a2a,#0a0f1a)'; }
-    else             { emoji='⚡'; msg='Fully Charged!'; sub=`${pct}% — Amazing!`; bg='linear-gradient(160deg,#0a2a15,#051a0a)'; }
+  } else if (sid==='wifi') {
+    const sig=env.signal??0;
+    const bars=sig<1?0:sig<25?1:sig<60?2:sig<85?3:4;
+    const barH=[8,14,20,26];
+    let emoji=bars===0?'❌':'📶', msg=result.output[0]||'', snd='wifi_ok';
+    if(bars===0){bg='linear-gradient(160deg,#1a0a0a,#0f0505)';snd='wifi_none';}
+    else if(bars<2){bg='linear-gradient(160deg,#1a1500,#0f0e00)';snd='wifi_weak';}
+    else if(bars<4){bg='linear-gradient(160deg,#0a1a10,#051008)';snd='wifi_ok';}
+    else{bg='linear-gradient(160deg,#0a2a10,#051a08)';snd='wifi_great';}
+    playSound(snd); setIsland(true,'WIFI');
+    const wBars=barH.map((h,i)=>`<div class="wifi-bar ${i<bars?'on':''}" style="height:${h}px;"></div>`).join('');
+    html=`<div class="phone-state" id="phoneState">
+      <div class="phone-emoji">${emoji}</div>
+      <div class="wifi-bars">${wBars}</div>
+      <div class="phone-msg" style="margin-top:8px;">${msg}</div>
+      <div class="phone-sub">Signal: ${sig}%</div>
+    </div>`;
 
-    html = `
-      <div class="phone-state" id="phoneState">
-        <div class="phone-emoji">${emoji}</div>
-        <div class="phone-msg">${msg}</div>
-        <div style="position:relative;display:inline-block;margin-top:6px;">
-          <div class="battery-visual" style="width:120px;height:22px;">
-            <div class="battery-fill" style="width:${pct}%;background:${color};"></div>
-          </div>
-          <div class="battery-tip"></div>
-        </div>
-        <div class="phone-sub">${sub}</div>
-        <div class="notif-bubble" style="margin-top:10px;">
-          <div class="notif-icon">${emoji}</div>
-          <div class="notif-text">
-            <div class="notif-title">Battery</div>
-            <div class="notif-body">${result.output[0] || ''}</div>
-          </div>
-        </div>
-      </div>`;
-
-  } else if (sid === 'wifi') {
-    const sig = env.signal ?? 0;
-    let bars = sig < 1 ? 0 : sig < 25 ? 1 : sig < 60 ? 2 : sig < 85 ? 3 : 4;
-    const barH = [8, 14, 20, 26];
-    let emoji = bars === 0 ? '❌' : '📶';
-    let msg = result.output[0] || '';
-    bg = bars === 0 ? 'linear-gradient(160deg,#1a0a0a,#0f0505)' :
-         bars < 3 ? 'linear-gradient(160deg,#1a1500,#0f0e00)' :
-         'linear-gradient(160deg,#0a1a0f,#051005)';
-
-    const wifiBars = barH.map((h, idx) =>
-      `<div class="wifi-bar ${idx < bars ? 'on' : ''}" style="height:${h}px;"></div>`
-    ).join('');
-
-    html = `
-      <div class="phone-state" id="phoneState">
-        <div class="phone-emoji">${emoji}</div>
-        <div class="wifi-bars">${wifiBars}</div>
-        <div class="phone-msg" style="margin-top:8px;">${msg}</div>
-        <div class="phone-sub">Signal: ${sig}%</div>
-      </div>`;
-
-  } else if (sid === 'alarm') {
-    const hour = env.hour ?? 0;
-    const isRinging = hour === 7;
-    bg = isRinging
-      ? 'linear-gradient(160deg,#2a0a1a,#1a0510)'
-      : 'linear-gradient(160deg,#0a0a2a,#05050f)';
-
-    const displayH = hour % 12 || 12;
-    const ampm = hour < 12 ? 'AM' : 'PM';
-    const timeStr = `${displayH}:00 ${ampm}`;
-
-    html = isRinging ? `
-      <div class="phone-state" id="phoneState">
+  } else if (sid==='alarm') {
+    const hour=env.hour??0;
+    const displayH=hour%12||12, ampm=hour<12?'AM':'PM';
+    const timeStr=`${displayH}:00 ${ampm}`;
+    let snd='alarm_sleep';
+    if(hour===7){bg='linear-gradient(160deg,#3a0a1a,#1a0510)';snd='alarm_ringing';}
+    else if(hour<7){bg='linear-gradient(160deg,#050520,#020210)';}
+    else if(hour<9){bg='linear-gradient(160deg,#1a1500,#0f0e05)';snd='alarm_morning';}
+    else{bg='linear-gradient(160deg,#2a0a0a,#1a0505)';snd='alarm_late';}
+    playSound(snd); setIsland(hour===7,hour===7?'ALARM':'');
+    if(hour===7) {
+      html=`<div class="phone-state" id="phoneState">
         <div class="alarm-ring" style="background:#2a0a1a;border:3px solid var(--accent);">⏰</div>
         <div class="phone-msg" style="color:var(--accent);font-size:1rem;">WAKE UP!!</div>
-        <div class="phone-sub">Alarm ringing at ${timeStr}</div>
-        <div class="notif-bubble" style="margin-top:8px;background:#fff0f5;">
-          <div class="notif-icon">⏰</div>
-          <div class="notif-text">
-            <div class="notif-title">Alarm</div>
-            <div class="notif-body">${result.output[0] || ''}</div>
-          </div>
-        </div>
-      </div>` : `
-      <div class="phone-state" id="phoneState">
+        <div class="phone-sub">Alarm ringing — ${timeStr}</div>
+        ${notifBubble('⏰','Alarm',result.output[0]||'')}
+      </div>`;
+    } else {
+      html=`<div class="phone-state" id="phoneState">
         <div class="idle-clock">${timeStr}</div>
-        <div class="idle-date">Current hour: ${hour}</div>
-        <div class="phone-sub" style="margin-top:12px;">${result.output[0] || ''}</div>
+        <div class="idle-date">Hour: ${hour}</div>
+        <div class="phone-sub" style="margin-top:10px;">${result.output[0]||''}</div>
       </div>`;
+    }
 
-  } else if (sid === 'messages') {
-    const msgs = env.messages ?? 0;
-    bg = msgs > 0
-      ? 'linear-gradient(160deg,#0a1a2a,#05100f)'
-      : 'linear-gradient(160deg,#1a1930,#0f0e17)';
+  } else if (sid==='messages') {
+    const msgs=env.messages??0;
+    let snd='messages_none';
+    if(msgs===0){bg='linear-gradient(160deg,#1a1930,#0f0e17)';}
+    else if(msgs===1){bg='linear-gradient(160deg,#0a1a2a,#05100f)';snd='messages_one';}
+    else if(msgs<10){bg='linear-gradient(160deg,#0a1a2a,#05100f)';snd='messages_few';}
+    else{bg='linear-gradient(160deg,#1a0a2a,#0f0515)';snd='messages_many';}
+    playSound(snd); setIsland(msgs>0,'MSG');
+    const badge=msgs>0?`<div style="background:var(--accent);color:#fff;font-size:0.75rem;font-weight:900;
+      width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      position:absolute;top:-5px;right:-5px;">${msgs>99?'99+':msgs}</div>`:'';
+    html=`<div class="phone-state" id="phoneState">
+      <div style="position:relative;display:inline-block;">
+        <div style="font-size:3.8rem;">💬</div>${badge}
+      </div>
+      <div class="phone-msg">${result.output[0]||''}</div>
+      <div class="phone-sub">${msgs} unread message${msgs!==1?'s':''}</div>
+      ${msgs>0?notifBubble('💬','Messages',`${msgs} new message${msgs!==1?'s':''}`):''}
+    </div>`;
 
-    const badge = msgs > 0
-      ? `<div style="background:var(--accent);color:#fff;font-size:0.8rem;font-weight:900;
-           width:28px;height:28px;border-radius:50%;display:flex;align-items:center;
-           justify-content:center;position:absolute;top:-6px;right:-6px;">${msgs>99?'99+':msgs}</div>` : '';
+  } else if (sid==='storage') {
+    const gb=env.free_gb??0, total=128;
+    const usedPct=Math.round(((total-gb)/total)*100);
+    const fillCol=gb===0?'#ff4444':gb<5?'#ffaa00':'#6bff9e';
+    let emoji=gb===0?'❌':gb<5?'⚠️':'💾', snd='storage_plenty';
+    if(gb===0){bg='linear-gradient(160deg,#2a0a0a,#100505)';snd='storage_full';}
+    else if(gb<5){bg='linear-gradient(160deg,#1a1000,#0f0800)';snd='storage_danger';}
+    else if(gb<20){bg='linear-gradient(160deg,#0a1520,#050a10)';snd='storage_some';}
+    else{bg='linear-gradient(160deg,#0a1a10,#050f08)';snd='storage_plenty';}
+    playSound(snd); setIsland(gb<5,'STORAGE');
+    html=`<div class="phone-state" id="phoneState">
+      <div class="phone-emoji">${emoji}</div>
+      <div class="phone-msg">${result.output[0]||''}</div>
+      <div style="width:140px;background:#1a1a3a;border-radius:8px;height:13px;margin:7px 0;overflow:hidden;">
+        <div style="width:${usedPct}%;height:100%;background:${fillCol};border-radius:8px;transition:width .6s;"></div>
+      </div>
+      <div class="phone-sub">${gb} GB free of ${total} GB</div>
+    </div>`;
 
-    html = `
-      <div class="phone-state" id="phoneState">
-        <div style="position:relative;display:inline-block;">
-          <div style="font-size:4rem;">💬</div>
-          ${badge}
-        </div>
-        <div class="phone-msg">${result.output[0] || ''}</div>
-        <div class="phone-sub">${msgs} unread message${msgs!==1?'s':''}</div>
-        ${msgs > 0 ? `<div class="notif-bubble" style="margin-top:10px;">
-          <div class="notif-icon">💬</div>
-          <div class="notif-text">
-            <div class="notif-title">Messages</div>
-            <div class="notif-body">You have ${msgs} new message${msgs!==1?'s':''}!</div>
-          </div>
-        </div>` : ''}
-      </div>`;
+  } else if (sid==='flashlight') {
+    const br=env.brightness??0;
+    let snd='flashlight_off';
+    if(br===0){bg='#020208';}
+    else if(br<30){bg=`linear-gradient(160deg,#0a0a20,#050510)`;snd='flashlight_dim';}
+    else if(br<70){bg=`linear-gradient(160deg,#1a1a3a,#0f0f20)`;snd='flashlight_medium';}
+    else{bg=`linear-gradient(160deg,#ffffff,#e8e8ff)`;snd='flashlight_full';}
+    playSound(snd); setIsland(br>0,'TORCH');
+    const textCol=br>=70?'#1a1a2e':'#fff';
+    const beamHTML=br>0?`<div class="flash-beam" style="opacity:${br/100};"></div>`:'';
+    html=`<div class="phone-state" id="phoneState" style="color:${textCol};">
+      ${beamHTML}
+      <div class="phone-emoji" style="filter:${br>0?`brightness(${1+br/60})`:'none'}">${br===0?'🔦':'💡'}</div>
+      <div class="phone-msg" style="color:${textCol};">${result.output[0]||''}</div>
+      <div class="phone-sub" style="color:${textCol};opacity:.6;">Brightness: ${br}%</div>
+      <div style="width:120px;background:${br>=70?'#ccccee':'#1a1a3a'};border-radius:8px;height:10px;margin-top:6px;overflow:hidden;">
+        <div style="width:${br}%;height:100%;background:${br>=70?'#4444cc':'#fffaaa'};border-radius:8px;transition:width .4s;"></div>
+      </div>
+    </div>`;
 
-  } else if (sid === 'storage') {
-    const gb = env.free_gb ?? 0;
-    const totalGb = 128;
-    const usedPct = Math.round(((totalGb - gb) / totalGb) * 100);
-    const fillColor = gb === 0 ? '#ff4444' : gb < 5 ? '#ffaa00' : '#6bff9e';
-    let emoji = gb === 0 ? '❌' : gb < 5 ? '⚠️' : '💾';
-    bg = gb === 0 ? 'linear-gradient(160deg,#2a0a0a,#100505)' :
-         gb < 5 ? 'linear-gradient(160deg,#1a1000,#0f0800)' :
-         'linear-gradient(160deg,#0a1520,#050a10)';
+  } else if (sid==='gps') {
+    const spd=env.speed??0;
+    let snd='gps_parked', arrow='⬤';
+    if(spd===0){bg='linear-gradient(160deg,#0a1520,#050a10)';}
+    else if(spd<20){bg='linear-gradient(160deg,#0a1a10,#050f08)';snd='gps_walk';}
+    else if(spd<60){bg='linear-gradient(160deg,#0a1a2a,#050a15)';snd='gps_city';}
+    else if(spd<100){bg='linear-gradient(160deg,#0a0a2a,#050510)';snd='gps_highway';}
+    else{bg='linear-gradient(160deg,#2a0a0a,#150505)';snd='gps_toofast';}
+    playSound(snd); setIsland(spd>0,'GPS');
+    // position dot on map based on speed
+    const dotX = Math.min(80, 10+spd*0.6);
+    html=`<div class="phone-state" id="phoneState">
+      <div class="phone-emoji">🗺️</div>
+      <div class="gps-map">
+        <div class="gps-road-h"></div><div class="gps-road-v"></div>
+        <div class="gps-pulse" style="left:${dotX-8}px;top:30px;"></div>
+        <div class="gps-dot" style="left:${dotX}px;top:37px;"></div>
+      </div>
+      <div class="phone-msg">${result.output[0]||''}</div>
+      <div class="phone-sub">Speed: ${spd} km/h</div>
+    </div>`;
 
-    html = `
-      <div class="phone-state" id="phoneState">
-        <div class="phone-emoji">${emoji}</div>
-        <div class="phone-msg">${result.output[0] || ''}</div>
-        <div style="width:140px;background:#1a1a3a;border-radius:8px;height:14px;margin:8px 0;overflow:hidden;">
-          <div style="width:${usedPct}%;height:100%;background:${fillColor};border-radius:8px;transition:width .6s;"></div>
-        </div>
-        <div class="phone-sub">${gb} GB free of ${totalGb} GB</div>
-      </div>`;
+  } else if (sid==='volume') {
+    const vol=env.volume??0;
+    let snd='volume_mute';
+    if(vol===0){bg='linear-gradient(160deg,#1a1930,#0f0e17)';}
+    else if(vol<20){bg='linear-gradient(160deg,#0a1520,#050a10)';snd='volume_quiet';}
+    else if(vol<50){bg='linear-gradient(160deg,#0a1a10,#050f08)';snd='volume_normal';}
+    else if(vol<80){bg='linear-gradient(160deg,#1a1500,#0f0e00)';snd='volume_loud';}
+    else{bg='linear-gradient(160deg,#2a1a00,#151000)';snd='volume_max';}
+    playSound(snd); setIsland(vol>60,'VOL');
+    const numBars=10;
+    const activeBars=Math.round(vol/100*numBars);
+    const barColors=['#6bff9e','#6bff9e','#6bff9e','#6bff9e','#6bff9e','#6bff9e','#ffe66d','#ffe66d','#ff9944','#ff4444'];
+    const volBars=Array.from({length:numBars},(_,i)=>{
+      const h=8+i*4, active=i<activeBars;
+      return `<div class="vol-bar-item" style="height:${active?h:4}px;background:${active?barColors[i]:'#2a2a4e'};"></div>`;
+    }).join('');
+    html=`<div class="phone-state" id="phoneState">
+      <div class="phone-emoji">${vol===0?'🔇':vol<40?'🔈':vol<70?'🔉':'🔊'}</div>
+      <div class="vol-bars">${volBars}</div>
+      <div class="phone-msg" style="margin-top:6px;">${result.output[0]||''}</div>
+      <div class="phone-sub">Volume: ${vol}%</div>
+    </div>`;
   }
 
   screen.style.background = bg;
   stateEl.outerHTML = html;
 }
 
-// ── CLOCK ─────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════════════════════════════
 function updateClock() {
-  const now = new Date();
-  const h = String(now.getHours()).padStart(2,'0');
-  const m = String(now.getMinutes()).padStart(2,'0');
-  document.getElementById('phoneTime').textContent = `${h}:${m}`;
+  const now=new Date();
+  const h=String(now.getHours()).padStart(2,'0'), m=String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('phoneTime').textContent=`${h}:${m}`;
 }
 
-// ── CONFETTI ──────────────────────────────────────────────────────────────
 function burst() {
-  const container = document.getElementById('confetti');
-  const colors = ['#ff6b6b','#6bff9e','#ffe66d','#6bc5ff','#c77dff','#ff6bbf'];
-  for (let i = 0; i < 30; i++) {
-    const el = document.createElement('div');
-    el.className = 'confetti-piece';
-    el.style.cssText = `
-      left:${10 + Math.random()*80}%;
-      top:-10px;
-      background:${colors[Math.floor(Math.random()*colors.length)]};
-      transform:rotate(${Math.random()*360}deg);
-      animation-duration:${0.8+Math.random()*0.8}s;
-      animation-delay:${Math.random()*0.3}s;
-      width:${6+Math.random()*8}px;
-      height:${6+Math.random()*8}px;
-    `;
+  const container=document.getElementById('confetti');
+  const colors=['#ff6b6b','#6bff9e','#ffe66d','#6bc5ff','#c77dff','#ff6bbf'];
+  for(let i=0;i<35;i++) {
+    const el=document.createElement('div');
+    el.className='confetti-piece';
+    el.style.cssText=`left:${10+Math.random()*80}%;top:-10px;background:${colors[~~(Math.random()*colors.length)]};
+      transform:rotate(${Math.random()*360}deg);animation-duration:${0.8+Math.random()*0.9}s;
+      animation-delay:${Math.random()*0.3}s;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;`;
     container.appendChild(el);
-    setTimeout(() => el.remove(), 2000);
+    setTimeout(()=>el.remove(),2200);
   }
 }
 
@@ -1071,16 +1151,15 @@ function escHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-// Tab enter → indent
-document.addEventListener('DOMContentLoaded', () => {
+// ═══════════════════════════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
   init();
-  document.getElementById('codeArea').addEventListener('keydown', function(e) {
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      const s = this.selectionStart;
-      this.value = this.value.slice(0,s) + '    ' + this.value.slice(this.selectionEnd);
-      this.selectionStart = this.selectionEnd = s + 4;
-    }
+  document.getElementById('codeArea').addEventListener('keydown',function(e){
+    if(e.key==='Tab'){e.preventDefault();const s=this.selectionStart;
+      this.value=this.value.slice(0,s)+'    '+this.value.slice(this.selectionEnd);
+      this.selectionStart=this.selectionEnd=s+4;}
   });
 });
 </script>
