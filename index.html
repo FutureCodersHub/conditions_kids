@@ -547,96 +547,6 @@ function getScenariosForLang(lang) {
   }));
 }
 let SCENARIOS = getScenariosForLang('it');
-    code:`battery = {battery}\n\nif battery == 0:\n    print("Phone is OFF!")\nelif battery < 10:\n    print("CRITICAL! Plug in now!")\nelif battery < 30:\n    print("Battery is low, charge me!")\nelif battery < 70:\n    print("Battery is okay.")\nelse:\n    print("Battery is full. Great!")`,
-    hints:[
-      {tag:'battery < 10',text:'True when battery is 0,1,2...9'},
-      {tag:'elif',text:'"else if" — another condition to check'},
-      {tag:'else:',text:'Runs when none of the above matched'},
-    ],
-    challenge:{
-      title:'🔋 Battery Challenge',
-      desc:'Write code that prints "SOS! Dying!" when battery < 5, "Low!" when battery < 20, "Good" when battery < 80, and "Full Power!" otherwise. Use the variable battery = 15.',
-      startCode:`battery = 15\n\n# Write your if/elif/else here!\n`,
-      check(env,output){
-        const tests=[
-          {b:2,expect:'SOS! Dying!'},{b:15,expect:'Low!'},{b:50,expect:'Good'},{b:90,expect:'Full Power!'}
-        ];
-        return tests.every(({b,expect})=>{
-          const e={battery:b};
-          const o=[];
-          simRun(`battery = ${b}\nif battery < 5:\n    print("SOS! Dying!")\nelif battery < 20:\n    print("Low!")\nelif battery < 80:\n    print("Good")\nelse:\n    print("Full Power!")`,e,o);
-          // check user output
-          const uo=[];
-          simRun(`battery = ${b}\n`+env._userCode,{},{});
-          return true; // simplified: check output array
-        });
-      }
-    }
-  },
-  {
-    id:'wifi', label:'📶 WiFi',
-    vars:[{name:'signal',label:'WiFi Signal (0–100)',min:0,max:100,default:60}],
-    code:`signal = {signal}\n\nif signal == 0:\n    print("No WiFi! You are offline.")\nelif signal < 25:\n    print("Very weak signal!")\nelif signal < 60:\n    print("Signal is okay, but slow.")\nelse:\n    print("Great WiFi! Full bars!")`,
-    hints:[
-      {tag:'signal == 0',text:'== checks if two values are EXACTLY equal'},
-      {tag:'signal < 25',text:'< means "less than"'},
-    ],
-    challenge:{
-      title:'📶 WiFi Challenge',
-      desc:'Make the phone show "Offline" for signal 0, "Weak" for signal < 30, "Decent" for signal < 75, and "Lightning Fast!" otherwise. Variable: signal = 40.',
-      startCode:`signal = 40\n\n# Your code here!\n`,
-    }
-  },
-  {
-    id:'alarm', label:'⏰ Alarm',
-    vars:[{name:'hour',label:'Current Hour (0–23)',min:0,max:23,default:7}],
-    code:`hour = {hour}\n\nif hour == 7:\n    print("WAKE UP! Alarm is ringing!")\nelif hour < 7:\n    print("Still sleeping... Zzz")\nelif hour < 9:\n    print("Morning! You're on time.")\nelse:\n    print("You're late! Hurry!")`,
-    hints:[
-      {tag:'hour == 7',text:'True ONLY when hour is exactly 7'},
-      {tag:'hour < 7',text:'True for 0,1,2,3,4,5,6'},
-    ],
-    challenge:{
-      title:'⏰ Alarm Challenge',
-      desc:'Ring the alarm at BOTH hour == 6 AND hour == 7 (school is early!). Print "ALARM RINGING!" for those hours, "Sleep more..." for hour < 6, and "Good morning!" otherwise.',
-      startCode:`hour = 6\n\n# Hint: use 'or' between two conditions!\n`,
-    }
-  },
-  {
-    id:'messages', label:'💬 Messages',
-    vars:[{name:'messages',label:'Unread Messages',min:0,max:99,default:5}],
-    code:`messages = {messages}\n\nif messages == 0:\n    print("No new messages.")\nelif messages == 1:\n    print("You have 1 new message!")\nelif messages < 10:\n    print("A few messages waiting!")\nelse:\n    print("Whoa! Lots of messages!")`,
-    hints:[
-      {tag:'messages == 1',text:'Exact match: only true for 1'},
-      {tag:'messages < 10',text:'True for 2,3,4,5,6,7,8,9'},
-    ],
-    challenge:{
-      title:'💬 Messages Challenge',
-      desc:'Print the EXACT number: "0 messages", "1 message" (no s!), or "X messages" for any other number. Bonus: print "📬 Inbox full!" if messages > 50.',
-      startCode:`messages = 3\n\n# Hint: you can use str(messages) to print numbers!\n`,
-    }
-  },
-  {
-    id:'storage', label:'💾 Storage',
-    vars:[{name:'free_gb',label:'Free Storage (GB)',min:0,max:128,default:10}],
-    code:`free_gb = {free_gb}\n\nif free_gb == 0:\n    print("Storage FULL! Delete something!")\nelif free_gb < 5:\n    print("Almost full! Be careful.")\nelif free_gb < 20:\n    print("Some space left.")\nelse:\n    print("Plenty of storage!")`,
-    hints:[
-      {tag:'free_gb == 0',text:'Checks for exactly zero gigabytes'},
-      {tag:'free_gb < 5',text:'Matches 1, 2, 3, or 4 GB'},
-    ],
-    challenge:{
-      title:'💾 Storage Challenge',
-      desc:'Print a warning for each level: "FULL", "< 5 GB — danger!", "< 20 GB — watch out", or "You have X GB free!" for anything else (use free_gb in the message).',
-      startCode:`free_gb = 3\n\n# Your code here!\n`,
-    }
-  },
-  {
-    id:'flashlight', label:'🔦 Flashlight',
-    vars:[{name:'brightness',label:'Brightness (0–100)',min:0,max:100,default:0}],
-    code:`brightness = {brightness}\n\nif brightness == 0:\n    print("Flashlight is OFF.")\nelif brightness < 30:\n    print("Dim light on.")\nelif brightness < 70:\n    print("Medium brightness.")\nelse:\n    print("FULL BRIGHTNESS! So bright!")`,
-    hints:[
-      {tag:'brightness == 0',text:'Light is completely off'},
-      {tag:'brightness < 30',text:'Dim = less than 30% power'},
-    ],
 // ═══════════════════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════════════════
@@ -1322,7 +1232,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     container.appendChild(el);
     setTimeout(()=>el.remove(),2200);
   }
-}
+});
 
 function escHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -1442,6 +1352,34 @@ function setLang(lang) {
   if (consoleEl && consoleEl.querySelector('.info')) {
     consoleEl.innerHTML = `<span class="info">${t.consolePlaceholder}</span>`;
   }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONFETTI BURST
+// ═══════════════════════════════════════════════════════════════
+function burst() {
+  const container = document.getElementById('confetti');
+  const colors = ['#ff6b6b','#6bff9e','#ffe66d','#6bc5ff','#c77dff','#ff6bbf'];
+  for (let i = 0; i < 40; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = `left:${10+Math.random()*80}%;top:-10px;background:${colors[~~(Math.random()*colors.length)]};
+      transform:rotate(${Math.random()*360}deg);animation-duration:${0.8+Math.random()*0.9}s;
+      animation-delay:${Math.random()*0.4}s;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;`;
+    container.appendChild(el);
+    setTimeout(() => el.remove(), 2200);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CLOCK
+// ═══════════════════════════════════════════════════════════════
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const el = document.getElementById('phoneTime');
+  if (el) el.textContent = h + ':' + m;
 }
 
 // ═══════════════════════════════════════════════════════════════
