@@ -219,8 +219,10 @@ input[type=range]{width:100%;accent-color:var(--purple);cursor:pointer;}
 .confetti-piece{position:absolute;border-radius:2px;animation:confettiFall 1.5s ease-in forwards;}
 @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
 
-/* LOGO IMAGE */
-.logo-img{height:48px;width:auto;object-fit:contain;display:block;margin:0 auto 6px;}
+/* CREDIT */
+.credit{text-align:center;font-size:0.78rem;font-weight:700;color:var(--muted);padding:6px 0 2px;position:relative;z-index:1;}
+.credit a{color:var(--purple);text-decoration:none;transition:color .2s;}
+.credit a:hover{color:var(--pink);}
 
 /* LANG SWITCHER */
 .lang-switcher{display:flex;justify-content:center;gap:8px;margin:8px 0 4px;position:relative;z-index:1;}
@@ -240,12 +242,12 @@ body[dir="rtl"] .hint-row{direction:rtl;}
 <div class="confetti-container" id="confetti"></div>
 
 <header>
-  <img src="logo.png" alt="CodeKids Logo" class="logo-img" onerror="this.style.display='none'">
   <div class="logo">
     <span>C</span><span>o</span><span>d</span><span>e</span><span>K</span><span>i</span><span>d</span><span>s</span>
   </div>
   <p data-i18n="headerSub">🚀 Scrivi codice Python → Guarda il tuo iPhone reagire in tempo reale!</p>
 </header>
+<div class="credit">Created by <a href="https://futurecodershub.github.io/web/" target="_blank" rel="noopener">FutureCodersHub</a></div>
 
 <div class="lang-switcher">
   <button class="lang-btn active" id="btn-it" onclick="setLang('it')">IT</button>
@@ -346,12 +348,205 @@ body[dir="rtl"] .hint-row{direction:rtl;}
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-// SCENARIOS
+// SCENARIOS — trilingual
 // ═══════════════════════════════════════════════════════════════
-const SCENARIOS = [
-  {
-    id:'battery', label:'🔋 Battery',
-    vars:[{name:'battery',label:'Battery %',min:0,max:100,default:20}],
+const SCENARIO_DATA = {
+  battery: {
+    id:'battery',
+    label:{ it:'🔋 Batteria', en:'🔋 Battery', ar:'🔋 البطارية' },
+    vars:[{name:'battery', label:{ it:'Batteria %', en:'Battery %', ar:'نسبة البطارية %' }, min:0,max:100,default:20}],
+    code:`battery = {battery}\n\nif battery == 0:\n    print("Telefono SPENTO!")\nelif battery < 10:\n    print("CRITICA! Carica subito!")\nelif battery < 30:\n    print("Batteria bassa, caricami!")\nelif battery < 70:\n    print("Batteria ok.")\nelse:\n    print("Batteria piena. Ottimo!")`,
+    code_en:`battery = {battery}\n\nif battery == 0:\n    print("Phone is OFF!")\nelif battery < 10:\n    print("CRITICAL! Plug in now!")\nelif battery < 30:\n    print("Battery is low, charge me!")\nelif battery < 70:\n    print("Battery is okay.")\nelse:\n    print("Battery is full. Great!")`,
+    code_ar:`battery = {battery}\n\nif battery == 0:\n    print("الهاتف مُغلق!")\nelif battery < 10:\n    print("حرج! اشحن الآن!")\nelif battery < 30:\n    print("البطارية منخفضة!")\nelif battery < 70:\n    print("البطارية جيدة.")\nelse:\n    print("بطارية ممتلئة!")`,
+    hints:{
+      it:[{tag:'battery < 10',text:'Vero quando battery vale 0,1,2...9'},{tag:'elif',text:'"else if" — un\'altra condizione da verificare'},{tag:'else:',text:'Esegue quando nessuna condizione precedente è vera'}],
+      en:[{tag:'battery < 10',text:'True when battery is 0,1,2...9'},{tag:'elif',text:'"else if" — another condition to check'},{tag:'else:',text:'Runs when none of the above matched'}],
+      ar:[{tag:'battery < 10',text:'صحيح عندما تكون القيمة 0 أو 1 أو ... 9'},{tag:'elif',text:'"else if" — شرط آخر للتحقق منه'},{tag:'else:',text:'يُنفَّذ عندما لا يتحقق أي شرط سابق'}]
+    },
+    challenge:{
+      title:{ it:'🔋 Sfida Batteria', en:'🔋 Battery Challenge', ar:'🔋 تحدي البطارية' },
+      desc:{
+        it:'Scrivi codice che stampa "SOS! Sta morendo!" se battery < 5, "Bassa!" se battery < 20, "Ok" se battery < 80, altrimenti "Piena!". Usa battery = 15.',
+        en:'Write code that prints "SOS! Dying!" when battery < 5, "Low!" when battery < 20, "Good" when battery < 80, and "Full Power!" otherwise. Use battery = 15.',
+        ar:'اكتب كوداً يطبع "SOS!" إذا كانت battery < 5، "منخفضة!" إذا كانت < 20، "جيدة" إذا كانت < 80، وإلا "ممتلئة!". استخدم battery = 15.'
+      },
+      startCode:{ it:`battery = 15\n\n# Scrivi il tuo if/elif/else qui!\n`, en:`battery = 15\n\n# Write your if/elif/else here!\n`, ar:`battery = 15\n\n# اكتب if/elif/else هنا!\n` }
+    }
+  },
+  wifi: {
+    id:'wifi',
+    label:{ it:'📶 WiFi', en:'📶 WiFi', ar:'📶 واي فاي' },
+    vars:[{name:'signal', label:{ it:'Segnale WiFi (0–100)', en:'WiFi Signal (0–100)', ar:'قوة الواي فاي (0–100)' }, min:0,max:100,default:60}],
+    code:`signal = {signal}\n\nif signal == 0:\n    print("Nessun WiFi! Sei offline.")\nelif signal < 25:\n    print("Segnale molto debole!")\nelif signal < 60:\n    print("Segnale ok, ma lento.")\nelse:\n    print("WiFi ottimo! Barre piene!")`,
+    code_en:`signal = {signal}\n\nif signal == 0:\n    print("No WiFi! You are offline.")\nelif signal < 25:\n    print("Very weak signal!")\nelif signal < 60:\n    print("Signal is okay, but slow.")\nelse:\n    print("Great WiFi! Full bars!")`,
+    code_ar:`signal = {signal}\n\nif signal == 0:\n    print("لا واي فاي! أنت غير متصل.")\nelif signal < 25:\n    print("إشارة ضعيفة جداً!")\nelif signal < 60:\n    print("الإشارة مقبولة، لكن بطيئة.")\nelse:\n    print("واي فاي ممتاز!")`,
+    hints:{
+      it:[{tag:'signal == 0',text:'== verifica se due valori sono ESATTAMENTE uguali'},{tag:'signal < 25',text:'< significa "minore di"'}],
+      en:[{tag:'signal == 0',text:'== checks if two values are EXACTLY equal'},{tag:'signal < 25',text:'< means "less than"'}],
+      ar:[{tag:'signal == 0',text:'== يتحقق من تساوي القيمتين تماماً'},{tag:'signal < 25',text:'< تعني "أقل من"'}]
+    },
+    challenge:{
+      title:{ it:'📶 Sfida WiFi', en:'📶 WiFi Challenge', ar:'📶 تحدي الواي فاي' },
+      desc:{
+        it:'Fai stampare "Offline" per signal 0, "Debole" per signal < 30, "Decente" per signal < 75, altrimenti "Fulmineo!". Variabile: signal = 40.',
+        en:'Make the phone show "Offline" for signal 0, "Weak" for signal < 30, "Decent" for signal < 75, and "Lightning Fast!" otherwise. Variable: signal = 40.',
+        ar:'اجعل الهاتف يطبع "غير متصل" لـ signal=0، "ضعيف" لـ <30، "مقبول" لـ <75، وإلا "سريع جداً!". المتغير: signal = 40.'
+      },
+      startCode:{ it:`signal = 40\n\n# Il tuo codice qui!\n`, en:`signal = 40\n\n# Your code here!\n`, ar:`signal = 40\n\n# كودك هنا!\n` }
+    }
+  },
+  alarm: {
+    id:'alarm',
+    label:{ it:'⏰ Sveglia', en:'⏰ Alarm', ar:'⏰ المنبه' },
+    vars:[{name:'hour', label:{ it:'Ora attuale (0–23)', en:'Current Hour (0–23)', ar:'الساعة الحالية (0–23)' }, min:0,max:23,default:7}],
+    code:`hour = {hour}\n\nif hour == 7:\n    print("SVEGLIATI! La sveglia suona!")\nelif hour < 7:\n    print("Ancora a dormire... Zzz")\nelif hour < 9:\n    print("Mattina! Sei in orario.")\nelse:\n    print("Sei in ritardo! Sbrigati!")`,
+    code_en:`hour = {hour}\n\nif hour == 7:\n    print("WAKE UP! Alarm is ringing!")\nelif hour < 7:\n    print("Still sleeping... Zzz")\nelif hour < 9:\n    print("Morning! You're on time.")\nelse:\n    print("You're late! Hurry!")`,
+    code_ar:`hour = {hour}\n\nif hour == 7:\n    print("استيقظ! المنبه يرن!")\nelif hour < 7:\n    print("لا تزال نائماً... Zzz")\nelif hour < 9:\n    print("صباح! أنت في الوقت.")\nelse:\n    print("تأخرت! أسرع!")`,
+    hints:{
+      it:[{tag:'hour == 7',text:'Vero SOLO quando hour è esattamente 7'},{tag:'hour < 7',text:'Vero per 0,1,2,3,4,5,6'}],
+      en:[{tag:'hour == 7',text:'True ONLY when hour is exactly 7'},{tag:'hour < 7',text:'True for 0,1,2,3,4,5,6'}],
+      ar:[{tag:'hour == 7',text:'صحيح فقط عندما تكون hour تساوي 7 بالضبط'},{tag:'hour < 7',text:'صحيح للقيم 0,1,2,3,4,5,6'}]
+    },
+    challenge:{
+      title:{ it:'⏰ Sfida Sveglia', en:'⏰ Alarm Challenge', ar:'⏰ تحدي المنبه' },
+      desc:{
+        it:'Fai suonare la sveglia sia alle 6 che alle 7 (la scuola inizia presto!). Stampa "SVEGLIA!" per queste ore, "Dormi ancora..." per hour < 6, e "Buongiorno!" altrimenti.',
+        en:'Ring the alarm at BOTH hour == 6 AND hour == 7. Print "ALARM RINGING!" for those hours, "Sleep more..." for hour < 6, and "Good morning!" otherwise.',
+        ar:'اجعل المنبه يرن عند hour==6 وعند hour==7. اطبع "المنبه يرن!" لهاتين الساعتين، "نم أكثر..." لـ hour<6، و"صباح الخير!" بخلاف ذلك.'
+      },
+      startCode:{ it:`hour = 6\n\n# Suggerimento: usa 'or' tra due condizioni!\n`, en:`hour = 6\n\n# Hint: use 'or' between two conditions!\n`, ar:`hour = 6\n\n# تلميح: استخدم 'or' بين شرطين!\n` }
+    }
+  },
+  messages: {
+    id:'messages',
+    label:{ it:'💬 Messaggi', en:'💬 Messages', ar:'💬 الرسائل' },
+    vars:[{name:'messages', label:{ it:'Messaggi non letti', en:'Unread Messages', ar:'الرسائل غير المقروءة' }, min:0,max:99,default:5}],
+    code:`messages = {messages}\n\nif messages == 0:\n    print("Nessun nuovo messaggio.")\nelif messages == 1:\n    print("Hai 1 nuovo messaggio!")\nelif messages < 10:\n    print("Qualche messaggio in attesa!")\nelse:\n    print("Molti messaggi!")`,
+    code_en:`messages = {messages}\n\nif messages == 0:\n    print("No new messages.")\nelif messages == 1:\n    print("You have 1 new message!")\nelif messages < 10:\n    print("A few messages waiting!")\nelse:\n    print("Whoa! Lots of messages!")`,
+    code_ar:`messages = {messages}\n\nif messages == 0:\n    print("لا رسائل جديدة.")\nelif messages == 1:\n    print("لديك رسالة واحدة!")\nelif messages < 10:\n    print("بعض الرسائل تنتظرك!")\nelse:\n    print("الكثير من الرسائل!")`,
+    hints:{
+      it:[{tag:'messages == 1',text:'Corrispondenza esatta: vero solo per 1'},{tag:'messages < 10',text:'Vero per 2,3,4,5,6,7,8,9'}],
+      en:[{tag:'messages == 1',text:'Exact match: only true for 1'},{tag:'messages < 10',text:'True for 2,3,4,5,6,7,8,9'}],
+      ar:[{tag:'messages == 1',text:'تطابق تام: صحيح فقط للقيمة 1'},{tag:'messages < 10',text:'صحيح للقيم 2,3,4,5,6,7,8,9'}]
+    },
+    challenge:{
+      title:{ it:'💬 Sfida Messaggi', en:'💬 Messages Challenge', ar:'💬 تحدي الرسائل' },
+      desc:{
+        it:'Stampa il numero ESATTO: "0 messaggi", "1 messaggio" (senza s!), o "X messaggi" per qualsiasi altro numero. Bonus: stampa "📬 Posta piena!" se messages > 50.',
+        en:'Print the EXACT number: "0 messages", "1 message" (no s!), or "X messages" for any other number. Bonus: print "📬 Inbox full!" if messages > 50.',
+        ar:'اطبع الرقم الدقيق: "0 رسائل"، "رسالة واحدة"، أو "X رسائل" لأي رقم آخر. إضافي: اطبع "📬 صندوق ممتلئ!" إذا كانت messages > 50.'
+      },
+      startCode:{ it:`messages = 3\n\n# Suggerimento: usa str(messages) per stampare numeri!\n`, en:`messages = 3\n\n# Hint: you can use str(messages) to print numbers!\n`, ar:`messages = 3\n\n# تلميح: استخدم str(messages) لطباعة الأرقام!\n` }
+    }
+  },
+  storage: {
+    id:'storage',
+    label:{ it:'💾 Memoria', en:'💾 Storage', ar:'💾 التخزين' },
+    vars:[{name:'free_gb', label:{ it:'Spazio libero (GB)', en:'Free Storage (GB)', ar:'المساحة الحرة (GB)' }, min:0,max:128,default:10}],
+    code:`free_gb = {free_gb}\n\nif free_gb == 0:\n    print("Memoria PIENA! Elimina qualcosa!")\nelif free_gb < 5:\n    print("Quasi piena! Attenzione.")\nelif free_gb < 20:\n    print("Un po' di spazio rimasto.")\nelse:\n    print("Spazio abbondante!")`,
+    code_en:`free_gb = {free_gb}\n\nif free_gb == 0:\n    print("Storage FULL! Delete something!")\nelif free_gb < 5:\n    print("Almost full! Be careful.")\nelif free_gb < 20:\n    print("Some space left.")\nelse:\n    print("Plenty of storage!")`,
+    code_ar:`free_gb = {free_gb}\n\nif free_gb == 0:\n    print("التخزين ممتلئ! احذف شيئاً!")\nelif free_gb < 5:\n    print("شبه ممتلئ! احذر.")\nelif free_gb < 20:\n    print("بعض المساحة متبقية.")\nelse:\n    print("مساحة كافية!")`,
+    hints:{
+      it:[{tag:'free_gb == 0',text:'Verifica esattamente zero gigabyte'},{tag:'free_gb < 5',text:'Corrisponde a 1, 2, 3 o 4 GB'}],
+      en:[{tag:'free_gb == 0',text:'Checks for exactly zero gigabytes'},{tag:'free_gb < 5',text:'Matches 1, 2, 3, or 4 GB'}],
+      ar:[{tag:'free_gb == 0',text:'يتحقق من كون المساحة صفراً تماماً'},{tag:'free_gb < 5',text:'يطابق 1 أو 2 أو 3 أو 4 GB'}]
+    },
+    challenge:{
+      title:{ it:'💾 Sfida Memoria', en:'💾 Storage Challenge', ar:'💾 تحدي التخزين' },
+      desc:{
+        it:'Stampa un avviso per ogni livello: "PIENA", "< 5 GB — pericolo!", "< 20 GB — attenzione", o "Hai X GB liberi!" per tutto il resto.',
+        en:'Print a warning for each level: "FULL", "< 5 GB — danger!", "< 20 GB — watch out", or "You have X GB free!" for anything else.',
+        ar:'اطبع تحذيراً لكل مستوى: "ممتلئ"، "< 5 GB - خطر!"، "< 20 GB - انتبه"، أو "لديك X GB حرة!".'
+      },
+      startCode:{ it:`free_gb = 3\n\n# Il tuo codice qui!\n`, en:`free_gb = 3\n\n# Your code here!\n`, ar:`free_gb = 3\n\n# كودك هنا!\n` }
+    }
+  },
+  flashlight: {
+    id:'flashlight',
+    label:{ it:'🔦 Torcia', en:'🔦 Flashlight', ar:'🔦 المصباح' },
+    vars:[{name:'brightness', label:{ it:'Luminosità (0–100)', en:'Brightness (0–100)', ar:'السطوع (0–100)' }, min:0,max:100,default:0}],
+    code:`brightness = {brightness}\n\nif brightness == 0:\n    print("Torcia SPENTA.")\nelif brightness < 30:\n    print("Luce fioca accesa.")\nelif brightness < 70:\n    print("Luminosità media.")\nelse:\n    print("MASSIMA LUMINOSITÀ! Abbagliante!")`,
+    code_en:`brightness = {brightness}\n\nif brightness == 0:\n    print("Flashlight is OFF.")\nelif brightness < 30:\n    print("Dim light on.")\nelif brightness < 70:\n    print("Medium brightness.")\nelse:\n    print("FULL BRIGHTNESS! So bright!")`,
+    code_ar:`brightness = {brightness}\n\nif brightness == 0:\n    print("المصباح مطفأ.")\nelif brightness < 30:\n    print("ضوء خافت.")\nelif brightness < 70:\n    print("سطوع متوسط.")\nelse:\n    print("أقصى سطوع!")`,
+    hints:{
+      it:[{tag:'brightness == 0',text:'La luce è completamente spenta'},{tag:'brightness < 30',text:'Fioco = meno del 30% di potenza'}],
+      en:[{tag:'brightness == 0',text:'Light is completely off'},{tag:'brightness < 30',text:'Dim = less than 30% power'}],
+      ar:[{tag:'brightness == 0',text:'الضوء مطفأ تماماً'},{tag:'brightness < 30',text:'خافت = أقل من 30% من الطاقة'}]
+    },
+    challenge:{
+      title:{ it:'🔦 Sfida Torcia', en:'🔦 Flashlight Challenge', ar:'🔦 تحدي المصباح' },
+      desc:{
+        it:'Aggiungi la "modalità disco": se brightness > 90 stampa "🎉 FESTA!" invece di massima luminosità. Altrimenti mantieni i 4 livelli.',
+        en:'Add a "disco mode": if brightness > 90, print "🎉 PARTY MODE!" instead of full brightness. Otherwise keep the same 4 levels.',
+        ar:'أضف "وضع الديسكو": إذا كانت brightness > 90 اطبع "🎉 حفلة!" بدلاً من أقصى سطوع. وإلا احتفظ بالمستويات الأربعة.'
+      },
+      startCode:{ it:`brightness = 95\n\n# Il tuo codice qui!\n`, en:`brightness = 95\n\n# Your code here!\n`, ar:`brightness = 95\n\n# كودك هنا!\n` }
+    }
+  },
+  gps: {
+    id:'gps',
+    label:{ it:'🗺️ GPS', en:'🗺️ GPS', ar:'🗺️ GPS' },
+    vars:[{name:'speed', label:{ it:'Velocità (km/h)', en:'Speed (km/h)', ar:'السرعة (كم/ساعة)' }, min:0,max:130,default:40}],
+    code:`speed = {speed}\n\nif speed == 0:\n    print("Sei parcheggiato. Fermo.")\nelif speed < 20:\n    print("Passo pedonale.")\nelif speed < 60:\n    print("Guida in città.")\nelif speed < 100:\n    print("Velocità autostradale!")\nelse:\n    print("TROPPO VELOCE! Rallenta!")`,
+    code_en:`speed = {speed}\n\nif speed == 0:\n    print("You are parked. Not moving.")\nelif speed < 20:\n    print("Walking pace.")\nelif speed < 60:\n    print("City driving.")\nelif speed < 100:\n    print("Highway speed!")\nelse:\n    print("TOO FAST! Slow down!")`,
+    code_ar:`speed = {speed}\n\nif speed == 0:\n    print("أنت متوقف.")\nelif speed < 20:\n    print("سرعة المشي.")\nelif speed < 60:\n    print("قيادة في المدينة.")\nelif speed < 100:\n    print("سرعة الطريق السريع!")\nelse:\n    print("سريع جداً! تمهل!")`,
+    hints:{
+      it:[{tag:'speed == 0',text:'Esattamente zero — parcheggiato o fermo'},{tag:'speed < 20',text:'Molto lento, come camminare o andare in bici'}],
+      en:[{tag:'speed == 0',text:'Exactly zero — parked or stopped'},{tag:'speed < 20',text:'Very slow, like walking or a bicycle'}],
+      ar:[{tag:'speed == 0',text:'صفر تماماً — متوقف'},{tag:'speed < 20',text:'بطيء جداً، كالمشي أو ركوب الدراجة'}]
+    },
+    challenge:{
+      title:{ it:'🗺️ Sfida GPS', en:'🗺️ GPS Challenge', ar:'🗺️ تحدي GPS' },
+      desc:{
+        it:'Aggiungi un avviso autovelox: stampa "📸 AUTOVELOX!" se speed > 80, poi stampa anche lo stato normale. (Suggerimento: puoi usare DUE if separati!)',
+        en:'Add a speed camera warning: print "📸 SPEED CAMERA!" if speed > 80, then also print the normal status. (Hint: you can have TWO if statements!)',
+        ar:'أضف تحذير كاميرا السرعة: اطبع "📸 كاميرا سرعة!" إذا كانت speed > 80، ثم اطبع الحالة العادية أيضاً.'
+      },
+      startCode:{ it:`speed = 90\n\n# Il tuo codice — prova due if separati!\n`, en:`speed = 90\n\n# Your code here — try two separate if statements!\n`, ar:`speed = 90\n\n# كودك هنا — جرب جملتي if منفصلتين!\n` }
+    }
+  },
+  volume: {
+    id:'volume',
+    label:{ it:'🔊 Volume', en:'🔊 Volume', ar:'🔊 الصوت' },
+    vars:[{name:'volume', label:{ it:'Volume (0–100)', en:'Volume (0–100)', ar:'مستوى الصوت (0–100)' }, min:0,max:100,default:50}],
+    code:`volume = {volume}\n\nif volume == 0:\n    print("Telefono in silenzioso.")\nelif volume < 20:\n    print("Molto basso.")\nelif volume < 50:\n    print("Volume normale.")\nelif volume < 80:\n    print("Sta diventando alto!")\nelse:\n    print("VOLUME MASSIMO! 🎵")`,
+    code_en:`volume = {volume}\n\nif volume == 0:\n    print("Phone is muted.")\nelif volume < 20:\n    print("Very quiet.")\nelif volume < 50:\n    print("Normal volume.")\nelif volume < 80:\n    print("Getting loud!")\nelse:\n    print("MAX VOLUME! 🎵")`,
+    code_ar:`volume = {volume}\n\nif volume == 0:\n    print("الهاتف صامت.")\nelif volume < 20:\n    print("هادئ جداً.")\nelif volume < 50:\n    print("صوت عادي.")\nelif volume < 80:\n    print("يصبح عالياً!")\nelse:\n    print("أقصى صوت! 🎵")`,
+    hints:{
+      it:[{tag:'volume == 0',text:'Silenzioso — nessun suono'},{tag:'volume < 20',text:'Molto basso, difficile da sentire'}],
+      en:[{tag:'volume == 0',text:'Muted — no sound at all'},{tag:'volume < 20',text:'Very soft, hard to hear'}],
+      ar:[{tag:'volume == 0',text:'صامت — لا صوت إطلاقاً'},{tag:'volume < 20',text:'خافت جداً، يصعب سماعه'}]
+    },
+    challenge:{
+      title:{ it:'🔊 Sfida Volume', en:'🔊 Volume Challenge', ar:'🔊 تحدي الصوت' },
+      desc:{
+        it:'Stampa il volume come barra! Per volume >= 80 stampa "████ ALTO", per >= 50 "███░ MED", per >= 20 "██░░ BASSO", e per 0 "░░░░ MUTO".',
+        en:'Print the volume as a bar! For volume >= 80 print "████ LOUD", for >= 50 print "███░ MED", for >= 20 print "██░░ LOW", and for 0 print "░░░░ MUTE".',
+        ar:'اطبع الصوت كشريط! لـ volume >= 80 اطبع "████ عالٍ"، لـ >= 50 "███░ متوسط"، لـ >= 20 "██░░ منخفض"، ولـ 0 "░░░░ صامت".'
+      },
+      startCode:{ it:`volume = 65\n\n# Il tuo codice qui!\n`, en:`volume = 65\n\n# Your code here!\n`, ar:`volume = 65\n\n# كودك هنا!\n` }
+    }
+  }
+};
+
+// Build SCENARIOS array for current lang
+let currentLangCode = 'it';
+function getScenariosForLang(lang) {
+  return Object.values(SCENARIO_DATA).map(s => ({
+    ...s,
+    label: s.label[lang],
+    vars: s.vars.map(v => ({...v, label: v.label[lang]})),
+    code: (s['code_'+lang] || s.code),
+    hints: s.hints[lang],
+    challenge: {
+      ...s.challenge,
+      title: s.challenge.title[lang],
+      desc: s.challenge.desc[lang],
+      startCode: s.challenge.startCode[lang]
+    }
+  }));
+}
+let SCENARIOS = getScenariosForLang('it');
     code:`battery = {battery}\n\nif battery == 0:\n    print("Phone is OFF!")\nelif battery < 10:\n    print("CRITICAL! Plug in now!")\nelif battery < 30:\n    print("Battery is low, charge me!")\nelif battery < 70:\n    print("Battery is okay.")\nelse:\n    print("Battery is full. Great!")`,
     hints:[
       {tag:'battery < 10',text:'True when battery is 0,1,2...9'},
@@ -442,44 +637,6 @@ const SCENARIOS = [
       {tag:'brightness == 0',text:'Light is completely off'},
       {tag:'brightness < 30',text:'Dim = less than 30% power'},
     ],
-    challenge:{
-      title:'🔦 Flashlight Challenge',
-      desc:'Add a "disco mode": if brightness > 90, print "🎉 PARTY MODE!" instead of full brightness. Otherwise keep the same 4 levels.',
-      startCode:`brightness = 95\n\n# Your code here!\n`,
-    }
-  },
-  {
-    id:'gps', label:'🗺️ GPS',
-    vars:[
-      {name:'speed',label:'Speed (km/h)',min:0,max:130,default:40},
-    ],
-    code:`speed = {speed}\n\nif speed == 0:\n    print("You are parked. Not moving.")\nelif speed < 20:\n    print("Walking pace.")\nelif speed < 60:\n    print("City driving.")\nelif speed < 100:\n    print("Highway speed!")\nelse:\n    print("TOO FAST! Slow down!")`,
-    hints:[
-      {tag:'speed == 0',text:'Exactly zero — parked or stopped'},
-      {tag:'speed < 20',text:'Very slow, like walking or a bicycle'},
-    ],
-    challenge:{
-      title:'🗺️ GPS Challenge',
-      desc:'Add a speed camera warning: print "📸 SPEED CAMERA!" if speed > 80, then also print the normal status. (Hint: you can have TWO if statements!)',
-      startCode:`speed = 90\n\n# Your code here — try two separate if statements!\n`,
-    }
-  },
-  {
-    id:'volume', label:'🔊 Volume',
-    vars:[{name:'volume',label:'Volume (0–100)',min:0,max:100,default:50}],
-    code:`volume = {volume}\n\nif volume == 0:\n    print("Phone is muted.")\nelif volume < 20:\n    print("Very quiet.")\nelif volume < 50:\n    print("Normal volume.")\nelif volume < 80:\n    print("Getting loud!")\nelse:\n    print("MAX VOLUME! 🎵")`,
-    hints:[
-      {tag:'volume == 0',text:'Muted — no sound at all'},
-      {tag:'volume < 20',text:'Very soft, hard to hear'},
-    ],
-    challenge:{
-      title:'🔊 Volume Challenge',
-      desc:'Print the volume as a bar! For volume >= 80 print "████ LOUD", for >= 50 print "███░ MED", for >= 20 print "██░░ LOW", and for 0 print "░░░░ MUTE".',
-      startCode:`volume = 65\n\n# Your code here!\n`,
-    }
-  },
-];
-
 // ═══════════════════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════════════════
@@ -727,7 +884,7 @@ function playSound(key) {
   const label = document.getElementById('soundLabel');
   badge.classList.add('playing');
   label.textContent = '♪ ' + key.replace(/_/g,' ');
-  setTimeout(() => { badge.classList.remove('playing'); label.textContent = 'Done'; }, 2000);
+  setTimeout(() => { badge.classList.remove('playing'); label.textContent = LANG[currentLangCode].soundDone||'Done'; }, 2000);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -824,10 +981,7 @@ function interpretPython(code) {
 // INIT
 // ═══════════════════════════════════════════════════════════════
 function init() {
-  buildScenarioPicker();
-  selectScenario(SCENARIOS[0]);
-  updateClock();
-  setInterval(updateClock,1000);
+  // Clock and interval managed in DOMContentLoaded + setLang handles UI
 }
 
 function setMode(mode) {
@@ -891,39 +1045,42 @@ function updateCodeFromSliders() {
 
 function buildHints() {
   const el=document.getElementById('hintsBox');
-  el.innerHTML=`<div class="section-label">💡 Hints</div>`+
+  const t=LANG[currentLangCode];
+  el.innerHTML=`<div class="section-label">💡 ${t.labelHints}</div>`+
     currentScenario.hints.map(h=>`<div class="hint-row"><span class="tag">${h.tag}</span><span>${h.text}</span></div>`).join('');
 }
 
 function loadChallenge() {
   const ch = currentScenario.challenge;
   const el = document.getElementById('challengeBox');
-  el.innerHTML=`<div class="challenge-badge">🏆 CHALLENGE</div>
+  const t = LANG[currentLangCode];
+  el.innerHTML=`<div class="challenge-badge">🏆 ${t.challengeBadge}</div>
     <div class="challenge-title">${ch.title}</div>
     <div class="challenge-desc">${ch.desc}</div>
-    <button class="challenge-check" onclick="checkChallenge()">✅ Check My Answer!</button>
+    <button class="challenge-check" onclick="checkChallenge()">✅ ${t.btnCheck}</button>
     <div id="challengeResult"></div>`;
-  document.getElementById('codeArea').value = ch.startCode || `# ${currentScenario.label} challenge\n\n`;
+  document.getElementById('codeArea').value = ch.startCode || `# ${currentScenario.label}\n\n`;
 }
 
 function checkChallenge() {
   const code = document.getElementById('codeArea').value;
   const out=[], env={};
+  const t=LANG[currentLangCode];
   try {
     simRun(code,env,out);
     const resultEl=document.getElementById('challengeResult');
     if (out.length>0) {
       resultEl.className='challenge-result pass';
-      resultEl.textContent='🎉 Great job! Your code ran and printed: '+out.join(' | ');
+      resultEl.textContent='🎉 '+t.challengePass+' '+out.join(' | ');
       burst();
-      playSound('battery_full'); // celebration
+      playSound('battery_full');
     } else {
       resultEl.className='challenge-result fail';
-      resultEl.textContent='🤔 Your code ran but printed nothing. Did you add print()?';
+      resultEl.textContent='🤔 '+t.challengeNoOutput;
     }
   } catch(e) {
     document.getElementById('challengeResult').className='challenge-result fail';
-    document.getElementById('challengeResult').textContent='❌ Error: '+e.message;
+    document.getElementById('challengeResult').textContent='❌ '+t.errorLabel+': '+e.message;
   }
 }
 
@@ -933,13 +1090,14 @@ function checkChallenge() {
 function runCode() {
   const code=document.getElementById('codeArea').value;
   const consoleEl=document.getElementById('consoleOut');
+  const t=LANG[currentLangCode];
   try {
     const result=interpretPython(code);
-    consoleEl.innerHTML=result.output.map(l=>`<span style="color:var(--green)">&gt; ${escHtml(l)}</span>`).join('<br>')||'<span class="info"># No output</span>';
+    consoleEl.innerHTML=result.output.map(l=>`<span style="color:var(--green)">&gt; ${escHtml(l)}</span>`).join('<br>')||`<span class="info"># ${t.noOutput}</span>`;
     updatePhone(result);
     if (result.output.length>0) burst();
   } catch(e) {
-    consoleEl.innerHTML=`<span class="err">❌ Error: ${escHtml(e.message)}</span>`;
+    consoleEl.innerHTML=`<span class="err">❌ ${t.errorLabel}: ${escHtml(e.message)}</span>`;
   }
 }
 
@@ -948,11 +1106,12 @@ function runCode() {
 // ═══════════════════════════════════════════════════════════════
 function resetPhone() {
   const screen=document.getElementById('phoneScreen');
+  const t=LANG[currentLangCode];
   screen.style.background='linear-gradient(160deg,#1a1930 0%,#0f0e17 100%)';
   document.getElementById('phoneState').outerHTML=`<div class="phone-state" id="phoneState">
     <div class="phone-emoji">📱</div>
-    <div class="phone-msg">Pick a scenario<br>and press Run!</div>
-    <div class="phone-sub">Your phone will react to your code 👆</div>
+    <div class="phone-msg">${t.phoneDefault}</div>
+    <div class="phone-sub">${t.phoneSub}</div>
   </div>`;
   setIsland(false,'');
 }
@@ -1149,15 +1308,9 @@ function updatePhone(result) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// UTILITIES
+// BOOT
 // ═══════════════════════════════════════════════════════════════
-function updateClock() {
-  const now=new Date();
-  const h=String(now.getHours()).padStart(2,'0'), m=String(now.getMinutes()).padStart(2,'0');
-  document.getElementById('phoneTime').textContent=`${h}:${m}`;
-}
-
-function burst() {
+document.addEventListener('DOMContentLoaded',()=>{
   const container=document.getElementById('confetti');
   const colors=['#ff6b6b','#6bff9e','#ffe66d','#6bc5ff','#c77dff','#ff6bbf'];
   for(let i=0;i<35;i++) {
@@ -1176,9 +1329,6 @@ function escHtml(str) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// BOOT
-// ═══════════════════════════════════════════════════════════════
-// ═══════════════════════════════════════════════════════════════
 // I18N — 3 LANGUAGES
 // ═══════════════════════════════════════════════════════════════
 const LANG = {
@@ -1191,8 +1341,16 @@ const LANG = {
     labelVars: "🎛️ Imposta le Variabili",
     labelMission: "🏆 La Tua Missione",
     labelCode: "✍️ Scrivi il tuo Codice Python",
+    labelHints: "Suggerimenti",
     btnRun: "Esegui il Codice!",
+    btnCheck: "Controlla la mia risposta!",
+    challengeBadge: "SFIDA",
+    challengePass: "Ottimo! Il tuo codice ha stampato:",
+    challengeNoOutput: "Il codice è girato ma non ha stampato nulla. Hai messo print()?",
     soundNone: "Nessun suono",
+    soundDone: "Fatto",
+    noOutput: "Nessun output",
+    errorLabel: "Errore",
     labelConsole: "📋 Console di Output",
     consolePlaceholder: "# L'output di print() apparirà qui...",
     labelPhone: "📱 iPhone 17",
@@ -1208,8 +1366,16 @@ const LANG = {
     labelVars: "🎛️ Set Your Variables",
     labelMission: "🏆 Your Mission",
     labelCode: "✍️ Write Your Python Code",
+    labelHints: "Hints",
     btnRun: "Run Code!",
+    btnCheck: "Check My Answer!",
+    challengeBadge: "CHALLENGE",
+    challengePass: "Great job! Your code ran and printed:",
+    challengeNoOutput: "Your code ran but printed nothing. Did you add print()?",
     soundNone: "No sound yet",
+    soundDone: "Done",
+    noOutput: "No output",
+    errorLabel: "Error",
     labelConsole: "📋 Output Console",
     consolePlaceholder: "# Your print() output will appear here...",
     labelPhone: "📱 iPhone 17",
@@ -1225,8 +1391,16 @@ const LANG = {
     labelVars: "🎛️ اضبط المتغيرات",
     labelMission: "🏆 مهمتك",
     labelCode: "✍️ اكتب كود بايثون",
+    labelHints: "تلميحات",
     btnRun: "تشغيل الكود!",
+    btnCheck: "تحقق من إجابتي!",
+    challengeBadge: "تحدي",
+    challengePass: "أحسنت! كودك طبع:",
+    challengeNoOutput: "الكود عمل لكنه لم يطبع شيئاً. هل أضفت print()؟",
     soundNone: "لا يوجد صوت بعد",
+    soundDone: "تم",
+    noOutput: "لا يوجد إخراج",
+    errorLabel: "خطأ",
     labelConsole: "📋 وحدة الإخراج",
     consolePlaceholder: "# مخرجات print() ستظهر هنا...",
     labelPhone: "📱 iPhone 17",
@@ -1236,24 +1410,46 @@ const LANG = {
 };
 
 function setLang(lang) {
+  currentLangCode = lang;
   document.documentElement.lang = lang;
   document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
   const t = LANG[lang];
   document.title = t.pageTitle;
+
+  // Update lang button states
   ['it','en','ar'].forEach(l => {
     const btn = document.getElementById('btn-' + l);
     if (btn) btn.classList.toggle('active', l === lang);
   });
+
+  // Update all static i18n elements
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (t[key] !== undefined) {
-      el.innerHTML = t[key];
-    }
+    if (t[key] !== undefined) el.innerHTML = t[key];
   });
+
+  // Rebuild dynamic UI with new lang
+  SCENARIOS = getScenariosForLang(lang);
+  const prevId = currentScenario ? currentScenario.id : SCENARIOS[0].id;
+  currentScenario = SCENARIOS.find(s => s.id === prevId) || SCENARIOS[0];
+  buildScenarioPicker();
+  buildSliders();
+  if (currentMode === 'guided') { updateCodeFromSliders(); buildHints(); }
+  else loadChallenge();
+
+  // Refresh console placeholder
+  const consoleEl = document.getElementById('consoleOut');
+  if (consoleEl && consoleEl.querySelector('.info')) {
+    consoleEl.innerHTML = `<span class="info">${t.consolePlaceholder}</span>`;
+  }
 }
 
+// ═══════════════════════════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded',()=>{
-  init();
+  updateClock();
+  setInterval(updateClock,1000);
   setLang('it');
   document.getElementById('codeArea').addEventListener('keydown',function(e){
     if(e.key==='Tab'){e.preventDefault();const s=this.selectionStart;
