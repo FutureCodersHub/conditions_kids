@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CodeKids – Make Your Phone React!</title>
+<title>CodeKids – Fai Reagire il Tuo Telefono!</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -216,6 +218,21 @@ input[type=range]{width:100%;accent-color:var(--purple);cursor:pointer;}
 .confetti-container{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;}
 .confetti-piece{position:absolute;border-radius:2px;animation:confettiFall 1.5s ease-in forwards;}
 @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* LOGO IMAGE */
+.logo-img{height:48px;width:auto;object-fit:contain;display:block;margin:0 auto 6px;}
+
+/* LANG SWITCHER */
+.lang-switcher{display:flex;justify-content:center;gap:8px;margin:8px 0 4px;position:relative;z-index:1;}
+.lang-btn{padding:5px 16px;border-radius:50px;border:2px solid #2e2d4e;background:transparent;
+  color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:0.82rem;cursor:pointer;transition:all .2s;letter-spacing:.05em;}
+.lang-btn.active{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:0 2px 12px #c77dff44;}
+.lang-btn:hover:not(.active){border-color:var(--purple);color:var(--purple);}
+
+/* RTL support */
+body[dir="rtl"] .left-col{direction:rtl;}
+body[dir="rtl"] .var-label{direction:rtl;}
+body[dir="rtl"] .hint-row{direction:rtl;}
 </style>
 </head>
 <body>
@@ -223,16 +240,23 @@ input[type=range]{width:100%;accent-color:var(--purple);cursor:pointer;}
 <div class="confetti-container" id="confetti"></div>
 
 <header>
+  <img src="logo.png" alt="CodeKids Logo" class="logo-img" onerror="this.style.display='none'">
   <div class="logo">
     <span>C</span><span>o</span><span>d</span><span>e</span><span>K</span><span>i</span><span>d</span><span>s</span>
   </div>
-  <p>🚀 Write Python code → Watch your iPhone react in real time!</p>
+  <p data-i18n="headerSub">🚀 Scrivi codice Python → Guarda il tuo iPhone reagire in tempo reale!</p>
 </header>
+
+<div class="lang-switcher">
+  <button class="lang-btn active" id="btn-it" onclick="setLang('it')">IT</button>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" id="btn-ar" onclick="setLang('ar')">AR</button>
+</div>
 
 <!-- Mode tabs -->
 <div class="mode-tabs">
-  <button class="mode-tab active" onclick="setMode('guided')" id="tab-guided">🧩 Guided Mode</button>
-  <button class="mode-tab" onclick="setMode('challenge')" id="tab-challenge">🏆 Challenge Mode</button>
+  <button class="mode-tab active" onclick="setMode('guided')" id="tab-guided" data-i18n="tabGuided">🧩 Modalità Guidata</button>
+  <button class="mode-tab" onclick="setMode('challenge')" id="tab-challenge" data-i18n="tabChallenge">🏆 Modalità Sfida</button>
 </div>
 
 <div class="main">
@@ -240,25 +264,25 @@ input[type=range]{width:100%;accent-color:var(--purple);cursor:pointer;}
 
     <!-- Scenario Picker -->
     <div>
-      <div class="section-label">🎯 Choose a Scenario</div>
+      <div class="section-label" data-i18n="labelScenario">🎯 Scegli uno Scenario</div>
       <div class="scenario-grid" id="scenarioPicker"></div>
     </div>
 
     <!-- Variable Sliders (Guided only) -->
     <div id="sliderSection">
-      <div class="section-label">🎛️ Set Your Variables</div>
+      <div class="section-label" data-i18n="labelVars">🎛️ Imposta le Variabili</div>
       <div class="vars-card" id="sliderArea"></div>
     </div>
 
     <!-- Challenge box (Challenge only) -->
     <div id="challengeSection" style="display:none;">
-      <div class="section-label">🏆 Your Mission</div>
+      <div class="section-label" data-i18n="labelMission">🏆 La Tua Missione</div>
       <div class="challenge-box" id="challengeBox"></div>
     </div>
 
     <!-- Code Editor -->
     <div>
-      <div class="section-label">✍️ Write Your Python Code</div>
+      <div class="section-label" data-i18n="labelCode">✍️ Scrivi il tuo Codice Python</div>
       <div class="editor-card">
         <div class="editor-topbar">
           <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
@@ -273,24 +297,24 @@ input[type=range]{width:100%;accent-color:var(--purple);cursor:pointer;}
 
     <!-- Run -->
     <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-      <button class="run-btn" onclick="runCode()"><span>▶</span> Run Code!</button>
+      <button class="run-btn" onclick="runCode()"><span>▶</span> <span data-i18n="btnRun">Esegui il Codice!</span></button>
       <div class="sound-badge" id="soundBadge">
         <div class="wave"><span style="height:4px"></span><span style="height:8px"></span><span style="height:12px"></span><span style="height:6px"></span></div>
-        <span id="soundLabel">No sound yet</span>
+        <span id="soundLabel" data-i18n="soundNone">Nessun suono</span>
       </div>
     </div>
 
     <!-- Console -->
     <div>
-      <div class="section-label">📋 Output Console</div>
-      <div class="console" id="consoleOut"><span class="info"># Your print() output will appear here...</span></div>
+      <div class="section-label" data-i18n="labelConsole">📋 Console di Output</div>
+      <div class="console" id="consoleOut"><span class="info" data-i18n="consolePlaceholder"># L'output di print() apparirà qui...</span></div>
     </div>
 
   </div>
 
   <!-- iPhone 17 Phone -->
   <div class="phone-col">
-    <div class="section-label" style="text-align:center;margin-bottom:10px;">📱 iPhone 17</div>
+    <div class="section-label" style="text-align:center;margin-bottom:10px;" data-i18n="labelPhone">📱 iPhone 17</div>
     <div class="phone-wrap">
       <div class="phone-btn-vol"></div>
       <div class="phone-btn-vol2"></div>
@@ -310,8 +334,8 @@ input[type=range]{width:100%;accent-color:var(--purple);cursor:pointer;}
         <div class="phone-screen" id="phoneScreen">
           <div class="phone-state" id="phoneState">
             <div class="phone-emoji">📱</div>
-            <div class="phone-msg">Pick a scenario<br>and press Run!</div>
-            <div class="phone-sub">Your phone will react to your code 👆</div>
+            <div class="phone-msg" data-i18n="phoneDefault">Scegli uno scenario<br>e premi Esegui!</div>
+            <div class="phone-sub" data-i18n="phoneSub">Il tuo telefono reagirà al codice 👆</div>
           </div>
         </div>
         <div class="phone-gesture"></div>
@@ -1154,8 +1178,83 @@ function escHtml(str) {
 // ═══════════════════════════════════════════════════════════════
 // BOOT
 // ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
+// I18N — 3 LANGUAGES
+// ═══════════════════════════════════════════════════════════════
+const LANG = {
+  it: {
+    pageTitle: "CodeKids – Fai Reagire il Tuo Telefono!",
+    headerSub: "🚀 Scrivi codice Python → Guarda il tuo iPhone reagire in tempo reale!",
+    tabGuided: "🧩 Modalità Guidata",
+    tabChallenge: "🏆 Modalità Sfida",
+    labelScenario: "🎯 Scegli uno Scenario",
+    labelVars: "🎛️ Imposta le Variabili",
+    labelMission: "🏆 La Tua Missione",
+    labelCode: "✍️ Scrivi il tuo Codice Python",
+    btnRun: "Esegui il Codice!",
+    soundNone: "Nessun suono",
+    labelConsole: "📋 Console di Output",
+    consolePlaceholder: "# L'output di print() apparirà qui...",
+    labelPhone: "📱 iPhone 17",
+    phoneDefault: "Scegli uno scenario<br>e premi Esegui!",
+    phoneSub: "Il tuo telefono reagirà al codice 👆",
+  },
+  en: {
+    pageTitle: "CodeKids – Make Your Phone React!",
+    headerSub: "🚀 Write Python code → Watch your iPhone react in real time!",
+    tabGuided: "🧩 Guided Mode",
+    tabChallenge: "🏆 Challenge Mode",
+    labelScenario: "🎯 Choose a Scenario",
+    labelVars: "🎛️ Set Your Variables",
+    labelMission: "🏆 Your Mission",
+    labelCode: "✍️ Write Your Python Code",
+    btnRun: "Run Code!",
+    soundNone: "No sound yet",
+    labelConsole: "📋 Output Console",
+    consolePlaceholder: "# Your print() output will appear here...",
+    labelPhone: "📱 iPhone 17",
+    phoneDefault: "Pick a scenario<br>and press Run!",
+    phoneSub: "Your phone will react to your code 👆",
+  },
+  ar: {
+    pageTitle: "كودكيدز – اجعل هاتفك يتفاعل!",
+    headerSub: "🚀 اكتب كود بايثون ← شاهد هاتفك يتفاعل في الوقت الحقيقي!",
+    tabGuided: "🧩 الوضع الإرشادي",
+    tabChallenge: "🏆 وضع التحدي",
+    labelScenario: "🎯 اختر سيناريو",
+    labelVars: "🎛️ اضبط المتغيرات",
+    labelMission: "🏆 مهمتك",
+    labelCode: "✍️ اكتب كود بايثون",
+    btnRun: "تشغيل الكود!",
+    soundNone: "لا يوجد صوت بعد",
+    labelConsole: "📋 وحدة الإخراج",
+    consolePlaceholder: "# مخرجات print() ستظهر هنا...",
+    labelPhone: "📱 iPhone 17",
+    phoneDefault: "اختر سيناريو<br>واضغط تشغيل!",
+    phoneSub: "هاتفك سيتفاعل مع كودك 👆",
+  }
+};
+
+function setLang(lang) {
+  document.documentElement.lang = lang;
+  document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  const t = LANG[lang];
+  document.title = t.pageTitle;
+  ['it','en','ar'].forEach(l => {
+    const btn = document.getElementById('btn-' + l);
+    if (btn) btn.classList.toggle('active', l === lang);
+  });
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) {
+      el.innerHTML = t[key];
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded',()=>{
   init();
+  setLang('it');
   document.getElementById('codeArea').addEventListener('keydown',function(e){
     if(e.key==='Tab'){e.preventDefault();const s=this.selectionStart;
       this.value=this.value.slice(0,s)+'    '+this.value.slice(this.selectionEnd);
