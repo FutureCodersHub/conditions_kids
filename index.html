@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CodeKids – Fai Reagire il Tuo Telefono!</title>
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
+<title>CodeKids – Learn Python!</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -20,36 +18,86 @@ body::before{content:'';position:fixed;inset:0;background-image:
   radial-gradient(1px 1px at 20% 30%,#ffffff33 0%,transparent 100%),
   radial-gradient(1px 1px at 80% 10%,#ffffff22 0%,transparent 100%),
   radial-gradient(1px 1px at 50% 80%,#ffffff22 0%,transparent 100%),
-  radial-gradient(1px 1px at 10% 70%,#ffffff33 0%,transparent 100%),
-  radial-gradient(2px 2px at 90% 60%,#ffffff11 0%,transparent 100%);
+  radial-gradient(1px 1px at 10% 70%,#ffffff33 0%,transparent 100%);
   pointer-events:none;z-index:0;}
 
-header{text-align:center;padding:28px 20px 12px;position:relative;z-index:1;}
-.logo{font-size:2.4rem;font-weight:900;letter-spacing:-1px;}
+header{text-align:center;padding:24px 20px 8px;position:relative;z-index:1;}
+.logo{font-size:2.2rem;font-weight:900;letter-spacing:-1px;}
 .logo span:nth-child(1){color:var(--yellow)}.logo span:nth-child(2){color:var(--green)}
 .logo span:nth-child(3){color:var(--blue)}.logo span:nth-child(4){color:var(--pink)}
 .logo span:nth-child(5){color:var(--purple)}.logo span:nth-child(6){color:var(--accent)}
 .logo span:nth-child(7){color:var(--yellow)}.logo span:nth-child(8){color:var(--green)}
-header p{color:var(--muted);font-size:1rem;font-weight:600;margin-top:4px;}
+header p{color:var(--muted);font-size:0.95rem;font-weight:600;margin-top:4px;}
+.credit{text-align:center;font-size:0.75rem;font-weight:700;color:var(--muted);padding:2px 0 4px;position:relative;z-index:1;}
+.credit a{color:var(--purple);text-decoration:none;}
 
-/* MODE TABS */
-.mode-tabs{display:flex;justify-content:center;gap:10px;margin:12px 0;position:relative;z-index:1;}
-.mode-tab{padding:10px 24px;border-radius:50px;border:2px solid #2e2d4e;background:transparent;
-  color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:0.95rem;cursor:pointer;transition:all .2s;}
-.mode-tab.active{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:0 4px 20px #c77dff44;}
-.mode-tab:hover:not(.active){border-color:var(--purple);color:var(--purple);}
+/* LANG */
+.lang-switcher{display:flex;justify-content:center;gap:8px;margin:6px 0 4px;position:relative;z-index:1;}
+.lang-btn{padding:4px 14px;border-radius:50px;border:2px solid #2e2d4e;background:transparent;
+  color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:0.8rem;cursor:pointer;transition:all .2s;}
+.lang-btn.active{background:var(--purple);border-color:var(--purple);color:#fff;}
+.lang-btn:hover:not(.active){border-color:var(--purple);color:var(--purple);}
 
+/* MAIN TABS (topic tabs) */
+.topic-tabs{display:flex;justify-content:center;gap:8px;margin:10px 0 0;position:relative;z-index:1;flex-wrap:wrap;padding:0 12px;}
+.topic-tab{padding:10px 20px;border-radius:50px;border:2px solid #2e2d4e;background:transparent;
+  color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:0.9rem;cursor:pointer;transition:all .2s;}
+.topic-tab.active-free{background:var(--blue);border-color:var(--blue);color:#0a1520;box-shadow:0 4px 20px #6bc5ff44;}
+.topic-tab.active-vars{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:0 4px 20px #c77dff44;}
+.topic-tab.active-lists{background:var(--green);border-color:var(--green);color:#051a08;box-shadow:0 4px 20px #6bff9e44;}
+.topic-tab.active-loops{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 4px 20px #ff6b6b44;}
+.topic-tab:hover:not([class*="active"]){border-color:var(--purple);color:var(--purple);}
+
+/* CONTENT AREA */
+.topic-content{display:none;} .topic-content.visible{display:block;}
+
+/* ── FREE PYTHON AREA ── */
+.free-area{max-width:820px;margin:20px auto;padding:0 24px 40px;position:relative;z-index:1;}
+.free-area .section-label{font-size:0.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.editor-card{background:var(--panel);border-radius:var(--radius);border:1.5px solid #2e2d4e;overflow:hidden;}
+.editor-topbar{background:#13122a;padding:9px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #2e2d4e;}
+.dot{width:12px;height:12px;border-radius:50%;}
+.dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
+.editor-title{margin-left:8px;font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted);}
+.code-area{width:100%;min-height:240px;background:transparent;border:none;outline:none;
+  color:#e8e6ff;font-family:'Space Mono',monospace;font-size:0.88rem;line-height:1.7;
+  padding:18px;resize:vertical;tab-size:4;}
+.run-btn{background:linear-gradient(135deg,var(--green),#38e07f);color:#0a1a0f;border:none;
+  padding:12px 28px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:1rem;
+  font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .2s;
+  box-shadow:0 4px 20px #6bff9e44;}
+.run-btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 8px 30px #6bff9e66;}
+.run-btn:active{transform:scale(0.97);}
+.console{background:#0b0b1a;border-radius:var(--radius);border:1.5px solid #2e2d4e;
+  padding:14px 18px;min-height:80px;font-family:'Space Mono',monospace;font-size:0.82rem;line-height:1.7;color:var(--green);}
+.console .err{color:var(--accent);} .console .info{color:var(--muted);}
+
+/* free python welcome card */
+.free-welcome{background:var(--card);border-radius:var(--radius);padding:18px 22px;border:1.5px solid #3a3a60;margin-bottom:16px;}
+.free-welcome h3{font-size:1rem;font-weight:900;color:var(--blue);margin-bottom:8px;}
+.snippet-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.snippet-btn{background:#13122a;border:1.5px solid #2e2d4e;color:var(--blue);padding:6px 14px;
+  border-radius:8px;font-family:'Space Mono',monospace;font-size:0.75rem;cursor:pointer;transition:all .2s;}
+.snippet-btn:hover{border-color:var(--blue);background:#0a1520;}
+
+/* ── PHONE LAYOUT (vars/lists/loops tabs) ── */
 .main{display:grid;grid-template-columns:1fr auto;gap:24px;max-width:1140px;
   margin:0 auto;padding:16px 24px 40px;position:relative;z-index:1;align-items:start;}
 @media(max-width:800px){.main{grid-template-columns:1fr;}.phone-col{display:flex;justify-content:center;}}
-
 .left-col{display:flex;flex-direction:column;gap:18px;}
 .section-label{font-size:0.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
 
-/* SCENARIO PICKER */
+/* MODE TABS (guided/challenge) */
+.mode-tabs{display:flex;gap:10px;flex-wrap:wrap;}
+.mode-tab{padding:9px 20px;border-radius:50px;border:2px solid #2e2d4e;background:transparent;
+  color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;transition:all .2s;}
+.mode-tab.active{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:0 4px 20px #c77dff44;}
+.mode-tab:hover:not(.active){border-color:var(--purple);color:var(--purple);}
+
+/* SCENARIOS */
 .scenario-grid{display:flex;flex-wrap:wrap;gap:8px;}
 .scenario-btn{border:2px solid transparent;background:var(--card);color:var(--text);
-  padding:9px 14px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:0.9rem;
+  padding:8px 14px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:0.88rem;
   font-weight:700;cursor:pointer;transition:all .2s;}
 .scenario-btn:hover{transform:translateY(-2px);border-color:var(--yellow);}
 .scenario-btn.active{border-color:var(--yellow);background:#2e2b10;color:var(--yellow);}
@@ -62,17 +110,13 @@ header p{color:var(--muted);font-size:1rem;font-weight:600;margin-top:4px;}
 .var-label span:last-child{color:var(--yellow);}
 input[type=range]{width:100%;accent-color:var(--purple);cursor:pointer;}
 
-/* EDITOR */
-.editor-card{background:var(--panel);border-radius:var(--radius);border:1.5px solid #2e2d4e;overflow:hidden;}
-.editor-topbar{background:#13122a;padding:9px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #2e2d4e;}
-.dot{width:12px;height:12px;border-radius:50%;}
-.dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
-.editor-title{margin-left:8px;font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted);}
-#codeArea{width:100%;min-height:200px;background:transparent;border:none;outline:none;
-  color:#e8e6ff;font-family:'Space Mono',monospace;font-size:0.9rem;line-height:1.7;
-  padding:18px;resize:vertical;tab-size:4;}
+/* HINTS */
+.hints{background:var(--card);border-radius:var(--radius);padding:14px 18px;display:flex;flex-direction:column;gap:6px;}
+.hint-row{display:flex;align-items:flex-start;gap:10px;font-size:0.85rem;color:var(--muted);font-weight:600;}
+.hint-row .tag{background:#2e2d4e;border-radius:6px;padding:1px 8px;font-family:'Space Mono',monospace;
+  font-size:0.75rem;color:var(--blue);white-space:nowrap;flex-shrink:0;}
 
-/* CHALLENGE MODE */
+/* CHALLENGE */
 .challenge-box{background:var(--card);border-radius:var(--radius);padding:16px 20px;border:2px solid var(--purple);}
 .challenge-title{font-size:1rem;font-weight:900;color:var(--purple);margin-bottom:6px;}
 .challenge-desc{font-size:0.88rem;color:var(--muted);font-weight:600;line-height:1.5;margin-bottom:10px;}
@@ -85,262 +129,377 @@ input[type=range]{width:100%;accent-color:var(--purple);cursor:pointer;}
 .challenge-result.pass{background:#0a2a15;color:var(--green);}
 .challenge-result.fail{background:#2a0a0a;color:var(--accent);}
 
-/* HINTS */
-.hints{background:var(--card);border-radius:var(--radius);padding:14px 18px;display:flex;flex-direction:column;gap:6px;}
-.hint-row{display:flex;align-items:flex-start;gap:10px;font-size:0.85rem;color:var(--muted);font-weight:600;}
-.hint-row .tag{background:#2e2d4e;border-radius:6px;padding:1px 8px;font-family:'Space Mono',monospace;
-  font-size:0.75rem;color:var(--blue);white-space:nowrap;flex-shrink:0;}
-
-/* RUN BUTTON */
-.run-btn{background:linear-gradient(135deg,var(--green),#38e07f);color:#0a1a0f;border:none;
-  padding:13px 30px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:1.05rem;
-  font-weight:900;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;
-  box-shadow:0 4px 20px #6bff9e44;align-self:flex-start;}
-.run-btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 8px 30px #6bff9e66;}
-.run-btn:active{transform:scale(0.97);}
-
-/* CONSOLE */
-.console{background:#0b0b1a;border-radius:var(--radius);border:1.5px solid #2e2d4e;
-  padding:14px 18px;min-height:70px;font-family:'Space Mono',monospace;font-size:0.82rem;line-height:1.7;color:var(--green);}
-.console .err{color:var(--accent);} .console .info{color:var(--muted);}
-
-/* SOUND INDICATOR */
+/* RUN + SOUND */
 .sound-badge{display:inline-flex;align-items:center;gap:6px;background:#1a1a3a;
   border:1.5px solid #3a3a6e;border-radius:50px;padding:5px 12px;font-size:0.78rem;
   font-weight:700;color:var(--muted);transition:all .3s;}
 .sound-badge.playing{border-color:var(--green);color:var(--green);background:#0a1a10;}
 .sound-badge .wave{display:inline-flex;gap:2px;align-items:flex-end;height:14px;}
-.sound-badge .wave span{width:3px;background:currentColor;border-radius:2px;
-  animation:none;transition:height .1s;}
+.sound-badge .wave span{width:3px;background:currentColor;border-radius:2px;animation:none;}
 .sound-badge.playing .wave span{animation:waveAnim .6s ease-in-out infinite alternate;}
 .sound-badge.playing .wave span:nth-child(2){animation-delay:.1s;}
 .sound-badge.playing .wave span:nth-child(3){animation-delay:.2s;}
 .sound-badge.playing .wave span:nth-child(4){animation-delay:.15s;}
 @keyframes waveAnim{from{height:3px}to{height:13px}}
 
-/* ── iPHONE 17 STYLE PHONE ── */
+/* PHONE */
 .phone-col{position:sticky;top:16px;}
-.phone-wrap{position:relative;width:320px;}
-
-/* Side buttons */
-.phone-btn-vol{position:absolute;left:-4px;top:100px;width:4px;height:30px;
-  background:#2a2a4e;border-radius:3px 0 0 3px;}
-.phone-btn-vol2{position:absolute;left:-4px;top:140px;width:4px;height:30px;
-  background:#2a2a4e;border-radius:3px 0 0 3px;}
-.phone-btn-power{position:absolute;right:-4px;top:120px;width:4px;height:50px;
-  background:#2a2a4e;border-radius:0 3px 3px 0;}
-
-.phone-outer{width:320px;height:650px;background:linear-gradient(160deg,#1e1e35,#141425);
-  border-radius:48px;border:2px solid #3a3a60;position:relative;overflow:hidden;
+.phone-wrap{position:relative;width:300px;}
+.phone-btn-vol{position:absolute;left:-4px;top:100px;width:4px;height:28px;background:#2a2a4e;border-radius:3px 0 0 3px;}
+.phone-btn-vol2{position:absolute;left:-4px;top:136px;width:4px;height:28px;background:#2a2a4e;border-radius:3px 0 0 3px;}
+.phone-btn-power{position:absolute;right:-4px;top:118px;width:4px;height:48px;background:#2a2a4e;border-radius:0 3px 3px 0;}
+.phone-outer{width:300px;height:620px;background:linear-gradient(160deg,#1e1e35,#141425);
+  border-radius:46px;border:2px solid #3a3a60;position:relative;overflow:hidden;
   display:flex;flex-direction:column;
   box-shadow:0 0 0 1px #5a5a9e,0 0 0 3px #0f0e1a,0 0 50px #00000099,inset 0 1px 0 #ffffff18;}
-
-/* Dynamic Island */
-.phone-island{width:100px;height:28px;background:#050510;border-radius:0 0 20px 20px;
+.phone-island{width:96px;height:26px;background:#050510;border-radius:0 0 18px 18px;
   margin:0 auto;position:relative;z-index:10;flex-shrink:0;display:flex;
   align-items:center;justify-content:center;gap:8px;transition:all .4s cubic-bezier(.34,1.56,.64,1);}
-.phone-island.expand{width:160px;}
-.island-cam{width:10px;height:10px;background:#1a1a3a;border-radius:50%;border:1.5px solid #2a2a5e;}
-.island-pill{width:40px;height:6px;background:#1a1a3a;border-radius:4px;}
-.island-live{display:none;align-items:center;gap:5px;font-size:0.65rem;color:var(--green);font-weight:800;}
+.phone-island.expand{width:150px;}
+.island-cam{width:9px;height:9px;background:#1a1a3a;border-radius:50%;border:1.5px solid #2a2a5e;}
+.island-pill{width:36px;height:5px;background:#1a1a3a;border-radius:4px;}
+.island-live{display:none;align-items:center;gap:5px;font-size:0.6rem;color:var(--green);font-weight:800;}
 .phone-island.expand .island-live{display:flex;}
 .island-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse .8s ease-in-out infinite alternate;}
 @keyframes pulse{from{opacity:.5}to{opacity:1}}
-
 .phone-status{display:flex;justify-content:space-between;align-items:center;
-  padding:4px 18px 0;font-size:0.62rem;font-weight:700;color:#888;flex-shrink:0;}
-
+  padding:3px 16px 0;font-size:0.6rem;font-weight:700;color:#888;flex-shrink:0;}
 .phone-screen{flex:1;display:flex;flex-direction:column;align-items:center;
   justify-content:center;padding:10px;position:relative;overflow:hidden;transition:background .5s ease;}
-
-/* Home gesture bar */
-.phone-gesture{width:100px;height:4px;background:#ffffff22;border-radius:4px;margin:8px auto;flex-shrink:0;}
-
-/* Phone state content */
-.phone-state{display:flex;flex-direction:column;align-items:center;gap:7px;
+.phone-gesture{width:90px;height:4px;background:#ffffff22;border-radius:4px;margin:7px auto;flex-shrink:0;}
+.phone-state{display:flex;flex-direction:column;align-items:center;gap:6px;
   animation:popIn .4s cubic-bezier(.34,1.56,.64,1);width:100%;}
 @keyframes popIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
-.phone-emoji{font-size:3.8rem;line-height:1;}
-.phone-msg{font-size:0.82rem;font-weight:800;text-align:center;color:#fff;
-  text-shadow:0 2px 8px #00000088;padding:0 8px;}
-.phone-sub{font-size:0.68rem;font-weight:600;text-align:center;opacity:.75;padding:0 8px;}
+.phone-emoji{font-size:3.4rem;line-height:1;}
+.phone-msg{font-size:0.8rem;font-weight:800;text-align:center;color:#fff;text-shadow:0 2px 8px #00000088;padding:0 6px;}
+.phone-sub{font-size:0.65rem;font-weight:600;text-align:center;opacity:.75;padding:0 6px;}
 
-/* Battery bar */
-.battery-visual{width:110px;height:20px;background:#1a1a2e;border-radius:4px;
-  border:2px solid #3a3a5e;position:relative;overflow:hidden;margin-top:4px;}
+/* Phone widgets */
+.battery-visual{width:100px;height:18px;background:#1a1a2e;border-radius:4px;border:2px solid #3a3a5e;position:relative;overflow:hidden;margin-top:4px;}
 .battery-fill{height:100%;border-radius:3px;transition:width .6s ease,background .6s ease;}
-.battery-tip{position:absolute;right:-7px;top:50%;transform:translateY(-50%);
-  width:5px;height:10px;background:#3a3a5e;border-radius:0 2px 2px 0;}
-
-/* WiFi bars */
+.battery-tip{position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:5px;height:10px;background:#3a3a5e;border-radius:0 2px 2px 0;}
 .wifi-bars{display:flex;align-items:flex-end;gap:3px;margin-top:4px;}
-.wifi-bar{width:10px;background:#3a3a5e;border-radius:2px;transition:background .4s,height .4s;}
+.wifi-bar{width:9px;background:#3a3a5e;border-radius:2px;transition:background .4s,height .4s;}
 .wifi-bar.on{background:var(--green);}
-
-/* Notification bubble */
-.notif-bubble{background:#fff;color:#1a1a2e;border-radius:14px;padding:8px 12px;
-  width:92%;display:flex;align-items:center;gap:9px;box-shadow:0 4px 16px #00000055;
-  font-size:0.72rem;font-weight:700;}
-.notif-icon{font-size:1.3rem;}
-.notif-title{font-weight:900;font-size:0.7rem;color:#1a1a2e;}
-.notif-body{font-weight:600;font-size:0.65rem;color:#555;margin-top:1px;}
-
-/* Alarm pulse */
-@keyframes alarmPulse{0%,100%{box-shadow:0 0 0 0 var(--accent)}50%{box-shadow:0 0 0 16px transparent}}
-.alarm-ring{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:2.8rem;animation:alarmPulse 1s ease-in-out infinite;}
-
-/* Lock screen clock */
-.idle-clock{font-size:2.8rem;font-weight:900;font-family:'Space Mono',monospace;color:#fff;opacity:.9;}
-.idle-date{font-size:0.75rem;font-weight:700;color:#aaa;margin-top:2px;}
-
-/* Flashlight glow */
+.notif-bubble{background:#fff;color:#1a1a2e;border-radius:14px;padding:7px 10px;
+  width:90%;display:flex;align-items:center;gap:8px;box-shadow:0 4px 16px #00000055;font-size:0.68rem;font-weight:700;}
+.notif-icon{font-size:1.2rem;}
+.notif-title{font-weight:900;font-size:0.66rem;color:#1a1a2e;}
+.notif-body{font-weight:600;font-size:0.6rem;color:#555;margin-top:1px;}
+@keyframes alarmPulse{0%,100%{box-shadow:0 0 0 0 var(--accent)}50%{box-shadow:0 0 0 14px transparent}}
+.alarm-ring{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.4rem;animation:alarmPulse 1s ease-in-out infinite;}
+.idle-clock{font-size:2.4rem;font-weight:900;font-family:'Space Mono',monospace;color:#fff;opacity:.9;}
+.idle-date{font-size:0.72rem;font-weight:700;color:#aaa;margin-top:2px;}
 @keyframes flashGlow{0%,100%{opacity:.8}50%{opacity:1}}
-.flash-beam{position:absolute;bottom:0;left:50%;transform:translateX(-50%);
-  width:180px;height:300px;background:radial-gradient(ellipse at bottom,#ffffffcc 0%,transparent 70%);
-  pointer-events:none;animation:flashGlow 2s ease-in-out infinite;}
-
-/* Volume bars */
-.vol-bars{display:flex;align-items:flex-end;gap:4px;height:50px;margin-top:6px;}
-.vol-bar-item{width:14px;border-radius:3px;transition:height .3s,background .3s;}
-
-/* GPS map dots */
-.gps-map{width:140px;height:90px;background:#0a1520;border-radius:10px;position:relative;overflow:hidden;margin-top:6px;}
-.gps-road-h{position:absolute;top:50%;left:0;right:0;height:6px;background:#1e3a5e;transform:translateY(-50%);}
-.gps-road-v{position:absolute;top:0;bottom:0;left:50%;width:6px;background:#1e3a5e;transform:translateX(-50%);}
-.gps-dot{position:absolute;width:14px;height:14px;background:var(--blue);border-radius:50%;
-  border:2px solid #fff;transition:all .5s;box-shadow:0 0 10px var(--blue);}
-.gps-pulse{position:absolute;width:30px;height:30px;border:2px solid var(--blue);
-  border-radius:50%;opacity:.5;animation:gpsPulse 1.5s ease-out infinite;}
+.flash-beam{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:160px;height:280px;background:radial-gradient(ellipse at bottom,#ffffffcc 0%,transparent 70%);pointer-events:none;animation:flashGlow 2s ease-in-out infinite;}
+.vol-bars{display:flex;align-items:flex-end;gap:3px;height:46px;margin-top:5px;}
+.vol-bar-item{width:13px;border-radius:3px;transition:height .3s,background .3s;}
+.gps-map{width:130px;height:82px;background:#0a1520;border-radius:10px;position:relative;overflow:hidden;margin-top:5px;}
+.gps-road-h{position:absolute;top:50%;left:0;right:0;height:5px;background:#1e3a5e;transform:translateY(-50%);}
+.gps-road-v{position:absolute;top:0;bottom:0;left:50%;width:5px;background:#1e3a5e;transform:translateX(-50%);}
+.gps-dot{position:absolute;width:12px;height:12px;background:var(--blue);border-radius:50%;border:2px solid #fff;transition:all .5s;box-shadow:0 0 8px var(--blue);}
+.gps-pulse{position:absolute;width:26px;height:26px;border:2px solid var(--blue);border-radius:50%;opacity:.5;animation:gpsPulse 1.5s ease-out infinite;}
 @keyframes gpsPulse{from{transform:scale(.5);opacity:.7}to{transform:scale(2);opacity:0}}
 
-/* Confetti */
+/* LIST VISUALIZER */
+.list-viz{background:#0b0b1a;border-radius:12px;border:1.5px solid #2e2d4e;padding:12px 14px;overflow-x:auto;}
+.list-items-row{display:flex;gap:6px;flex-wrap:wrap;min-height:40px;}
+.list-item-box{background:var(--card);border:2px solid var(--purple);border-radius:10px;padding:5px 10px;
+  font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--purple);font-weight:700;
+  display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .3s;}
+.list-item-box.highlight{background:#2a1a40;border-color:var(--yellow);color:var(--yellow);}
+.list-item-box .idx{font-size:0.58rem;color:var(--muted);font-weight:600;}
+.list-ops-log{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--green);margin-top:8px;min-height:20px;}
+
+/* LOOP VISUALIZER */
+.loop-viz{background:#0b0b1a;border-radius:12px;border:1.5px solid #2e2d4e;padding:12px 14px;}
+.loop-track{display:flex;gap:4px;flex-wrap:wrap;min-height:44px;align-items:center;}
+.loop-step{width:36px;height:36px;border-radius:8px;background:var(--card);border:2px solid #3a3a60;
+  display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;
+  font-size:0.8rem;color:var(--muted);transition:all .25s;}
+.loop-step.done{background:#0a2a15;border-color:var(--green);color:var(--green);}
+.loop-step.active{background:#2a1a40;border-color:var(--yellow);color:var(--yellow);transform:scale(1.15);}
+.loop-counter{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--blue);margin-top:7px;}
+
+/* PHONE LIST DISPLAY */
+.phone-list-container{width:100%;display:flex;flex-direction:column;gap:5px;padding:2px;}
+.phone-list-item{background:rgba(255,255,255,0.07);border-radius:8px;padding:6px 10px;
+  font-size:0.7rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,0.1);}
+.phone-list-item .item-idx{font-size:0.58rem;color:var(--muted);font-family:'Space Mono',monospace;}
+.phone-list-item.highlight{background:rgba(199,125,255,0.2);border-color:var(--purple);}
+
+/* PHONE LOOP DISPLAY */
+.phone-loop-progress{width:90%;background:#1a1a3a;border-radius:8px;height:8px;margin-top:6px;overflow:hidden;}
+.phone-loop-bar{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--blue),var(--purple));transition:width .4s;}
+.phone-loop-steps{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;max-width:240px;}
+.phone-loop-dot{width:18px;height:18px;border-radius:50%;background:#2a2a4e;font-size:0.55rem;
+  font-weight:800;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:all .25s;}
+.phone-loop-dot.done{background:var(--green);color:#0a1a0f;}
+.phone-loop-dot.active{background:var(--yellow);color:#1a1500;transform:scale(1.2);}
+
+/* CONFETTI */
 .confetti-container{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;}
 .confetti-piece{position:absolute;border-radius:2px;animation:confettiFall 1.5s ease-in forwards;}
 @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
-
-/* CREDIT */
-.credit{text-align:center;font-size:0.78rem;font-weight:700;color:var(--muted);padding:6px 0 2px;position:relative;z-index:1;}
-.credit a{color:var(--purple);text-decoration:none;transition:color .2s;}
-.credit a:hover{color:var(--pink);}
-
-/* LANG SWITCHER */
-.lang-switcher{display:flex;justify-content:center;gap:8px;margin:8px 0 4px;position:relative;z-index:1;}
-.lang-btn{padding:5px 16px;border-radius:50px;border:2px solid #2e2d4e;background:transparent;
-  color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:0.82rem;cursor:pointer;transition:all .2s;letter-spacing:.05em;}
-.lang-btn.active{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:0 2px 12px #c77dff44;}
-.lang-btn:hover:not(.active){border-color:var(--purple);color:var(--purple);}
-
-/* RTL support */
-body[dir="rtl"] .left-col{direction:rtl;}
-body[dir="rtl"] .var-label{direction:rtl;}
-body[dir="rtl"] .hint-row{direction:rtl;}
 </style>
 </head>
 <body>
-
 <div class="confetti-container" id="confetti"></div>
 
 <header>
-  <div class="logo">
-    <span>C</span><span>o</span><span>d</span><span>e</span><span>K</span><span>i</span><span>d</span><span>s</span>
-  </div>
-  <p data-i18n="headerSub">🚀 Scrivi codice Python → Guarda il tuo iPhone reagire in tempo reale!</p>
+  <div class="logo"><span>C</span><span>o</span><span>d</span><span>e</span><span>K</span><span>i</span><span>d</span><span>s</span></div>
+  <p id="headerSub">🚀 Write Python → Watch your phone react in real time!</p>
 </header>
 <div class="credit">Created by <a href="https://futurecodershub.github.io/web/" target="_blank" rel="noopener">FutureCodersHub</a></div>
 
 <div class="lang-switcher">
-  <button class="lang-btn active" id="btn-it" onclick="setLang('it')">IT</button>
-  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" id="btn-it" onclick="setLang('it')">IT</button>
+  <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
   <button class="lang-btn" id="btn-ar" onclick="setLang('ar')">AR</button>
 </div>
 
-<!-- Mode tabs -->
-<div class="mode-tabs">
-  <button class="mode-tab active" onclick="setMode('guided')" id="tab-guided" data-i18n="tabGuided">🧩 Modalità Guidata</button>
-  <button class="mode-tab" onclick="setMode('challenge')" id="tab-challenge" data-i18n="tabChallenge">🏆 Modalità Sfida</button>
+<div class="topic-tabs">
+  <button class="topic-tab" id="tab-free" onclick="setTopic('free')">🐍 <span data-i18n="tabFree">Free Python</span></button>
+  <button class="topic-tab active-vars" id="tab-vars" onclick="setTopic('vars')">🔀 <span data-i18n="tabVars">Variables &amp; Conditions</span></button>
+  <button class="topic-tab" id="tab-lists" onclick="setTopic('lists')">📋 <span data-i18n="tabLists">Lists</span></button>
+  <button class="topic-tab" id="tab-loops" onclick="setTopic('loops')">🔁 <span data-i18n="tabLoops">Loops</span></button>
 </div>
 
-<div class="main">
-  <div class="left-col">
-
-    <!-- Scenario Picker -->
-    <div>
-      <div class="section-label" data-i18n="labelScenario">🎯 Scegli uno Scenario</div>
-      <div class="scenario-grid" id="scenarioPicker"></div>
+<!-- ═══════════════════ FREE PYTHON ═══════════════════ -->
+<div class="topic-content" id="content-free">
+  <div class="free-area">
+    <div class="free-welcome">
+      <h3 id="freeWelcomeTitle">🐍 Python Playground — try anything!</h3>
+      <p id="freeWelcomeDesc" style="font-size:0.85rem;color:var(--muted);font-weight:600;line-height:1.5;">Write any Python code below. Variables, conditions, lists, loops, print — it all works. Click a snippet to load an example.</p>
+      <div class="snippet-row" id="snippetRow"></div>
     </div>
-
-    <!-- Variable Sliders (Guided only) -->
-    <div id="sliderSection">
-      <div class="section-label" data-i18n="labelVars">🎛️ Imposta le Variabili</div>
-      <div class="vars-card" id="sliderArea"></div>
-    </div>
-
-    <!-- Challenge box (Challenge only) -->
-    <div id="challengeSection" style="display:none;">
-      <div class="section-label" data-i18n="labelMission">🏆 La Tua Missione</div>
-      <div class="challenge-box" id="challengeBox"></div>
-    </div>
-
-    <!-- Code Editor -->
-    <div>
-      <div class="section-label" data-i18n="labelCode">✍️ Scrivi il tuo Codice Python</div>
-      <div class="editor-card">
-        <div class="editor-topbar">
-          <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
-          <span class="editor-title">main.py</span>
-        </div>
-        <textarea id="codeArea" spellcheck="false"></textarea>
+    <div class="section-label" data-i18n="labelCode">✍️ Your Python Code</div>
+    <div class="editor-card" style="margin-bottom:14px;">
+      <div class="editor-topbar">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <span class="editor-title">free_play.py</span>
       </div>
+      <textarea class="code-area" id="freeCode" spellcheck="false"># Write any Python code here!
+name = "Alice"
+age = 12
+fruits = ["apple", "banana", "mango"]
+
+print("Hello,", name)
+print("You are", age, "years old")
+print("Your favourite fruit is", fruits[0])
+
+for fruit in fruits:
+    print("I like", fruit)</textarea>
     </div>
-
-    <!-- Hints (Guided only) -->
-    <div class="hints" id="hintsBox"></div>
-
-    <!-- Run -->
-    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-      <button class="run-btn" onclick="runCode()"><span>▶</span> <span data-i18n="btnRun">Esegui il Codice!</span></button>
-      <div class="sound-badge" id="soundBadge">
-        <div class="wave"><span style="height:4px"></span><span style="height:8px"></span><span style="height:12px"></span><span style="height:6px"></span></div>
-        <span id="soundLabel" data-i18n="soundNone">Nessun suono</span>
-      </div>
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px;">
+      <button class="run-btn" onclick="runFreeCode()"><span>▶</span> <span data-i18n="btnRun">Run Code!</span></button>
     </div>
-
-    <!-- Console -->
-    <div>
-      <div class="section-label" data-i18n="labelConsole">📋 Console di Output</div>
-      <div class="console" id="consoleOut"><span class="info" data-i18n="consolePlaceholder"># L'output di print() apparirà qui...</span></div>
-    </div>
-
+    <div class="section-label" data-i18n="labelConsole">📋 Output Console</div>
+    <div class="console" id="freeConsole"><span class="info"># Your print() output will appear here...</span></div>
   </div>
+</div>
 
-  <!-- iPhone 17 Phone -->
-  <div class="phone-col">
-    <div class="section-label" style="text-align:center;margin-bottom:10px;" data-i18n="labelPhone">📱 iPhone 17</div>
-    <div class="phone-wrap">
-      <div class="phone-btn-vol"></div>
-      <div class="phone-btn-vol2"></div>
-      <div class="phone-btn-power"></div>
-      <div class="phone-outer">
-        <div class="phone-island" id="phoneIsland">
-          <div class="island-cam"></div>
-          <div class="island-pill"></div>
-          <div class="island-live"><div class="island-dot"></div><span id="islandText">LIVE</span></div>
+<!-- ═══════════════════ VARS & CONDITIONS ═══════════════════ -->
+<div class="topic-content visible" id="content-vars">
+  <div class="main">
+    <div class="left-col">
+      <div>
+        <div class="section-label" data-i18n="labelMode">⚙️ Mode</div>
+        <div class="mode-tabs">
+          <button class="mode-tab active" id="vtab-guided" onclick="setVarsMode('guided')" data-i18n="tabGuided">🧩 Guided</button>
+          <button class="mode-tab" id="vtab-challenge" onclick="setVarsMode('challenge')" data-i18n="tabChallenge">🏆 Challenge</button>
         </div>
-        <div class="phone-status">
-          <span id="phoneTime">12:00</span>
-          <span style="display:flex;gap:4px;align-items:center;font-size:0.7rem;">
-            <span id="phoneSig">▪▪▪▪</span> <span id="phoneBatt">🔋</span>
-          </span>
-        </div>
-        <div class="phone-screen" id="phoneScreen">
-          <div class="phone-state" id="phoneState">
-            <div class="phone-emoji">📱</div>
-            <div class="phone-msg" data-i18n="phoneDefault">Scegli uno scenario<br>e premi Esegui!</div>
-            <div class="phone-sub" data-i18n="phoneSub">Il tuo telefono reagirà al codice 👆</div>
+      </div>
+      <div>
+        <div class="section-label" data-i18n="labelScenario">🎯 Choose a Scenario</div>
+        <div class="scenario-grid" id="vScenarioPicker"></div>
+      </div>
+      <div id="vSliderSection">
+        <div class="section-label" data-i18n="labelVars">🎛️ Set Variables</div>
+        <div class="vars-card" id="vSliderArea"></div>
+      </div>
+      <div id="vChallengeSection" style="display:none;">
+        <div class="section-label" data-i18n="labelMission">🏆 Your Mission</div>
+        <div class="challenge-box" id="vChallengeBox"></div>
+      </div>
+      <div>
+        <div class="section-label" data-i18n="labelCode">✍️ Write Your Python Code</div>
+        <div class="editor-card">
+          <div class="editor-topbar">
+            <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+            <span class="editor-title">conditions.py</span>
           </div>
+          <textarea class="code-area" id="vCodeArea" spellcheck="false"></textarea>
         </div>
-        <div class="phone-gesture"></div>
+      </div>
+      <div class="hints" id="vHintsBox" style="display:none;"></div>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <button class="run-btn" onclick="runVarsCode()"><span>▶</span> <span data-i18n="btnRun">Run Code!</span></button>
+        <div class="sound-badge" id="vSoundBadge">
+          <div class="wave"><span style="height:4px"></span><span style="height:8px"></span><span style="height:12px"></span><span style="height:6px"></span></div>
+          <span id="vSoundLabel">No sound yet</span>
+        </div>
+      </div>
+      <div>
+        <div class="section-label" data-i18n="labelConsole">📋 Output Console</div>
+        <div class="console" id="vConsole"><span class="info"># print() output appears here...</span></div>
+      </div>
+    </div>
+    <!-- PHONE -->
+    <div class="phone-col">
+      <div class="section-label" style="text-align:center;margin-bottom:8px;" data-i18n="labelPhone">📱 iPhone</div>
+      <div class="phone-wrap" id="vPhoneWrap">
+        <div class="phone-btn-vol"></div><div class="phone-btn-vol2"></div><div class="phone-btn-power"></div>
+        <div class="phone-outer">
+          <div class="phone-island" id="vPhoneIsland"><div class="island-cam"></div><div class="island-pill"></div><div class="island-live"><div class="island-dot"></div><span id="vIslandText">LIVE</span></div></div>
+          <div class="phone-status"><span id="vPhoneTime">12:00</span><span style="font-size:0.65rem;">▪▪▪▪ 🔋</span></div>
+          <div class="phone-screen" id="vPhoneScreen">
+            <div class="phone-state" id="vPhoneState">
+              <div class="phone-emoji">📱</div>
+              <div class="phone-msg" data-i18n="phoneDefault">Pick a scenario<br>and press Run!</div>
+              <div class="phone-sub" data-i18n="phoneSub">Your phone reacts to your code 👆</div>
+            </div>
+          </div>
+          <div class="phone-gesture"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ LISTS ═══════════════════ -->
+<div class="topic-content" id="content-lists">
+  <div class="main">
+    <div class="left-col">
+      <div>
+        <div class="section-label">⚙️ Mode</div>
+        <div class="mode-tabs">
+          <button class="mode-tab active" id="ltab-guided" onclick="setListsMode('guided')">🧩 <span data-i18n="tabGuided">Guided</span></button>
+          <button class="mode-tab" id="ltab-challenge" onclick="setListsMode('challenge')">🏆 <span data-i18n="tabChallenge">Challenge</span></button>
+        </div>
+      </div>
+      <div>
+        <div class="section-label" data-i18n="labelScenario">🎯 Choose a Scenario</div>
+        <div class="scenario-grid" id="lScenarioPicker"></div>
+      </div>
+      <div id="lGuidedInfo"></div>
+      <div id="lChallengeSection" style="display:none;">
+        <div class="section-label" data-i18n="labelMission">🏆 Your Mission</div>
+        <div class="challenge-box" id="lChallengeBox"></div>
+      </div>
+      <div>
+        <div class="section-label" data-i18n="labelCode">✍️ Write Your Python Code</div>
+        <div class="editor-card">
+          <div class="editor-topbar">
+            <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+            <span class="editor-title">lists.py</span>
+          </div>
+          <textarea class="code-area" id="lCodeArea" spellcheck="false"></textarea>
+        </div>
+      </div>
+      <div class="hints" id="lHintsBox" style="display:none;"></div>
+      <!-- List Visualizer -->
+      <div id="lVizSection">
+        <div class="section-label">🔬 List Visualizer</div>
+        <div class="list-viz">
+          <div class="list-items-row" id="lVizItems"><span style="color:var(--muted);font-size:0.78rem;font-family:'Space Mono',monospace;">Run code to see your list here...</span></div>
+          <div class="list-ops-log" id="lVizLog"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <button class="run-btn" onclick="runListsCode()"><span>▶</span> <span data-i18n="btnRun">Run Code!</span></button>
+      </div>
+      <div>
+        <div class="section-label" data-i18n="labelConsole">📋 Output Console</div>
+        <div class="console" id="lConsole"><span class="info"># print() output appears here...</span></div>
+      </div>
+    </div>
+    <!-- PHONE for lists -->
+    <div class="phone-col">
+      <div class="section-label" style="text-align:center;margin-bottom:8px;" data-i18n="labelPhone">📱 iPhone</div>
+      <div class="phone-wrap">
+        <div class="phone-btn-vol"></div><div class="phone-btn-vol2"></div><div class="phone-btn-power"></div>
+        <div class="phone-outer">
+          <div class="phone-island" id="lPhoneIsland"><div class="island-cam"></div><div class="island-pill"></div><div class="island-live"><div class="island-dot"></div><span>LIST</span></div></div>
+          <div class="phone-status"><span id="lPhoneTime">12:00</span><span style="font-size:0.65rem;">▪▪▪▪ 🔋</span></div>
+          <div class="phone-screen" id="lPhoneScreen">
+            <div class="phone-state" id="lPhoneState">
+              <div class="phone-emoji">📋</div>
+              <div class="phone-msg">Run code to see<br>your list!</div>
+              <div class="phone-sub">Lists keep things organized 📦</div>
+            </div>
+          </div>
+          <div class="phone-gesture"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ LOOPS ═══════════════════ -->
+<div class="topic-content" id="content-loops">
+  <div class="main">
+    <div class="left-col">
+      <div>
+        <div class="section-label">⚙️ Mode</div>
+        <div class="mode-tabs">
+          <button class="mode-tab active" id="ootab-guided" onclick="setLoopsMode('guided')">🧩 <span data-i18n="tabGuided">Guided</span></button>
+          <button class="mode-tab" id="ootab-challenge" onclick="setLoopsMode('challenge')">🏆 <span data-i18n="tabChallenge">Challenge</span></button>
+        </div>
+      </div>
+      <div>
+        <div class="section-label" data-i18n="labelScenario">🎯 Choose a Scenario</div>
+        <div class="scenario-grid" id="ooScenarioPicker"></div>
+      </div>
+      <div id="ooGuidedInfo"></div>
+      <div id="ooChallengeSection" style="display:none;">
+        <div class="section-label" data-i18n="labelMission">🏆 Your Mission</div>
+        <div class="challenge-box" id="ooChallengeBox"></div>
+      </div>
+      <div>
+        <div class="section-label" data-i18n="labelCode">✍️ Write Your Python Code</div>
+        <div class="editor-card">
+          <div class="editor-topbar">
+            <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+            <span class="editor-title">loops.py</span>
+          </div>
+          <textarea class="code-area" id="ooCodeArea" spellcheck="false"></textarea>
+        </div>
+      </div>
+      <div class="hints" id="ooHintsBox" style="display:none;"></div>
+      <!-- Loop Visualizer -->
+      <div id="ooVizSection">
+        <div class="section-label">🔬 Loop Visualizer</div>
+        <div class="loop-viz">
+          <div class="loop-track" id="ooLoopTrack"><span style="color:var(--muted);font-size:0.78rem;font-family:'Space Mono',monospace;">Run code to see the loop steps...</span></div>
+          <div class="loop-counter" id="ooLoopCounter"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <button class="run-btn" onclick="runLoopsCode()"><span>▶</span> <span data-i18n="btnRun">Run Code!</span></button>
+      </div>
+      <div>
+        <div class="section-label" data-i18n="labelConsole">📋 Output Console</div>
+        <div class="console" id="ooConsole"><span class="info"># print() output appears here...</span></div>
+      </div>
+    </div>
+    <!-- PHONE for loops -->
+    <div class="phone-col">
+      <div class="section-label" style="text-align:center;margin-bottom:8px;" data-i18n="labelPhone">📱 iPhone</div>
+      <div class="phone-wrap">
+        <div class="phone-btn-vol"></div><div class="phone-btn-vol2"></div><div class="phone-btn-power"></div>
+        <div class="phone-outer">
+          <div class="phone-island" id="ooPhoneIsland"><div class="island-cam"></div><div class="island-pill"></div><div class="island-live"><div class="island-dot"></div><span>LOOP</span></div></div>
+          <div class="phone-status"><span id="ooPhoneTime">12:00</span><span style="font-size:0.65rem;">▪▪▪▪ 🔋</span></div>
+          <div class="phone-screen" id="ooPhoneScreen">
+            <div class="phone-state" id="ooPhoneState">
+              <div class="phone-emoji">🔁</div>
+              <div class="phone-msg">Run code to start<br>the loop!</div>
+              <div class="phone-sub">Loops repeat things automatically ⚡</div>
+            </div>
+          </div>
+          <div class="phone-gesture"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -348,1051 +507,1046 @@ body[dir="rtl"] .hint-row{direction:rtl;}
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-// SCENARIOS — trilingual
-// ═══════════════════════════════════════════════════════════════
-const SCENARIO_DATA = {
-  battery: {
-    id:'battery',
-    label:{ it:'🔋 Batteria', en:'🔋 Battery', ar:'🔋 البطارية' },
-    vars:[{name:'battery', label:{ it:'Batteria %', en:'Battery %', ar:'نسبة البطارية %' }, min:0,max:100,default:20}],
-    code:`battery = {battery}\n\nif battery == 0:\n    print("Telefono SPENTO!")\nelif battery < 10:\n    print("CRITICA! Carica subito!")\nelif battery < 30:\n    print("Batteria bassa, caricami!")\nelif battery < 70:\n    print("Batteria ok.")\nelse:\n    print("Batteria piena. Ottimo!")`,
-    code_en:`battery = {battery}\n\nif battery == 0:\n    print("Phone is OFF!")\nelif battery < 10:\n    print("CRITICAL! Plug in now!")\nelif battery < 30:\n    print("Battery is low, charge me!")\nelif battery < 70:\n    print("Battery is okay.")\nelse:\n    print("Battery is full. Great!")`,
-    code_ar:`battery = {battery}\n\nif battery == 0:\n    print("الهاتف مُغلق!")\nelif battery < 10:\n    print("حرج! اشحن الآن!")\nelif battery < 30:\n    print("البطارية منخفضة!")\nelif battery < 70:\n    print("البطارية جيدة.")\nelse:\n    print("بطارية ممتلئة!")`,
-    hints:{
-      it:[{tag:'battery < 10',text:'Vero quando battery vale 0,1,2...9'},{tag:'elif',text:'"else if" — un\'altra condizione da verificare'},{tag:'else:',text:'Esegue quando nessuna condizione precedente è vera'}],
-      en:[{tag:'battery < 10',text:'True when battery is 0,1,2...9'},{tag:'elif',text:'"else if" — another condition to check'},{tag:'else:',text:'Runs when none of the above matched'}],
-      ar:[{tag:'battery < 10',text:'صحيح عندما تكون القيمة 0 أو 1 أو ... 9'},{tag:'elif',text:'"else if" — شرط آخر للتحقق منه'},{tag:'else:',text:'يُنفَّذ عندما لا يتحقق أي شرط سابق'}]
-    },
-    challenge:{
-      title:{ it:'🔋 Sfida Batteria', en:'🔋 Battery Challenge', ar:'🔋 تحدي البطارية' },
-      desc:{
-        it:'Scrivi codice che stampa "SOS! Sta morendo!" se battery < 5, "Bassa!" se battery < 20, "Ok" se battery < 80, altrimenti "Piena!". Usa battery = 15.',
-        en:'Write code that prints "SOS! Dying!" when battery < 5, "Low!" when battery < 20, "Good" when battery < 80, and "Full Power!" otherwise. Use battery = 15.',
-        ar:'اكتب كوداً يطبع "SOS!" إذا كانت battery < 5، "منخفضة!" إذا كانت < 20، "جيدة" إذا كانت < 80، وإلا "ممتلئة!". استخدم battery = 15.'
-      },
-      startCode:{ it:`battery = 15\n\n# Scrivi il tuo if/elif/else qui!\n`, en:`battery = 15\n\n# Write your if/elif/else here!\n`, ar:`battery = 15\n\n# اكتب if/elif/else هنا!\n` }
-    }
-  },
-  wifi: {
-    id:'wifi',
-    label:{ it:'📶 WiFi', en:'📶 WiFi', ar:'📶 واي فاي' },
-    vars:[{name:'signal', label:{ it:'Segnale WiFi (0–100)', en:'WiFi Signal (0–100)', ar:'قوة الواي فاي (0–100)' }, min:0,max:100,default:60}],
-    code:`signal = {signal}\n\nif signal == 0:\n    print("Nessun WiFi! Sei offline.")\nelif signal < 25:\n    print("Segnale molto debole!")\nelif signal < 60:\n    print("Segnale ok, ma lento.")\nelse:\n    print("WiFi ottimo! Barre piene!")`,
-    code_en:`signal = {signal}\n\nif signal == 0:\n    print("No WiFi! You are offline.")\nelif signal < 25:\n    print("Very weak signal!")\nelif signal < 60:\n    print("Signal is okay, but slow.")\nelse:\n    print("Great WiFi! Full bars!")`,
-    code_ar:`signal = {signal}\n\nif signal == 0:\n    print("لا واي فاي! أنت غير متصل.")\nelif signal < 25:\n    print("إشارة ضعيفة جداً!")\nelif signal < 60:\n    print("الإشارة مقبولة، لكن بطيئة.")\nelse:\n    print("واي فاي ممتاز!")`,
-    hints:{
-      it:[{tag:'signal == 0',text:'== verifica se due valori sono ESATTAMENTE uguali'},{tag:'signal < 25',text:'< significa "minore di"'}],
-      en:[{tag:'signal == 0',text:'== checks if two values are EXACTLY equal'},{tag:'signal < 25',text:'< means "less than"'}],
-      ar:[{tag:'signal == 0',text:'== يتحقق من تساوي القيمتين تماماً'},{tag:'signal < 25',text:'< تعني "أقل من"'}]
-    },
-    challenge:{
-      title:{ it:'📶 Sfida WiFi', en:'📶 WiFi Challenge', ar:'📶 تحدي الواي فاي' },
-      desc:{
-        it:'Fai stampare "Offline" per signal 0, "Debole" per signal < 30, "Decente" per signal < 75, altrimenti "Fulmineo!". Variabile: signal = 40.',
-        en:'Make the phone show "Offline" for signal 0, "Weak" for signal < 30, "Decent" for signal < 75, and "Lightning Fast!" otherwise. Variable: signal = 40.',
-        ar:'اجعل الهاتف يطبع "غير متصل" لـ signal=0، "ضعيف" لـ <30، "مقبول" لـ <75، وإلا "سريع جداً!". المتغير: signal = 40.'
-      },
-      startCode:{ it:`signal = 40\n\n# Il tuo codice qui!\n`, en:`signal = 40\n\n# Your code here!\n`, ar:`signal = 40\n\n# كودك هنا!\n` }
-    }
-  },
-  alarm: {
-    id:'alarm',
-    label:{ it:'⏰ Sveglia', en:'⏰ Alarm', ar:'⏰ المنبه' },
-    vars:[{name:'hour', label:{ it:'Ora attuale (0–23)', en:'Current Hour (0–23)', ar:'الساعة الحالية (0–23)' }, min:0,max:23,default:7}],
-    code:`hour = {hour}\n\nif hour == 7:\n    print("SVEGLIATI! La sveglia suona!")\nelif hour < 7:\n    print("Ancora a dormire... Zzz")\nelif hour < 9:\n    print("Mattina! Sei in orario.")\nelse:\n    print("Sei in ritardo! Sbrigati!")`,
-    code_en:`hour = {hour}\n\nif hour == 7:\n    print("WAKE UP! Alarm is ringing!")\nelif hour < 7:\n    print("Still sleeping... Zzz")\nelif hour < 9:\n    print("Morning! You're on time.")\nelse:\n    print("You're late! Hurry!")`,
-    code_ar:`hour = {hour}\n\nif hour == 7:\n    print("استيقظ! المنبه يرن!")\nelif hour < 7:\n    print("لا تزال نائماً... Zzz")\nelif hour < 9:\n    print("صباح! أنت في الوقت.")\nelse:\n    print("تأخرت! أسرع!")`,
-    hints:{
-      it:[{tag:'hour == 7',text:'Vero SOLO quando hour è esattamente 7'},{tag:'hour < 7',text:'Vero per 0,1,2,3,4,5,6'}],
-      en:[{tag:'hour == 7',text:'True ONLY when hour is exactly 7'},{tag:'hour < 7',text:'True for 0,1,2,3,4,5,6'}],
-      ar:[{tag:'hour == 7',text:'صحيح فقط عندما تكون hour تساوي 7 بالضبط'},{tag:'hour < 7',text:'صحيح للقيم 0,1,2,3,4,5,6'}]
-    },
-    challenge:{
-      title:{ it:'⏰ Sfida Sveglia', en:'⏰ Alarm Challenge', ar:'⏰ تحدي المنبه' },
-      desc:{
-        it:'Fai suonare la sveglia sia alle 6 che alle 7 (la scuola inizia presto!). Stampa "SVEGLIA!" per queste ore, "Dormi ancora..." per hour < 6, e "Buongiorno!" altrimenti.',
-        en:'Ring the alarm at BOTH hour == 6 AND hour == 7. Print "ALARM RINGING!" for those hours, "Sleep more..." for hour < 6, and "Good morning!" otherwise.',
-        ar:'اجعل المنبه يرن عند hour==6 وعند hour==7. اطبع "المنبه يرن!" لهاتين الساعتين، "نم أكثر..." لـ hour<6، و"صباح الخير!" بخلاف ذلك.'
-      },
-      startCode:{ it:`hour = 6\n\n# Suggerimento: usa 'or' tra due condizioni!\n`, en:`hour = 6\n\n# Hint: use 'or' between two conditions!\n`, ar:`hour = 6\n\n# تلميح: استخدم 'or' بين شرطين!\n` }
-    }
-  },
-  messages: {
-    id:'messages',
-    label:{ it:'💬 Messaggi', en:'💬 Messages', ar:'💬 الرسائل' },
-    vars:[{name:'messages', label:{ it:'Messaggi non letti', en:'Unread Messages', ar:'الرسائل غير المقروءة' }, min:0,max:99,default:5}],
-    code:`messages = {messages}\n\nif messages == 0:\n    print("Nessun nuovo messaggio.")\nelif messages == 1:\n    print("Hai 1 nuovo messaggio!")\nelif messages < 10:\n    print("Qualche messaggio in attesa!")\nelse:\n    print("Molti messaggi!")`,
-    code_en:`messages = {messages}\n\nif messages == 0:\n    print("No new messages.")\nelif messages == 1:\n    print("You have 1 new message!")\nelif messages < 10:\n    print("A few messages waiting!")\nelse:\n    print("Whoa! Lots of messages!")`,
-    code_ar:`messages = {messages}\n\nif messages == 0:\n    print("لا رسائل جديدة.")\nelif messages == 1:\n    print("لديك رسالة واحدة!")\nelif messages < 10:\n    print("بعض الرسائل تنتظرك!")\nelse:\n    print("الكثير من الرسائل!")`,
-    hints:{
-      it:[{tag:'messages == 1',text:'Corrispondenza esatta: vero solo per 1'},{tag:'messages < 10',text:'Vero per 2,3,4,5,6,7,8,9'}],
-      en:[{tag:'messages == 1',text:'Exact match: only true for 1'},{tag:'messages < 10',text:'True for 2,3,4,5,6,7,8,9'}],
-      ar:[{tag:'messages == 1',text:'تطابق تام: صحيح فقط للقيمة 1'},{tag:'messages < 10',text:'صحيح للقيم 2,3,4,5,6,7,8,9'}]
-    },
-    challenge:{
-      title:{ it:'💬 Sfida Messaggi', en:'💬 Messages Challenge', ar:'💬 تحدي الرسائل' },
-      desc:{
-        it:'Stampa il numero ESATTO: "0 messaggi", "1 messaggio" (senza s!), o "X messaggi" per qualsiasi altro numero. Bonus: stampa "📬 Posta piena!" se messages > 50.',
-        en:'Print the EXACT number: "0 messages", "1 message" (no s!), or "X messages" for any other number. Bonus: print "📬 Inbox full!" if messages > 50.',
-        ar:'اطبع الرقم الدقيق: "0 رسائل"، "رسالة واحدة"، أو "X رسائل" لأي رقم آخر. إضافي: اطبع "📬 صندوق ممتلئ!" إذا كانت messages > 50.'
-      },
-      startCode:{ it:`messages = 3\n\n# Suggerimento: usa str(messages) per stampare numeri!\n`, en:`messages = 3\n\n# Hint: you can use str(messages) to print numbers!\n`, ar:`messages = 3\n\n# تلميح: استخدم str(messages) لطباعة الأرقام!\n` }
-    }
-  },
-  storage: {
-    id:'storage',
-    label:{ it:'💾 Memoria', en:'💾 Storage', ar:'💾 التخزين' },
-    vars:[{name:'free_gb', label:{ it:'Spazio libero (GB)', en:'Free Storage (GB)', ar:'المساحة الحرة (GB)' }, min:0,max:128,default:10}],
-    code:`free_gb = {free_gb}\n\nif free_gb == 0:\n    print("Memoria PIENA! Elimina qualcosa!")\nelif free_gb < 5:\n    print("Quasi piena! Attenzione.")\nelif free_gb < 20:\n    print("Un po' di spazio rimasto.")\nelse:\n    print("Spazio abbondante!")`,
-    code_en:`free_gb = {free_gb}\n\nif free_gb == 0:\n    print("Storage FULL! Delete something!")\nelif free_gb < 5:\n    print("Almost full! Be careful.")\nelif free_gb < 20:\n    print("Some space left.")\nelse:\n    print("Plenty of storage!")`,
-    code_ar:`free_gb = {free_gb}\n\nif free_gb == 0:\n    print("التخزين ممتلئ! احذف شيئاً!")\nelif free_gb < 5:\n    print("شبه ممتلئ! احذر.")\nelif free_gb < 20:\n    print("بعض المساحة متبقية.")\nelse:\n    print("مساحة كافية!")`,
-    hints:{
-      it:[{tag:'free_gb == 0',text:'Verifica esattamente zero gigabyte'},{tag:'free_gb < 5',text:'Corrisponde a 1, 2, 3 o 4 GB'}],
-      en:[{tag:'free_gb == 0',text:'Checks for exactly zero gigabytes'},{tag:'free_gb < 5',text:'Matches 1, 2, 3, or 4 GB'}],
-      ar:[{tag:'free_gb == 0',text:'يتحقق من كون المساحة صفراً تماماً'},{tag:'free_gb < 5',text:'يطابق 1 أو 2 أو 3 أو 4 GB'}]
-    },
-    challenge:{
-      title:{ it:'💾 Sfida Memoria', en:'💾 Storage Challenge', ar:'💾 تحدي التخزين' },
-      desc:{
-        it:'Stampa un avviso per ogni livello: "PIENA", "< 5 GB — pericolo!", "< 20 GB — attenzione", o "Hai X GB liberi!" per tutto il resto.',
-        en:'Print a warning for each level: "FULL", "< 5 GB — danger!", "< 20 GB — watch out", or "You have X GB free!" for anything else.',
-        ar:'اطبع تحذيراً لكل مستوى: "ممتلئ"، "< 5 GB - خطر!"، "< 20 GB - انتبه"، أو "لديك X GB حرة!".'
-      },
-      startCode:{ it:`free_gb = 3\n\n# Il tuo codice qui!\n`, en:`free_gb = 3\n\n# Your code here!\n`, ar:`free_gb = 3\n\n# كودك هنا!\n` }
-    }
-  },
-  flashlight: {
-    id:'flashlight',
-    label:{ it:'🔦 Torcia', en:'🔦 Flashlight', ar:'🔦 المصباح' },
-    vars:[{name:'brightness', label:{ it:'Luminosità (0–100)', en:'Brightness (0–100)', ar:'السطوع (0–100)' }, min:0,max:100,default:0}],
-    code:`brightness = {brightness}\n\nif brightness == 0:\n    print("Torcia SPENTA.")\nelif brightness < 30:\n    print("Luce fioca accesa.")\nelif brightness < 70:\n    print("Luminosità media.")\nelse:\n    print("MASSIMA LUMINOSITÀ! Abbagliante!")`,
-    code_en:`brightness = {brightness}\n\nif brightness == 0:\n    print("Flashlight is OFF.")\nelif brightness < 30:\n    print("Dim light on.")\nelif brightness < 70:\n    print("Medium brightness.")\nelse:\n    print("FULL BRIGHTNESS! So bright!")`,
-    code_ar:`brightness = {brightness}\n\nif brightness == 0:\n    print("المصباح مطفأ.")\nelif brightness < 30:\n    print("ضوء خافت.")\nelif brightness < 70:\n    print("سطوع متوسط.")\nelse:\n    print("أقصى سطوع!")`,
-    hints:{
-      it:[{tag:'brightness == 0',text:'La luce è completamente spenta'},{tag:'brightness < 30',text:'Fioco = meno del 30% di potenza'}],
-      en:[{tag:'brightness == 0',text:'Light is completely off'},{tag:'brightness < 30',text:'Dim = less than 30% power'}],
-      ar:[{tag:'brightness == 0',text:'الضوء مطفأ تماماً'},{tag:'brightness < 30',text:'خافت = أقل من 30% من الطاقة'}]
-    },
-    challenge:{
-      title:{ it:'🔦 Sfida Torcia', en:'🔦 Flashlight Challenge', ar:'🔦 تحدي المصباح' },
-      desc:{
-        it:'Aggiungi la "modalità disco": se brightness > 90 stampa "🎉 FESTA!" invece di massima luminosità. Altrimenti mantieni i 4 livelli.',
-        en:'Add a "disco mode": if brightness > 90, print "🎉 PARTY MODE!" instead of full brightness. Otherwise keep the same 4 levels.',
-        ar:'أضف "وضع الديسكو": إذا كانت brightness > 90 اطبع "🎉 حفلة!" بدلاً من أقصى سطوع. وإلا احتفظ بالمستويات الأربعة.'
-      },
-      startCode:{ it:`brightness = 95\n\n# Il tuo codice qui!\n`, en:`brightness = 95\n\n# Your code here!\n`, ar:`brightness = 95\n\n# كودك هنا!\n` }
-    }
-  },
-  gps: {
-    id:'gps',
-    label:{ it:'🗺️ GPS', en:'🗺️ GPS', ar:'🗺️ GPS' },
-    vars:[{name:'speed', label:{ it:'Velocità (km/h)', en:'Speed (km/h)', ar:'السرعة (كم/ساعة)' }, min:0,max:130,default:40}],
-    code:`speed = {speed}\n\nif speed == 0:\n    print("Sei parcheggiato. Fermo.")\nelif speed < 20:\n    print("Passo pedonale.")\nelif speed < 60:\n    print("Guida in città.")\nelif speed < 100:\n    print("Velocità autostradale!")\nelse:\n    print("TROPPO VELOCE! Rallenta!")`,
-    code_en:`speed = {speed}\n\nif speed == 0:\n    print("You are parked. Not moving.")\nelif speed < 20:\n    print("Walking pace.")\nelif speed < 60:\n    print("City driving.")\nelif speed < 100:\n    print("Highway speed!")\nelse:\n    print("TOO FAST! Slow down!")`,
-    code_ar:`speed = {speed}\n\nif speed == 0:\n    print("أنت متوقف.")\nelif speed < 20:\n    print("سرعة المشي.")\nelif speed < 60:\n    print("قيادة في المدينة.")\nelif speed < 100:\n    print("سرعة الطريق السريع!")\nelse:\n    print("سريع جداً! تمهل!")`,
-    hints:{
-      it:[{tag:'speed == 0',text:'Esattamente zero — parcheggiato o fermo'},{tag:'speed < 20',text:'Molto lento, come camminare o andare in bici'}],
-      en:[{tag:'speed == 0',text:'Exactly zero — parked or stopped'},{tag:'speed < 20',text:'Very slow, like walking or a bicycle'}],
-      ar:[{tag:'speed == 0',text:'صفر تماماً — متوقف'},{tag:'speed < 20',text:'بطيء جداً، كالمشي أو ركوب الدراجة'}]
-    },
-    challenge:{
-      title:{ it:'🗺️ Sfida GPS', en:'🗺️ GPS Challenge', ar:'🗺️ تحدي GPS' },
-      desc:{
-        it:'Aggiungi un avviso autovelox: stampa "📸 AUTOVELOX!" se speed > 80, poi stampa anche lo stato normale. (Suggerimento: puoi usare DUE if separati!)',
-        en:'Add a speed camera warning: print "📸 SPEED CAMERA!" if speed > 80, then also print the normal status. (Hint: you can have TWO if statements!)',
-        ar:'أضف تحذير كاميرا السرعة: اطبع "📸 كاميرا سرعة!" إذا كانت speed > 80، ثم اطبع الحالة العادية أيضاً.'
-      },
-      startCode:{ it:`speed = 90\n\n# Il tuo codice — prova due if separati!\n`, en:`speed = 90\n\n# Your code here — try two separate if statements!\n`, ar:`speed = 90\n\n# كودك هنا — جرب جملتي if منفصلتين!\n` }
-    }
-  },
-  volume: {
-    id:'volume',
-    label:{ it:'🔊 Volume', en:'🔊 Volume', ar:'🔊 الصوت' },
-    vars:[{name:'volume', label:{ it:'Volume (0–100)', en:'Volume (0–100)', ar:'مستوى الصوت (0–100)' }, min:0,max:100,default:50}],
-    code:`volume = {volume}\n\nif volume == 0:\n    print("Telefono in silenzioso.")\nelif volume < 20:\n    print("Molto basso.")\nelif volume < 50:\n    print("Volume normale.")\nelif volume < 80:\n    print("Sta diventando alto!")\nelse:\n    print("VOLUME MASSIMO! 🎵")`,
-    code_en:`volume = {volume}\n\nif volume == 0:\n    print("Phone is muted.")\nelif volume < 20:\n    print("Very quiet.")\nelif volume < 50:\n    print("Normal volume.")\nelif volume < 80:\n    print("Getting loud!")\nelse:\n    print("MAX VOLUME! 🎵")`,
-    code_ar:`volume = {volume}\n\nif volume == 0:\n    print("الهاتف صامت.")\nelif volume < 20:\n    print("هادئ جداً.")\nelif volume < 50:\n    print("صوت عادي.")\nelif volume < 80:\n    print("يصبح عالياً!")\nelse:\n    print("أقصى صوت! 🎵")`,
-    hints:{
-      it:[{tag:'volume == 0',text:'Silenzioso — nessun suono'},{tag:'volume < 20',text:'Molto basso, difficile da sentire'}],
-      en:[{tag:'volume == 0',text:'Muted — no sound at all'},{tag:'volume < 20',text:'Very soft, hard to hear'}],
-      ar:[{tag:'volume == 0',text:'صامت — لا صوت إطلاقاً'},{tag:'volume < 20',text:'خافت جداً، يصعب سماعه'}]
-    },
-    challenge:{
-      title:{ it:'🔊 Sfida Volume', en:'🔊 Volume Challenge', ar:'🔊 تحدي الصوت' },
-      desc:{
-        it:'Stampa il volume come barra! Per volume >= 80 stampa "████ ALTO", per >= 50 "███░ MED", per >= 20 "██░░ BASSO", e per 0 "░░░░ MUTO".',
-        en:'Print the volume as a bar! For volume >= 80 print "████ LOUD", for >= 50 print "███░ MED", for >= 20 print "██░░ LOW", and for 0 print "░░░░ MUTE".',
-        ar:'اطبع الصوت كشريط! لـ volume >= 80 اطبع "████ عالٍ"، لـ >= 50 "███░ متوسط"، لـ >= 20 "██░░ منخفض"، ولـ 0 "░░░░ صامت".'
-      },
-      startCode:{ it:`volume = 65\n\n# Il tuo codice qui!\n`, en:`volume = 65\n\n# Your code here!\n`, ar:`volume = 65\n\n# كودك هنا!\n` }
-    }
-  }
-};
-
-// Build SCENARIOS array for current lang
-let currentLangCode = 'it';
-function getScenariosForLang(lang) {
-  return Object.values(SCENARIO_DATA).map(s => ({
-    ...s,
-    label: s.label[lang],
-    vars: s.vars.map(v => ({...v, label: v.label[lang]})),
-    code: (s['code_'+lang] || s.code),
-    hints: s.hints[lang],
-    challenge: {
-      ...s.challenge,
-      title: s.challenge.title[lang],
-      desc: s.challenge.desc[lang],
-      startCode: s.challenge.startCode[lang]
-    }
-  }));
-}
-let SCENARIOS = getScenariosForLang('it');
-// ═══════════════════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════════════════
-let currentScenario = SCENARIOS[0];
+let currentLang = 'en';
+let currentTopic = 'vars';
+let varsMode = 'guided', listsMode = 'guided', loopsMode = 'guided';
+let currentVarsScenario, currentListsScenario, currentLoopsScenario;
 let varValues = {};
-let currentMode = 'guided';
 
 // ═══════════════════════════════════════════════════════════════
-// SOUND ENGINE — Web Audio API, zero external files
+// I18N
 // ═══════════════════════════════════════════════════════════════
-let audioCtx = null;
-let soundStoppers = [];
-
-function getCtx() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  return audioCtx;
-}
-
-function stopAllSound() {
-  soundStoppers.forEach(fn => { try{ fn(); }catch(e){} });
-  soundStoppers = [];
-}
-
-// core oscillator helper
-function osc(ctx, type, freq, start, dur, vol=0.35, freqEnd=null) {
-  const g = ctx.createGain();
-  g.gain.setValueAtTime(vol, start);
-  g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
-  g.connect(ctx.destination);
-  const o = ctx.createOscillator();
-  o.type = type;
-  o.frequency.setValueAtTime(freq, start);
-  if (freqEnd) o.frequency.exponentialRampToValueAtTime(freqEnd, start + dur);
-  o.connect(g);
-  o.start(start); o.stop(start + dur + 0.05);
-  soundStoppers.push(() => { try{ o.stop(); }catch(e){} });
-}
-
-// noise helper
-function noise(ctx, start, dur, vol=0.15, ffreq=2000, ftype='bandpass') {
-  const buf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * dur), ctx.sampleRate);
-  const d = buf.getChannelData(0);
-  for (let i=0;i<d.length;i++) d[i] = Math.random()*2-1;
-  const src = ctx.createBufferSource(); src.buffer = buf;
-  const filt = ctx.createBiquadFilter(); filt.type=ftype; filt.frequency.value=ffreq;
-  const g = ctx.createGain();
-  g.gain.setValueAtTime(vol, start);
-  g.gain.exponentialRampToValueAtTime(0.0001, start+dur);
-  src.connect(filt); filt.connect(g); g.connect(ctx.destination);
-  src.start(start); src.stop(start+dur+0.05);
-}
-
-// repeating beep
-function beepLoop(ctx, freq, interval, count, start, dur, vol=0.3) {
-  for (let i=0;i<count;i++) osc(ctx,'square',freq,start+i*interval,dur,vol);
-}
-
-const SOUNDS = {
-  // ── BATTERY ──
-  battery_dead: ctx => {
-    const t = ctx.currentTime;
-    osc(ctx,'sine',80,t,0.8,0.5); osc(ctx,'sine',60,t+0.1,0.7,0.3);
-    noise(ctx,t,0.3,0.25,200);
-    osc(ctx,'sawtooth',220,t+0.3,1.0,0.2,30);
+const LANG = {
+  en: {
+    tabFree:'Free Python', tabVars:'Variables & Conditions', tabLists:'Lists', tabLoops:'Loops',
+    tabGuided:'🧩 Guided', tabChallenge:'🏆 Challenge', labelScenario:'🎯 Choose a Scenario',
+    labelMode:'⚙️ Mode', labelVars:'🎛️ Set Variables', labelMission:'🏆 Your Mission',
+    labelCode:'✍️ Write Your Python Code', labelHints:'Hints', btnRun:'Run Code!',
+    btnCheck:'Check My Answer!', challengeBadge:'CHALLENGE',
+    challengePass:'Great job! Output:', challengeNoOutput:'No output yet — did you add print()?',
+    soundNone:'No sound yet', soundDone:'Done', noOutput:'No output', errorLabel:'Error',
+    labelConsole:'📋 Output Console', consolePlaceholder:'# print() output appears here...',
+    labelPhone:'📱 iPhone', phoneDefault:'Pick a scenario<br>and press Run!', phoneSub:'Your phone reacts to your code 👆',
+    headerSub:'🚀 Write Python → Watch your phone react in real time!',
+    freeWelcomeTitle:'🐍 Python Playground — try anything!',
+    freeWelcomeDesc:'Write any Python code below. Variables, conditions, lists, loops, print — it all works.',
   },
-  battery_critical: ctx => {
-    const t=ctx.currentTime;
-    [0,0.22,0.44,0.66].forEach(d => {
-      osc(ctx,'square',880,t+d,0.14,0.35);
-      osc(ctx,'square',1100,t+d+0.07,0.1,0.2);
-    });
+  it: {
+    tabFree:'Python Libero', tabVars:'Variabili & Condizioni', tabLists:'Liste', tabLoops:'Cicli',
+    tabGuided:'🧩 Guidata', tabChallenge:'🏆 Sfida', labelScenario:'🎯 Scegli uno Scenario',
+    labelMode:'⚙️ Modalità', labelVars:'🎛️ Imposta Variabili', labelMission:'🏆 La Tua Missione',
+    labelCode:'✍️ Scrivi il tuo Codice Python', labelHints:'Suggerimenti', btnRun:'Esegui!',
+    btnCheck:'Controlla!', challengeBadge:'SFIDA',
+    challengePass:'Ottimo! Output:', challengeNoOutput:'Nessun output — hai usato print()?',
+    soundNone:'Nessun suono', soundDone:'Fatto', noOutput:'Nessun output', errorLabel:'Errore',
+    labelConsole:'📋 Console di Output', consolePlaceholder:'# L\'output apparirà qui...',
+    labelPhone:'📱 iPhone', phoneDefault:'Scegli uno scenario<br>e premi Esegui!', phoneSub:'Il telefono reagisce al codice 👆',
+    headerSub:'🚀 Scrivi Python → Guarda il tuo iPhone reagire in tempo reale!',
+    freeWelcomeTitle:'🐍 Python Libero — prova tutto!',
+    freeWelcomeDesc:'Scrivi qualsiasi codice Python. Variabili, condizioni, liste, cicli — tutto funziona.',
   },
-  battery_low: ctx => {
-    const t=ctx.currentTime;
-    osc(ctx,'sine',660,t,0.28,0.35); osc(ctx,'sine',440,t+0.32,0.25,0.35);
-  },
-  battery_ok: ctx => {
-    const t=ctx.currentTime;
-    osc(ctx,'sine',523,t,0.3,0.3); osc(ctx,'sine',659,t+0.18,0.22,0.3);
-  },
-  battery_full: ctx => {
-    const t=ctx.currentTime;
-    [523,659,784,1047].forEach((f,i) => osc(ctx,'sine',f,t+i*0.1,0.38,0.28));
-  },
-
-  // ── WIFI ──
-  wifi_none: ctx => {
-    const t=ctx.currentTime;
-    noise(ctx,t,0.4,0.3,800,'bandpass');
-    osc(ctx,'sawtooth',200,t,0.4,0.15,100);
-  },
-  wifi_weak: ctx => {
-    const t=ctx.currentTime;
-    [0,0.5].forEach(d => { osc(ctx,'sine',300,t+d,0.2,0.15); noise(ctx,t+d+0.1,0.15,0.1,1200); });
-  },
-  wifi_ok: ctx => {
-    const t=ctx.currentTime;
-    osc(ctx,'sine',440,t,0.25,0.2); osc(ctx,'sine',550,t+0.15,0.2,0.22);
-  },
-  wifi_great: ctx => {
-    const t=ctx.currentTime;
-    [440,550,660,880].forEach((f,i) => osc(ctx,'sine',f,t+i*0.08,0.3,0.22));
-  },
-
-  // ── ALARM ──
-  alarm_sleep: ctx => {
-    const t=ctx.currentTime;
-    // soft breathing sine — Zzz
-    osc(ctx,'sine',120,t,1.0,0.08,80);
-    osc(ctx,'sine',110,t+0.5,0.8,0.06,90);
-  },
-  alarm_ringing: ctx => {
-    // classic loud alarm beep pattern
-    const t=ctx.currentTime;
-    const pattern=[0,0.18,0.36,0.54,0.8,0.98,1.16,1.34];
-    pattern.forEach(d => {
-      osc(ctx,'square',880,t+d,0.15,0.45);
-      osc(ctx,'square',1320,t+d+0.08,0.1,0.15);
-    });
-    noise(ctx,t,1.5,0.05,3000);
-  },
-  alarm_morning: ctx => {
-    const t=ctx.currentTime;
-    // gentle bird-chirp-like ascending tones
-    [0,0.2,0.4].forEach(d => {
-      osc(ctx,'sine',880,t+d,0.12,0.18,1100);
-    });
-    osc(ctx,'sine',660,t+0.7,0.3,0.25);
-  },
-  alarm_late: ctx => {
-    const t=ctx.currentTime;
-    // frantic run! ascending rapid beeps
-    [0,0.1,0.2,0.3,0.4].forEach((d,i) => osc(ctx,'square',600+i*80,t+d,0.12,0.35));
-  },
-
-  // ── MESSAGES ──
-  messages_none: ctx => {
-    const t=ctx.currentTime; osc(ctx,'sine',330,t,0.3,0.15);
-  },
-  messages_one: ctx => {
-    const t=ctx.currentTime;
-    osc(ctx,'sine',660,t,0.2,0.2); osc(ctx,'sine',880,t+0.15,0.18,0.2);
-  },
-  messages_few: ctx => {
-    const t=ctx.currentTime;
-    [0,0.15,0.3].forEach(d => osc(ctx,'sine',660,t+d,0.12,0.2));
-  },
-  messages_many: ctx => {
-    const t=ctx.currentTime;
-    noise(ctx,t,0.1,0.15,2000);
-    [0,0.1,0.2,0.3,0.4,0.5].forEach(d => osc(ctx,'sine',660+d*200,t+d,0.1,0.15));
-  },
-
-  // ── STORAGE ──
-  storage_full: ctx => {
-    const t=ctx.currentTime;
-    osc(ctx,'sawtooth',150,t,0.6,0.4,100);
-    noise(ctx,t+0.1,0.4,0.2,500);
-  },
-  storage_danger: ctx => {
-    const t=ctx.currentTime;
-    beepLoop(ctx,440,0.3,3,t,0.2,0.3);
-  },
-  storage_some: ctx => {
-    const t=ctx.currentTime; osc(ctx,'sine',440,t,0.35,0.2);
-  },
-  storage_plenty: ctx => {
-    const t=ctx.currentTime;
-    [440,550,660].forEach((f,i) => osc(ctx,'sine',f,t+i*0.1,0.3,0.2));
-  },
-
-  // ── FLASHLIGHT ──
-  flashlight_off: ctx => {
-    const t=ctx.currentTime; osc(ctx,'sine',200,t,0.25,0.15,100);
-  },
-  flashlight_dim: ctx => {
-    const t=ctx.currentTime; osc(ctx,'sine',400,t,0.3,0.18,300);
-  },
-  flashlight_medium: ctx => {
-    const t=ctx.currentTime;
-    osc(ctx,'sine',600,t,0.3,0.2); noise(ctx,t,0.15,0.05,4000);
-  },
-  flashlight_full: ctx => {
-    const t=ctx.currentTime;
-    noise(ctx,t,0.08,0.25,6000);
-    osc(ctx,'sine',880,t,0.25,0.3,1200);
-    osc(ctx,'sine',1100,t+0.05,0.2,0.25);
-  },
-
-  // ── GPS / SPEED ──
-  gps_parked: ctx => {
-    const t=ctx.currentTime; osc(ctx,'sine',330,t,0.5,0.12);
-  },
-  gps_walk: ctx => {
-    const t=ctx.currentTime;
-    [0,0.3,0.6].forEach(d => osc(ctx,'sine',440,t+d,0.18,0.12));
-  },
-  gps_city: ctx => {
-    const t=ctx.currentTime;
-    osc(ctx,'sine',550,t,0.25,0.18); osc(ctx,'sine',660,t+0.2,0.2,0.18);
-  },
-  gps_highway: ctx => {
-    const t=ctx.currentTime;
-    osc(ctx,'sawtooth',200,t,0.6,0.15,400);
-    noise(ctx,t,0.5,0.08,3000);
-  },
-  gps_toofast: ctx => {
-    const t=ctx.currentTime;
-    beepLoop(ctx,880,0.15,5,t,0.1,0.4);
-    noise(ctx,t,0.8,0.1,5000);
-  },
-
-  // ── VOLUME ──
-  volume_mute: ctx => {
-    const t=ctx.currentTime; noise(ctx,t,0.15,0.05,500);
-  },
-  volume_quiet: ctx => {
-    const t=ctx.currentTime; osc(ctx,'sine',440,t,0.3,0.08);
-  },
-  volume_normal: ctx => {
-    const t=ctx.currentTime;
-    osc(ctx,'sine',440,t,0.3,0.2); osc(ctx,'sine',550,t+0.1,0.25,0.18);
-  },
-  volume_loud: ctx => {
-    const t=ctx.currentTime;
-    osc(ctx,'sine',440,t,0.3,0.35); osc(ctx,'sawtooth',220,t,0.3,0.1);
-    noise(ctx,t+0.1,0.2,0.1,2000);
-  },
-  volume_max: ctx => {
-    const t=ctx.currentTime;
-    [220,330,440,550,660,880].forEach((f,i) => osc(ctx,'sawtooth',f,t+i*0.04,0.35,0.18));
-    noise(ctx,t,0.3,0.15,3000);
-  },
+  ar: {
+    tabFree:'Python حر', tabVars:'متغيرات وشروط', tabLists:'القوائم', tabLoops:'الحلقات',
+    tabGuided:'🧩 إرشادي', tabChallenge:'🏆 تحدي', labelScenario:'🎯 اختر سيناريو',
+    labelMode:'⚙️ الوضع', labelVars:'🎛️ اضبط المتغيرات', labelMission:'🏆 مهمتك',
+    labelCode:'✍️ اكتب كود بايثون', labelHints:'تلميحات', btnRun:'تشغيل!',
+    btnCheck:'تحقق!', challengeBadge:'تحدي',
+    challengePass:'أحسنت! الإخراج:', challengeNoOutput:'لا إخراج — هل أضفت print()؟',
+    soundNone:'لا صوت بعد', soundDone:'تم', noOutput:'لا إخراج', errorLabel:'خطأ',
+    labelConsole:'📋 وحدة الإخراج', consolePlaceholder:'# مخرجات print() ستظهر هنا...',
+    labelPhone:'📱 iPhone', phoneDefault:'اختر سيناريو<br>واضغط تشغيل!', phoneSub:'هاتفك يتفاعل مع كودك 👆',
+    headerSub:'🚀 اكتب بايثون ← شاهد هاتفك يتفاعل!',
+    freeWelcomeTitle:'🐍 ملعب بايثون — جرب أي شيء!',
+    freeWelcomeDesc:'اكتب أي كود بايثون. المتغيرات، الشروط، القوائم، الحلقات — كل شيء يعمل.',
+  }
 };
-
-function playSound(key) {
-  stopAllSound();
-  const fn = SOUNDS[key];
-  if (!fn) return;
-  const ctx = getCtx();
-  fn(ctx);
-  // update badge
-  const badge = document.getElementById('soundBadge');
-  const label = document.getElementById('soundLabel');
-  badge.classList.add('playing');
-  label.textContent = '♪ ' + key.replace(/_/g,' ');
-  setTimeout(() => { badge.classList.remove('playing'); label.textContent = LANG[currentLangCode].soundDone||'Done'; }, 2000);
-}
+function t(key){ return (LANG[currentLang]||LANG.en)[key]||key; }
 
 // ═══════════════════════════════════════════════════════════════
-// SIMPLE PYTHON INTERPRETER
+// PYTHON INTERPRETER
 // ═══════════════════════════════════════════════════════════════
-function simRun(code, envIn, outArr) {
+function simRun(code, envIn, outArr, listOps) {
   const env = Object.assign({}, envIn);
-  const lines = code.split('\n');
 
   function evalExpr(expr) {
     expr = expr.trim();
-    // str(x)
-    expr = expr.replace(/str\(([^)]+)\)/g, (_,a) => {
-      const v = evalExpr(a); return '"' + v + '"';
-    });
-    let evaled = expr.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\b/g, m => m in env ? env[m] : m);
-    try { return Function('"use strict";return (' + evaled + ')')(); } catch(e) { throw new Error('Cannot evaluate: '+expr); }
+    expr = expr.replace(/str\(([^)]+)\)/g, (_,a)=>{ const v=evalExpr(a); return '"'+v+'"'; });
+    expr = expr.replace(/len\(([^)]+)\)/g, (_,a)=>{ const v=evalExpr(a); return Array.isArray(v)?v.length:0; });
+    expr = expr.replace(/int\(([^)]+)\)/g, (_,a)=>{ return 'Math.floor('+a+')'; });
+    // list index
+    expr = expr.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\[(\d+)\]/g, (_, nm, idx)=>{ const arr=env[nm]; return Array.isArray(arr)?JSON.stringify(arr[parseInt(idx)]):nm+'['+idx+']'; });
+    let evaled = expr.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\b/g, m=> (m in env)?JSON.stringify(env[m]):m);
+    try { return Function('"use strict";return ('+evaled+')')(); } catch(e) { throw new Error('Cannot evaluate: '+expr); }
   }
 
   function execBlock(lines, startIdx, indent) {
     let i = startIdx;
     while (i < lines.length) {
       const raw = lines[i];
-      if (raw.trim()==='' || raw.trim().startsWith('#')) { i++; continue; }
+      if (!raw || raw.trim()==='' || raw.trim().startsWith('#')) { i++; continue; }
       const lineIndent = raw.match(/^(\s*)/)[1].length;
       if (lineIndent < indent) break;
       const line = raw.trim();
 
-      // Assignment
+      // list .append
+      const appMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\.append\((.+)\)$/);
+      if (appMatch) {
+        const arr = env[appMatch[1]];
+        if (Array.isArray(arr)) { const val = evalExpr(appMatch[2]); arr.push(val); if(listOps) listOps.push({op:'append',name:appMatch[1],val,arr:[...arr]}); }
+        i++; continue;
+      }
+      // list .remove
+      const remMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\.remove\((.+)\)$/);
+      if (remMatch) {
+        const arr = env[remMatch[1]];
+        if (Array.isArray(arr)) { const val = evalExpr(remMatch[2]); const idx=arr.indexOf(val); if(idx>=0)arr.splice(idx,1); if(listOps) listOps.push({op:'remove',name:remMatch[1],val,arr:[...arr]}); }
+        i++; continue;
+      }
+      // list .pop
+      const popMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\.pop\(\)$/);
+      if (popMatch) {
+        const arr = env[popMatch[1]];
+        if (Array.isArray(arr)) { const val=arr.pop(); if(listOps) listOps.push({op:'pop',name:popMatch[1],val,arr:[...arr]}); }
+        i++; continue;
+      }
+      // list index assign
+      const idxAssign = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\[(\d+)\]\s*=\s*(.+)$/);
+      if (idxAssign) {
+        const arr = env[idxAssign[1]];
+        if (Array.isArray(arr)) { const val=evalExpr(idxAssign[3]); arr[parseInt(idxAssign[2])]=val; }
+        i++; continue;
+      }
+      // assignment
       const assign = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*(.+)$/);
-      if (assign && !['if','elif','else','while','for'].some(k => line.startsWith(k))) {
-        env[assign[1]] = evalExpr(assign[2]); i++; continue;
+      if (assign && !['if','elif','else','while','for'].some(k=>line.startsWith(k))) {
+        const rhs = assign[2].trim();
+        // list literal
+        if (rhs.startsWith('[')) {
+          try { env[assign[1]] = Function('"use strict";return '+rhs.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\b/g,m=>(m in env)?JSON.stringify(env[m]):m)+')')(); }
+          catch(e) { env[assign[1]] = []; }
+        } else {
+          env[assign[1]] = evalExpr(rhs);
+        }
+        i++; continue;
       }
       // print
-      const pr = line.match(/^print\s*\(\s*(.*)\s*\)$/s);
+      const pr = line.match(/^print\s*\(([\s\S]*)\)$/);
       if (pr) {
-        let arg = pr[1].trim();
-        let out;
-        if ((arg.startsWith('"')&&arg.endsWith('"'))||(arg.startsWith("'")&&arg.endsWith("'"))) {
-          out = arg.slice(1,-1);
-        } else {
-          // handle "text" + str(var) patterns
-          try { out = String(evalExpr(arg)); } catch(e) { out = arg; }
-        }
-        outArr.push(out); i++; continue;
+        const args = splitPrintArgs(pr[1]);
+        const parts = args.map(a=>{
+          a=a.trim();
+          if((a.startsWith('"')&&a.endsWith('"'))||(a.startsWith("'")&&a.endsWith("'"))) return a.slice(1,-1);
+          try{return String(evalExpr(a));}catch(e){return a;}
+        });
+        outArr.push(parts.join(' ')); i++; continue;
       }
-      // if/elif/else chain
+      // for loop
+      const forIn = line.match(/^for\s+([a-zA-Z_][a-zA-Z0-9_]*)\s+in\s+(.+):$/);
+      if (forIn) {
+        const varName = forIn[1];
+        let iterable;
+        const rangeMatch = forIn[2].trim().match(/^range\((\d+)(?:,\s*(\d+))?\)$/);
+        if (rangeMatch) {
+          const start2 = rangeMatch[2]!==undefined?parseInt(rangeMatch[1]):0;
+          const end2 = rangeMatch[2]!==undefined?parseInt(rangeMatch[2]):parseInt(rangeMatch[1]);
+          iterable = Array.from({length:Math.max(0,end2-start2)},(_,k)=>k+start2);
+        } else {
+          try { iterable = evalExpr(forIn[2].trim()); } catch(e) { iterable=[]; }
+        }
+        if (!Array.isArray(iterable) && typeof iterable==='string') iterable=iterable.split('');
+        let bStart=i+1, bEnd=bStart;
+        while(bEnd<lines.length){ const bl=lines[bEnd]; if(!bl||bl.trim()===''){bEnd++;continue;} const bi=bl.match(/^(\s*)/)[1].length; if(bi<=indent)break; bEnd++; }
+        if(Array.isArray(iterable)){
+          if(listOps) listOps.push({op:'loopStart',name:varName,items:[...iterable]});
+          for(const item of iterable){
+            env[varName]=item;
+            if(listOps) listOps.push({op:'loopStep',name:varName,val:item});
+            execBlock(lines,bStart,indent+4);
+          }
+        }
+        i=bEnd; continue;
+      }
+      // if/elif/else
       if (line.startsWith('if ')||line.startsWith('elif ')||line==='else:') {
         let chain=[]; let j=i;
-        while (j < lines.length) {
-          const l = lines[j]; if (!l) {j++;continue;}
-          const lind = l.match(/^(\s*)/)[1].length;
-          if (lind < indent && j>i) break;
-          const lt = l.trim();
-          if (lt.startsWith('if ')||lt.startsWith('elif ')||lt==='else:') {
-            const cond = (lt==='else:') ? null : lt.replace(/^(if|elif)\s+/,'').replace(/:$/,'');
-            let bStart=j+1, bEnd=bStart;
-            while (bEnd<lines.length) {
-              const bl=lines[bEnd]; if (!bl||bl.trim()===''){bEnd++;continue;}
-              const bi=bl.match(/^(\s*)/)[1].length;
-              if (bi<=indent) break; bEnd++;
-            }
-            chain.push({cond,bStart,bEnd}); j=bEnd;
-            let k=bEnd; while(k<lines.length&&!lines[k].trim())k++;
-            if (k<lines.length) {
-              const kl=lines[k].trim(), ki=lines[k].match(/^(\s*)/)[1].length;
-              if (ki===indent&&(kl.startsWith('elif ')||kl==='else:')) continue;
-            }
+        while(j<lines.length){
+          const l=lines[j]; if(!l){j++;continue;}
+          const lind=l.match(/^(\s*)/)[1].length;
+          if(lind<indent&&j>i)break;
+          const lt=l.trim();
+          if(lt.startsWith('if ')||lt.startsWith('elif ')||lt==='else:'){
+            const cond=(lt==='else:')?null:lt.replace(/^(if|elif)\s+/,'').replace(/:$/,'');
+            let bStart2=j+1,bEnd2=bStart2;
+            while(bEnd2<lines.length){const bl=lines[bEnd2];if(!bl||bl.trim()===''){bEnd2++;continue;}const bi=bl.match(/^(\s*)/)[1].length;if(bi<=indent)break;bEnd2++;}
+            chain.push({cond,bStart:bStart2,bEnd:bEnd2}); j=bEnd2;
+            let k=bEnd2; while(k<lines.length&&!lines[k].trim())k++;
+            if(k<lines.length){const kl=lines[k].trim(),ki=lines[k].match(/^(\s*)/)[1].length; if(ki===indent&&(kl.startsWith('elif ')||kl==='else:'))continue;}
             break;
           } else j++;
         }
-        for (const b of chain) {
-          const ok = b.cond===null ? true : evalExpr(b.cond);
-          if (ok) { execBlock(lines,b.bStart,indent+4); break; }
+        for(const b of chain){
+          const ok=b.cond===null?true:evalExpr(b.cond);
+          if(ok){execBlock(lines,b.bStart,indent+4);break;}
         }
-        i = chain.length ? chain[chain.length-1].bEnd : i+1;
-        continue;
+        i=chain.length?chain[chain.length-1].bEnd:i+1; continue;
       }
       i++;
     }
-    return {env, output: outArr};
+    return {env, output:outArr};
   }
-
-  execBlock(lines,0,0);
-  return {env, output: outArr};
+  execBlock(code.split('\n'),0,0);
+  return {env, output:outArr};
 }
 
-function interpretPython(code) {
-  const env={}, out=[];
-  return simRun(code,env,out);
+function splitPrintArgs(str) {
+  const args=[]; let depth=0,cur='',inStr=false,strChar='';
+  for(let i=0;i<str.length;i++){
+    const c=str[i];
+    if(!inStr&&(c==='"'||c==="'")){inStr=true;strChar=c;cur+=c;}
+    else if(inStr&&c===strChar){inStr=false;cur+=c;}
+    else if(!inStr&&c==='(')depth++;
+    else if(!inStr&&c===')')depth--;
+    else if(!inStr&&c===','&&depth===0){args.push(cur.trim());cur='';continue;}
+    cur+=c;
+  }
+  if(cur.trim())args.push(cur.trim());
+  return args;
+}
+function interpretPython(code,listOps){ const out=[]; simRun(code,{},out,listOps||null); return {output:out,env:{}}; }
+function interpretPythonFull(code){ const out=[],ops=[],env={}; simRun(code,env,out,ops); return {output:out,env,ops}; }
+function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ═══════════════════════════════════════════════════════════════
+// SOUND ENGINE
+// ═══════════════════════════════════════════════════════════════
+let audioCtx=null, soundStoppers=[];
+function getCtx(){ if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended')audioCtx.resume(); return audioCtx; }
+function stopAllSound(){ soundStoppers.forEach(fn=>{try{fn();}catch(e){}});soundStoppers=[]; }
+function osc(ctx,type,freq,start,dur,vol=0.3,freqEnd=null){
+  const g=ctx.createGain(); g.gain.setValueAtTime(vol,start); g.gain.exponentialRampToValueAtTime(0.0001,start+dur); g.connect(ctx.destination);
+  const o=ctx.createOscillator(); o.type=type; o.frequency.setValueAtTime(freq,start);
+  if(freqEnd)o.frequency.exponentialRampToValueAtTime(freqEnd,start+dur);
+  o.connect(g); o.start(start); o.stop(start+dur+0.05); soundStoppers.push(()=>{try{o.stop();}catch(e){}});
+}
+function noise(ctx,start,dur,vol=0.15,ffreq=2000){
+  const buf=ctx.createBuffer(1,Math.ceil(ctx.sampleRate*dur),ctx.sampleRate);
+  const d=buf.getChannelData(0); for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+  const src=ctx.createBufferSource(); src.buffer=buf;
+  const filt=ctx.createBiquadFilter(); filt.type='bandpass'; filt.frequency.value=ffreq;
+  const g=ctx.createGain(); g.gain.setValueAtTime(vol,start); g.gain.exponentialRampToValueAtTime(0.0001,start+dur);
+  src.connect(filt);filt.connect(g);g.connect(ctx.destination); src.start(start); src.stop(start+dur+0.05);
+}
+const SOUNDS = {
+  battery_dead:ctx=>{const t2=ctx.currentTime;osc(ctx,'sine',80,t2,.8,.5);osc(ctx,'sawtooth',220,t2+.3,1,.2,30);},
+  battery_critical:ctx=>{const t2=ctx.currentTime;[0,.22,.44,.66].forEach(d=>{osc(ctx,'square',880,t2+d,.14,.35);osc(ctx,'square',1100,t2+d+.07,.1,.2);});},
+  battery_low:ctx=>{const t2=ctx.currentTime;osc(ctx,'sine',660,t2,.28,.35);osc(ctx,'sine',440,t2+.32,.25,.35);},
+  battery_ok:ctx=>{const t2=ctx.currentTime;osc(ctx,'sine',523,t2,.3,.3);osc(ctx,'sine',659,t2+.18,.22,.3);},
+  battery_full:ctx=>{const t2=ctx.currentTime;[523,659,784,1047].forEach((f,i)=>osc(ctx,'sine',f,t2+i*.1,.38,.28));},
+  wifi_none:ctx=>{const t2=ctx.currentTime;noise(ctx,t2,.4,.3,800);},
+  wifi_weak:ctx=>{const t2=ctx.currentTime;[0,.5].forEach(d=>osc(ctx,'sine',300,t2+d,.2,.15));},
+  wifi_ok:ctx=>{const t2=ctx.currentTime;osc(ctx,'sine',440,t2,.25,.2);osc(ctx,'sine',550,t2+.15,.2,.22);},
+  wifi_great:ctx=>{const t2=ctx.currentTime;[440,550,660,880].forEach((f,i)=>osc(ctx,'sine',f,t2+i*.08,.3,.22));},
+  alarm_sleep:ctx=>{const t2=ctx.currentTime;osc(ctx,'sine',120,t2,1,.08,80);},
+  alarm_ringing:ctx=>{const t2=ctx.currentTime;[0,.18,.36,.54,.8,.98].forEach(d=>{osc(ctx,'square',880,t2+d,.15,.45);osc(ctx,'square',1320,t2+d+.08,.1,.15);});},
+  alarm_morning:ctx=>{const t2=ctx.currentTime;[0,.2,.4].forEach(d=>osc(ctx,'sine',880,t2+d,.12,.18,1100));osc(ctx,'sine',660,t2+.7,.3,.25);},
+  alarm_late:ctx=>{const t2=ctx.currentTime;[0,.1,.2,.3,.4].forEach((d,i)=>osc(ctx,'square',600+i*80,t2+d,.12,.35));},
+  messages_none:ctx=>{osc(ctx,'sine',330,ctx.currentTime,.3,.15);},
+  messages_one:ctx=>{const t2=ctx.currentTime;osc(ctx,'sine',660,t2,.2,.2);osc(ctx,'sine',880,t2+.15,.18,.2);},
+  messages_few:ctx=>{const t2=ctx.currentTime;[0,.15,.3].forEach(d=>osc(ctx,'sine',660,t2+d,.12,.2));},
+  messages_many:ctx=>{const t2=ctx.currentTime;[0,.1,.2,.3,.4,.5].forEach(d=>osc(ctx,'sine',660+d*200,t2+d,.1,.15));},
+  storage_full:ctx=>{const t2=ctx.currentTime;osc(ctx,'sawtooth',150,t2,.6,.4,100);},
+  storage_danger:ctx=>{const t2=ctx.currentTime;[0,.3,.6].forEach(d=>osc(ctx,'square',440,t2+d,.2,.3));},
+  storage_some:ctx=>{osc(ctx,'sine',440,ctx.currentTime,.35,.2);},
+  storage_plenty:ctx=>{const t2=ctx.currentTime;[440,550,660].forEach((f,i)=>osc(ctx,'sine',f,t2+i*.1,.3,.2));},
+  flashlight_off:ctx=>{osc(ctx,'sine',200,ctx.currentTime,.25,.15,100);},
+  flashlight_dim:ctx=>{osc(ctx,'sine',400,ctx.currentTime,.3,.18,300);},
+  flashlight_medium:ctx=>{const t2=ctx.currentTime;osc(ctx,'sine',600,t2,.3,.2);noise(ctx,t2,.15,.05,4000);},
+  flashlight_full:ctx=>{const t2=ctx.currentTime;noise(ctx,t2,.08,.25,6000);osc(ctx,'sine',880,t2,.25,.3,1200);},
+  gps_parked:ctx=>{osc(ctx,'sine',330,ctx.currentTime,.5,.12);},
+  gps_walk:ctx=>{const t2=ctx.currentTime;[0,.3,.6].forEach(d=>osc(ctx,'sine',440,t2+d,.18,.12));},
+  gps_city:ctx=>{const t2=ctx.currentTime;osc(ctx,'sine',550,t2,.25,.18);osc(ctx,'sine',660,t2+.2,.2,.18);},
+  gps_highway:ctx=>{const t2=ctx.currentTime;osc(ctx,'sawtooth',200,t2,.6,.15,400);noise(ctx,t2,.5,.08,3000);},
+  gps_toofast:ctx=>{const t2=ctx.currentTime;[0,.15,.3,.45,.6].forEach(d=>osc(ctx,'square',880,t2+d,.1,.4));},
+  volume_mute:ctx=>{noise(ctx,ctx.currentTime,.15,.05,500);},
+  volume_quiet:ctx=>{osc(ctx,'sine',440,ctx.currentTime,.3,.08);},
+  volume_normal:ctx=>{const t2=ctx.currentTime;osc(ctx,'sine',440,t2,.3,.2);osc(ctx,'sine',550,t2+.1,.25,.18);},
+  volume_loud:ctx=>{const t2=ctx.currentTime;osc(ctx,'sine',440,t2,.3,.35);osc(ctx,'sawtooth',220,t2,.3,.1);},
+  volume_max:ctx=>{const t2=ctx.currentTime;[220,330,440,550,660].forEach((f,i)=>osc(ctx,'sawtooth',f,t2+i*.04,.35,.18));},
+  list_add:ctx=>{const t2=ctx.currentTime;osc(ctx,'sine',660,t2,.15,.3);osc(ctx,'sine',880,t2+.1,.12,.25);},
+  list_remove:ctx=>{const t2=ctx.currentTime;osc(ctx,'sine',440,t2,.2,.3,null,200);},
+  list_done:ctx=>{const t2=ctx.currentTime;[523,659,784,1047].forEach((f,i)=>osc(ctx,'sine',f,t2+i*.08,.35,.25));},
+  loop_tick:ctx=>{osc(ctx,'sine',550,ctx.currentTime,.06,.15);},
+  loop_done:ctx=>{const t2=ctx.currentTime;[440,550,660,880].forEach((f,i)=>osc(ctx,'sine',f,t2+i*.07,.3,.22));},
+};
+function playSound(key){
+  stopAllSound(); const fn=SOUNDS[key]; if(!fn)return;
+  const ctx=getCtx(); fn(ctx);
+  const badge=document.getElementById('vSoundBadge'), label=document.getElementById('vSoundLabel');
+  if(badge){badge.classList.add('playing'); label.textContent='♪ '+key.replace(/_/g,' '); setTimeout(()=>{badge.classList.remove('playing');label.textContent=t('soundDone');},2000);}
 }
 
 // ═══════════════════════════════════════════════════════════════
-// INIT
+// VARS SCENARIO DATA
 // ═══════════════════════════════════════════════════════════════
-function init() {
-  // Clock and interval managed in DOMContentLoaded + setLang handles UI
+const VARS_SCENARIOS_RAW = {
+  battery:{id:'battery',label:{it:'🔋 Batteria',en:'🔋 Battery',ar:'🔋 البطارية'},
+    vars:[{name:'battery',label:{it:'Batteria %',en:'Battery %',ar:'نسبة البطارية %'},min:0,max:100,default:20}],
+    code_en:`battery = {battery}\n\nif battery == 0:\n    print("Phone is OFF!")\nelif battery < 10:\n    print("CRITICAL! Plug in now!")\nelif battery < 30:\n    print("Battery is low, charge me!")\nelif battery < 70:\n    print("Battery is okay.")\nelse:\n    print("Battery is full. Great!")`,
+    code_it:`battery = {battery}\n\nif battery == 0:\n    print("Telefono SPENTO!")\nelif battery < 10:\n    print("CRITICA! Carica subito!")\nelif battery < 30:\n    print("Batteria bassa!")\nelif battery < 70:\n    print("Batteria ok.")\nelse:\n    print("Batteria piena!")`,
+    code_ar:`battery = {battery}\n\nif battery == 0:\n    print("الهاتف مُغلق!")\nelif battery < 10:\n    print("حرج! اشحن الآن!")\nelif battery < 30:\n    print("البطارية منخفضة!")\nelif battery < 70:\n    print("البطارية جيدة.")\nelse:\n    print("بطارية ممتلئة!")`,
+    hints:{en:[{tag:'battery < 10',text:'True when battery is 0,1...9'},{tag:'elif',text:'"else if" — another condition'},{tag:'else:',text:'Runs when none above matched'}],
+      it:[{tag:'battery < 10',text:'Vero per 0,1...9'},{tag:'elif',text:'"else if"'},{tag:'else:',text:'Esegue se nessuna condizione è vera'}],
+      ar:[{tag:'battery < 10',text:'صحيح للقيم 0-9'},{tag:'elif',text:'شرط آخر'},{tag:'else:',text:'يعمل إذا لم يتحقق أي شرط'}]},
+    challenge:{title:{en:'🔋 Battery Challenge',it:'🔋 Sfida Batteria',ar:'🔋 تحدي البطارية'},
+      desc:{en:'Print "SOS! Dying!" if battery < 5, "Low!" if < 20, "Good" if < 80, else "Full Power!". Use battery = 15.',
+        it:'Stampa "SOS! Sta morendo!" se battery < 5, "Bassa!" se < 20, "Ok" se < 80, altrimenti "Piena!". Usa battery = 15.',
+        ar:'اطبع "SOS!" إذا battery < 5، "منخفضة!" إذا < 20، "جيدة" إذا < 80، وإلا "ممتلئة!". استخدم battery = 15.'},
+      startCode:{en:`battery = 15\n\n# Write your if/elif/else here!\n`,it:`battery = 15\n\n# Scrivi if/elif/else qui!\n`,ar:`battery = 15\n\n# اكتب if/elif/else هنا!\n`}}},
+  wifi:{id:'wifi',label:{it:'📶 WiFi',en:'📶 WiFi',ar:'📶 واي فاي'},
+    vars:[{name:'signal',label:{it:'Segnale (0–100)',en:'WiFi Signal (0–100)',ar:'قوة الواي فاي (0–100)'},min:0,max:100,default:60}],
+    code_en:`signal = {signal}\n\nif signal == 0:\n    print("No WiFi! You are offline.")\nelif signal < 25:\n    print("Very weak signal!")\nelif signal < 60:\n    print("Signal is okay, but slow.")\nelse:\n    print("Great WiFi! Full bars!")`,
+    code_it:`signal = {signal}\n\nif signal == 0:\n    print("Nessun WiFi! Sei offline.")\nelif signal < 25:\n    print("Segnale molto debole!")\nelif signal < 60:\n    print("Segnale ok, ma lento.")\nelse:\n    print("WiFi ottimo!")`,
+    code_ar:`signal = {signal}\n\nif signal == 0:\n    print("لا واي فاي!")\nelif signal < 25:\n    print("إشارة ضعيفة!")\nelif signal < 60:\n    print("إشارة مقبولة.")\nelse:\n    print("واي فاي ممتاز!")`,
+    hints:{en:[{tag:'signal == 0',text:'Checks EXACTLY equal to zero'},{tag:'signal < 25',text:'Less than 25'}],
+      it:[{tag:'signal == 0',text:'Esattamente zero'},{tag:'signal < 25',text:'Minore di 25'}],
+      ar:[{tag:'signal == 0',text:'يساوي صفراً تماماً'},{tag:'signal < 25',text:'أقل من 25'}]},
+    challenge:{title:{en:'📶 WiFi Challenge',it:'📶 Sfida WiFi',ar:'📶 تحدي WiFi'},
+      desc:{en:'Show "Offline" for signal 0, "Weak" for < 30, "Decent" for < 75, else "Lightning Fast!". signal = 40.',
+        it:'Mostra "Offline" per signal 0, "Debole" < 30, "Decente" < 75, altrimenti "Fulmineo!". signal = 40.',
+        ar:'اعرض "غير متصل" لـ signal=0، "ضعيف" لـ <30، "مقبول" لـ <75، وإلا "سريع!". signal = 40.'},
+      startCode:{en:`signal = 40\n\n# Your code here!\n`,it:`signal = 40\n\n# Il tuo codice!\n`,ar:`signal = 40\n\n# كودك هنا!\n`}}},
+  alarm:{id:'alarm',label:{it:'⏰ Sveglia',en:'⏰ Alarm',ar:'⏰ المنبه'},
+    vars:[{name:'hour',label:{it:'Ora (0–23)',en:'Hour (0–23)',ar:'الساعة (0–23)'},min:0,max:23,default:7}],
+    code_en:`hour = {hour}\n\nif hour == 7:\n    print("WAKE UP! Alarm is ringing!")\nelif hour < 7:\n    print("Still sleeping... Zzz")\nelif hour < 9:\n    print("Morning! You're on time.")\nelse:\n    print("You're late! Hurry!")`,
+    code_it:`hour = {hour}\n\nif hour == 7:\n    print("SVEGLIATI!")\nelif hour < 7:\n    print("Dormi ancora... Zzz")\nelif hour < 9:\n    print("Mattina! Sei in orario.")\nelse:\n    print("Sei in ritardo!")`,
+    code_ar:`hour = {hour}\n\nif hour == 7:\n    print("استيقظ! المنبه يرن!")\nelif hour < 7:\n    print("لا تزال نائماً... Zzz")\nelif hour < 9:\n    print("صباح! أنت في الوقت.")\nelse:\n    print("تأخرت! أسرع!")`,
+    hints:{en:[{tag:'hour == 7',text:'True ONLY for exactly 7'},{tag:'hour < 7',text:'True for 0,1,2,3,4,5,6'}],
+      it:[{tag:'hour == 7',text:'Vero SOLO per 7'},{tag:'hour < 7',text:'Vero per 0-6'}],
+      ar:[{tag:'hour == 7',text:'صحيح فقط للقيمة 7'},{tag:'hour < 7',text:'صحيح للقيم 0-6'}]},
+    challenge:{title:{en:'⏰ Alarm Challenge',it:'⏰ Sfida Sveglia',ar:'⏰ تحدي المنبه'},
+      desc:{en:'Ring at BOTH hour==6 AND hour==7. Print "ALARM RINGING!" for those, "Sleep more..." for hour<6, "Good morning!" otherwise.',
+        it:'Fai suonare sia per hour==6 che hour==7. Stampa "SVEGLIA!" per quelle ore, "Dormi..." per hour<6, "Buongiorno!" altrimenti.',
+        ar:'اجعل المنبه يرن عند hour==6 وعند hour==7. اطبع "المنبه!" لهما، "نم أكثر..." لـ <6، "صباح الخير!" بخلاف ذلك.'},
+      startCode:{en:`hour = 6\n\n# Hint: use 'or' between two conditions!\n`,it:`hour = 6\n\n# Suggerimento: usa 'or'!\n`,ar:`hour = 6\n\n# تلميح: استخدم 'or'!\n`}}},
+  messages:{id:'messages',label:{it:'💬 Messaggi',en:'💬 Messages',ar:'💬 الرسائل'},
+    vars:[{name:'messages',label:{it:'Messaggi non letti',en:'Unread Messages',ar:'الرسائل غير المقروءة'},min:0,max:99,default:5}],
+    code_en:`messages = {messages}\n\nif messages == 0:\n    print("No new messages.")\nelif messages == 1:\n    print("You have 1 new message!")\nelif messages < 10:\n    print("A few messages waiting!")\nelse:\n    print("Whoa! Lots of messages!")`,
+    code_it:`messages = {messages}\n\nif messages == 0:\n    print("Nessun nuovo messaggio.")\nelif messages == 1:\n    print("Hai 1 nuovo messaggio!")\nelif messages < 10:\n    print("Qualche messaggio!")\nelse:\n    print("Molti messaggi!")`,
+    code_ar:`messages = {messages}\n\nif messages == 0:\n    print("لا رسائل.")\nelif messages == 1:\n    print("رسالة واحدة!")\nelif messages < 10:\n    print("بعض الرسائل!")\nelse:\n    print("رسائل كثيرة!")`,
+    hints:{en:[{tag:'messages == 1',text:'Exact match: only true for 1'},{tag:'messages < 10',text:'True for 2,3...9'}],
+      it:[{tag:'messages == 1',text:'Esattamente 1'},{tag:'messages < 10',text:'Vero per 2-9'}],
+      ar:[{tag:'messages == 1',text:'يساوي 1 فقط'},{tag:'messages < 10',text:'صحيح للقيم 2-9'}]},
+    challenge:{title:{en:'💬 Messages Challenge',it:'💬 Sfida Messaggi',ar:'💬 تحدي الرسائل'},
+      desc:{en:'Print "0 messages", "1 message" (no s!), or "X messages". Bonus: "📬 Inbox full!" if messages > 50. Use messages = 3.',
+        it:'Stampa "0 messaggi", "1 messaggio", o "X messaggi". Bonus: "📬 Posta piena!" se > 50. Usa messages = 3.',
+        ar:'اطبع "0 رسائل"، "رسالة واحدة"، أو "X رسائل". إضافي: "📬 ممتلئ!" إذا > 50. استخدم messages = 3.'},
+      startCode:{en:`messages = 3\n\n# Hint: use str(messages) to print numbers!\n`,it:`messages = 3\n\n# Usa str(messages)!\n`,ar:`messages = 3\n\n# استخدم str(messages)!\n`}}},
+  storage:{id:'storage',label:{it:'💾 Memoria',en:'💾 Storage',ar:'💾 التخزين'},
+    vars:[{name:'free_gb',label:{it:'GB Liberi',en:'Free GB',ar:'GB الحرة'},min:0,max:128,default:10}],
+    code_en:`free_gb = {free_gb}\n\nif free_gb == 0:\n    print("Storage FULL! Delete something!")\nelif free_gb < 5:\n    print("Almost full! Be careful.")\nelif free_gb < 20:\n    print("Some space left.")\nelse:\n    print("Plenty of storage!")`,
+    code_it:`free_gb = {free_gb}\n\nif free_gb == 0:\n    print("Memoria PIENA!")\nelif free_gb < 5:\n    print("Quasi piena!")\nelif free_gb < 20:\n    print("Poco spazio.")\nelse:\n    print("Spazio abbondante!")`,
+    code_ar:`free_gb = {free_gb}\n\nif free_gb == 0:\n    print("ممتلئ!")\nelif free_gb < 5:\n    print("شبه ممتلئ!")\nelif free_gb < 20:\n    print("بعض المساحة.")\nelse:\n    print("مساحة كافية!")`,
+    hints:{en:[{tag:'free_gb == 0',text:'Exactly zero GB'},{tag:'free_gb < 5',text:'Matches 1,2,3,4 GB'}],
+      it:[{tag:'free_gb == 0',text:'Esattamente zero'},{tag:'free_gb < 5',text:'1,2,3,4 GB'}],
+      ar:[{tag:'free_gb == 0',text:'صفر تماماً'},{tag:'free_gb < 5',text:'يطابق 1,2,3,4 GB'}]},
+    challenge:{title:{en:'💾 Storage Challenge',it:'💾 Sfida Memoria',ar:'💾 تحدي التخزين'},
+      desc:{en:'Print "FULL", "< 5GB danger!", "< 20GB watch out", or "You have X GB free!" for the rest.',
+        it:'Stampa "PIENA", "< 5GB pericolo!", "< 20GB attenzione", o "Hai X GB liberi!".',
+        ar:'اطبع "ممتلئ"، "< 5GB خطر!"، "< 20GB انتبه"، أو "لديك X GB حرة!".'},
+      startCode:{en:`free_gb = 3\n\n# Your code here!\n`,it:`free_gb = 3\n\n# Il tuo codice!\n`,ar:`free_gb = 3\n\n# كودك هنا!\n`}}},
+  flashlight:{id:'flashlight',label:{it:'🔦 Torcia',en:'🔦 Flashlight',ar:'🔦 المصباح'},
+    vars:[{name:'brightness',label:{it:'Luminosità (0-100)',en:'Brightness (0-100)',ar:'السطوع (0-100)'},min:0,max:100,default:0}],
+    code_en:`brightness = {brightness}\n\nif brightness == 0:\n    print("Flashlight is OFF.")\nelif brightness < 30:\n    print("Dim light on.")\nelif brightness < 70:\n    print("Medium brightness.")\nelse:\n    print("FULL BRIGHTNESS! So bright!")`,
+    code_it:`brightness = {brightness}\n\nif brightness == 0:\n    print("Torcia SPENTA.")\nelif brightness < 30:\n    print("Luce fioca.")\nelif brightness < 70:\n    print("Luminosità media.")\nelse:\n    print("MASSIMA LUMINOSITÀ!")`,
+    code_ar:`brightness = {brightness}\n\nif brightness == 0:\n    print("المصباح مطفأ.")\nelif brightness < 30:\n    print("ضوء خافت.")\nelif brightness < 70:\n    print("سطوع متوسط.")\nelse:\n    print("أقصى سطوع!")`,
+    hints:{en:[{tag:'brightness == 0',text:'Light is completely off'},{tag:'brightness < 30',text:'Dim = less than 30% power'}],
+      it:[{tag:'brightness == 0',text:'Completamente spenta'},{tag:'brightness < 30',text:'Meno del 30%'}],
+      ar:[{tag:'brightness == 0',text:'مطفأ تماماً'},{tag:'brightness < 30',text:'أقل من 30%'}]},
+    challenge:{title:{en:'🔦 Flashlight Challenge',it:'🔦 Sfida Torcia',ar:'🔦 تحدي المصباح'},
+      desc:{en:'Add "disco mode": if brightness > 90 print "🎉 PARTY MODE!" instead of full brightness. Keep the 4 levels otherwise.',
+        it:'Aggiungi modalità disco: se > 90 stampa "🎉 FESTA!" invece del massimo.',
+        ar:'أضف وضع الديسكو: إذا كانت > 90 اطبع "🎉 حفلة!" بدلاً من أقصى سطوع.'},
+      startCode:{en:`brightness = 95\n\n# Your code here!\n`,it:`brightness = 95\n\n# Il tuo codice!\n`,ar:`brightness = 95\n\n# كودك هنا!\n`}}},
+  gps:{id:'gps',label:{it:'🗺️ GPS',en:'🗺️ GPS',ar:'🗺️ GPS'},
+    vars:[{name:'speed',label:{it:'Velocità (km/h)',en:'Speed (km/h)',ar:'السرعة (كم/ساعة)'},min:0,max:130,default:40}],
+    code_en:`speed = {speed}\n\nif speed == 0:\n    print("You are parked.")\nelif speed < 20:\n    print("Walking pace.")\nelif speed < 60:\n    print("City driving.")\nelif speed < 100:\n    print("Highway speed!")\nelse:\n    print("TOO FAST! Slow down!")`,
+    code_it:`speed = {speed}\n\nif speed == 0:\n    print("Sei parcheggiato.")\nelif speed < 20:\n    print("Passo pedonale.")\nelif speed < 60:\n    print("Guida in città.")\nelif speed < 100:\n    print("Velocità autostradale!")\nelse:\n    print("TROPPO VELOCE!")`,
+    code_ar:`speed = {speed}\n\nif speed == 0:\n    print("أنت متوقف.")\nelif speed < 20:\n    print("سرعة المشي.")\nelif speed < 60:\n    print("قيادة في المدينة.")\nelif speed < 100:\n    print("سرعة الطريق!")\nelse:\n    print("سريع جداً!")`,
+    hints:{en:[{tag:'speed == 0',text:'Parked or stopped'},{tag:'speed < 20',text:'Very slow, like walking'}],
+      it:[{tag:'speed == 0',text:'Parcheggiato'},{tag:'speed < 20',text:'Come camminare'}],
+      ar:[{tag:'speed == 0',text:'متوقف'},{tag:'speed < 20',text:'بطيء جداً'}]},
+    challenge:{title:{en:'🗺️ GPS Challenge',it:'🗺️ Sfida GPS',ar:'🗺️ تحدي GPS'},
+      desc:{en:'Add a speed camera: print "📸 SPEED CAMERA!" if speed > 80, THEN also print the normal status. Hint: two separate if statements!',
+        it:'Aggiungi autovelox: stampa "📸 AUTOVELOX!" se > 80, poi lo stato normale. Due if separati!',
+        ar:'أضف كاميرا سرعة: اطبع "📸 كاميرا!" إذا > 80، ثم الحالة العادية. جملتا if منفصلتان!'},
+      startCode:{en:`speed = 90\n\n# Your code here — try two separate if statements!\n`,it:`speed = 90\n\n# Due if separati!\n`,ar:`speed = 90\n\n# جملتا if منفصلتان!\n`}}},
+  volume:{id:'volume',label:{it:'🔊 Volume',en:'🔊 Volume',ar:'🔊 الصوت'},
+    vars:[{name:'volume',label:{it:'Volume (0-100)',en:'Volume (0-100)',ar:'الصوت (0-100)'},min:0,max:100,default:50}],
+    code_en:`volume = {volume}\n\nif volume == 0:\n    print("Phone is muted.")\nelif volume < 20:\n    print("Very quiet.")\nelif volume < 50:\n    print("Normal volume.")\nelif volume < 80:\n    print("Getting loud!")\nelse:\n    print("MAX VOLUME! 🎵")`,
+    code_it:`volume = {volume}\n\nif volume == 0:\n    print("Silenzioso.")\nelif volume < 20:\n    print("Molto basso.")\nelif volume < 50:\n    print("Volume normale.")\nelif volume < 80:\n    print("Sta diventando alto!")\nelse:\n    print("MASSIMO! 🎵")`,
+    code_ar:`volume = {volume}\n\nif volume == 0:\n    print("صامت.")\nelif volume < 20:\n    print("هادئ جداً.")\nelif volume < 50:\n    print("صوت عادي.")\nelif volume < 80:\n    print("يصبح عالياً!")\nelse:\n    print("أقصى صوت! 🎵")`,
+    hints:{en:[{tag:'volume == 0',text:'Muted — no sound at all'},{tag:'volume < 20',text:'Very soft, hard to hear'}],
+      it:[{tag:'volume == 0',text:'Silenzioso'},{tag:'volume < 20',text:'Molto basso'}],
+      ar:[{tag:'volume == 0',text:'صامت تماماً'},{tag:'volume < 20',text:'خافت جداً'}]},
+    challenge:{title:{en:'🔊 Volume Challenge',it:'🔊 Sfida Volume',ar:'🔊 تحدي الصوت'},
+      desc:{en:'Print the volume as a bar: "████ LOUD" for >=80, "███░ MED" for >=50, "██░░ LOW" for >=20, "░░░░ MUTE" for 0.',
+        it:'"████ ALTO" per >=80, "███░ MED" per >=50, "██░░ BASSO" per >=20, "░░░░ MUTO" per 0.',
+        ar:'"████ عالٍ" لـ >=80، "███░ متوسط" لـ >=50، "██░░ منخفض" لـ >=20، "░░░░ صامت" لـ 0.'},
+      startCode:{en:`volume = 65\n\n# Your code here!\n`,it:`volume = 65\n\n# Il tuo codice!\n`,ar:`volume = 65\n\n# كودك هنا!\n`}}}
+};
+
+// ═══════════════════════════════════════════════════════════════
+// LISTS SCENARIO DATA
+// ═══════════════════════════════════════════════════════════════
+const LISTS_SCENARIOS = {
+  contacts:{id:'contacts',
+    label:{en:'👥 Contacts',it:'👥 Contatti',ar:'👥 جهات الاتصال'},
+    code:{en:`contacts = ["Alice", "Bob", "Charlie", "Diana"]\n\nprint("My contacts:")\nprint(contacts)\nprint("First contact:", contacts[0])\nprint("Last contact:", contacts[3])\nprint("I have", len(contacts), "contacts")`,
+      it:`contacts = ["Alice", "Bob", "Charlie", "Diana"]\n\nprint("I miei contatti:")\nprint(contacts)\nprint("Primo:", contacts[0])\nprint("Ultimo:", contacts[3])\nprint("Ho", len(contacts), "contatti")`,
+      ar:`contacts = ["Alice", "Bob", "Charlie", "Diana"]\n\nprint("جهاتي:")\nprint(contacts)\nprint("الأول:", contacts[0])\nprint("الأخير:", contacts[3])\nprint("لدي", len(contacts), "جهات")` },
+    hints:{en:[{tag:'contacts[0]',text:'Index 0 = first item (Python counts from 0!)'},{tag:'len(contacts)',text:'Counts how many items in the list'},{tag:'contacts[3]',text:'Index 3 = fourth item'}],
+      it:[{tag:'contacts[0]',text:'Indice 0 = primo elemento'},{tag:'len(contacts)',text:'Conta gli elementi'},{tag:'contacts[3]',text:'Indice 3 = quarto elemento'}],
+      ar:[{tag:'contacts[0]',text:'المؤشر 0 = العنصر الأول'},{tag:'len(contacts)',text:'يعد عناصر القائمة'},{tag:'contacts[3]',text:'المؤشر 3 = العنصر الرابع'}]},
+    challenge:{title:{en:'👥 Contacts Challenge',it:'👥 Sfida Contatti',ar:'👥 تحدي جهات الاتصال'},
+      desc:{en:'Create a list "favourites" with 3 names. Print the second person and how many favourites you have.',
+        it:'Crea una lista "preferiti" con 3 nomi. Stampa la seconda persona e quanti preferiti hai.',
+        ar:'أنشئ قائمة "المفضلون" بـ 3 أسماء. اطبع الشخص الثاني وعدد المفضلين.'},
+      startCode:{en:`favourites = []  # Add 3 names!\n\n# Print second person and length\n`,it:`preferiti = []  # Aggiungi 3 nomi!\n\n# Stampa seconda persona e lunghezza\n`,ar:`المفضلون = []  # أضف 3 أسماء!\n\n# اطبع الثاني والعدد\n`}}},
+  playlist:{id:'playlist',
+    label:{en:'🎵 Playlist',it:'🎵 Playlist',ar:'🎵 قائمة التشغيل'},
+    code:{en:`playlist = ["Shape of You", "Blinding Lights", "Levitating"]\n\nprint("Now playing:", playlist[0])\nplaylist.append("Dynamite")\nprint("Added a song!")\nprint("Playlist:", playlist)\nprint("Total songs:", len(playlist))`,
+      it:`playlist = ["Canzone 1", "Canzone 2", "Canzone 3"]\n\nprint("In riproduzione:", playlist[0])\nplaylist.append("Canzone 4")\nprint("Canzone aggiunta!")\nprint("Playlist:", playlist)\nprint("Totale canzoni:", len(playlist))`,
+      ar:`playlist = ["أغنية 1", "أغنية 2", "أغنية 3"]\n\nprint("الآن:", playlist[0])\nplaylist.append("أغنية 4")\nprint("تمت إضافة أغنية!")\nprint("القائمة:", playlist)\nprint("العدد:", len(playlist))`},
+    hints:{en:[{tag:'.append()',text:'Adds a new item to the END of the list'},{tag:'playlist[0]',text:'First song (index 0)'},{tag:'len(playlist)',text:'How many songs total'}],
+      it:[{tag:'.append()',text:'Aggiunge in fondo alla lista'},{tag:'playlist[0]',text:'Prima canzone'},{tag:'len(playlist)',text:'Numero totale di canzoni'}],
+      ar:[{tag:'.append()',text:'يضيف عنصراً في نهاية القائمة'},{tag:'playlist[0]',text:'الأغنية الأولى'},{tag:'len(playlist)',text:'العدد الإجمالي'}]},
+    challenge:{title:{en:'🎵 Playlist Challenge',it:'🎵 Sfida Playlist',ar:'🎵 تحدي قائمة التشغيل'},
+      desc:{en:'Create a playlist with 3 songs. Add 2 more songs using .append(). Print "My playlist has X songs". Then print the 3rd song.',
+        it:'Crea una playlist con 3 canzoni. Aggiungi 2 con .append(). Stampa "La playlist ha X canzoni". Poi la 3a canzone.',
+        ar:'أنشئ قائمة بـ 3 أغانٍ. أضف 2 بـ .append(). اطبع "قائمتي لديها X أغانٍ". ثم الأغنية الثالثة.'},
+      startCode:{en:`playlist = []  # Add 3 songs!\n\n# Append 2 more, then print info\n`,it:`playlist = []  # 3 canzoni!\n\n# Aggiungi 2, poi stampa info\n`,ar:`playlist = []  # 3 أغانٍ!\n\n# أضف 2، ثم اطبع المعلومات\n`}}},
+  shopping:{id:'shopping',
+    label:{en:'🛒 Shopping',it:'🛒 Spesa',ar:'🛒 التسوق'},
+    code:{en:`shopping = ["milk", "eggs", "bread", "butter"]\n\nprint("Shopping list:", shopping)\nprint("Items to buy:", len(shopping))\nshopping.remove("eggs")\nprint("Got eggs! Removed.")\nprint("Still need:", shopping)`,
+      it:`spesa = ["latte", "uova", "pane", "burro"]\n\nprint("Lista:", spesa)\nprint("Articoli:", len(spesa))\nspesa.remove("uova")\nprint("Uova prese!")\nprint("Rimane:", spesa)`,
+      ar:`تسوق = ["حليب", "بيض", "خبز", "زبدة"]\n\nprint("قائمة التسوق:", تسوق)\nprint("العناصر:", len(تسوق))\nتسوق.remove("بيض")\nprint("أخذنا البيض!")\nprint("تبقى:", تسوق)`},
+    hints:{en:[{tag:'.remove()',text:'Removes the first matching item from the list'},{tag:'shopping[0]',text:'The first item in the list'},{tag:'len()',text:'Counts remaining items'}],
+      it:[{tag:'.remove()',text:'Rimuove il primo elemento corrispondente'},{tag:'spesa[0]',text:'Primo elemento'},{tag:'len()',text:'Conta gli elementi rimasti'}],
+      ar:[{tag:'.remove()',text:'يزيل العنصر الأول المطابق'},{tag:'تسوق[0]',text:'العنصر الأول'},{tag:'len()',text:'يعد العناصر المتبقية'}]},
+    challenge:{title:{en:'🛒 Shopping Challenge',it:'🛒 Sfida Spesa',ar:'🛒 تحدي التسوق'},
+      desc:{en:'Make a shopping list of 5 items. Remove the first item you "bought". Print how many items are left. Then add a new item.',
+        it:'Fai una lista spesa con 5 articoli. Rimuovi il primo che hai "comprato". Stampa quanti ne rimangono. Aggiungi un nuovo articolo.',
+        ar:'أنشئ قائمة تسوق بـ 5 عناصر. أزل العنصر الأول الذي "اشتريته". اطبع كم تبقى. ثم أضف عنصراً جديداً.'},
+      startCode:{en:`shopping = []  # Add 5 items!\n\n# Remove one, print count, add new\n`,it:`spesa = []  # 5 articoli!\n\n# Rimuovi uno, stampa, aggiungi\n`,ar:`تسوق = []  # 5 عناصر!\n\n# أزل واحداً، اطبع، أضف جديداً\n`}}},
+  scores:{id:'scores',
+    label:{en:'🏆 High Scores',it:'🏆 Punteggi',ar:'🏆 أعلى النقاط'},
+    code:{en:`scores = [100, 85, 92, 78, 95]\n\nprint("All scores:", scores)\nprint("Number of players:", len(scores))\nprint("First score:", scores[0])\nscores.append(88)\nprint("New player joined!")\nprint("Updated scores:", scores)`,
+      it:`punteggi = [100, 85, 92, 78, 95]\n\nprint("Punteggi:", punteggi)\nprint("Giocatori:", len(punteggi))\nprint("Primo:", punteggi[0])\npunteggi.append(88)\nprint("Nuovo giocatore!")\nprint("Aggiornato:", punteggi)`,
+      ar:`نقاط = [100, 85, 92, 78, 95]\n\nprint("جميع النقاط:", نقاط)\nprint("عدد اللاعبين:", len(نقاط))\nprint("أول نقاط:", نقاط[0])\nنقاط.append(88)\nprint("لاعب جديد!")\nprint("النقاط المحدثة:", نقاط)`},
+    hints:{en:[{tag:'scores[0]',text:'First player\'s score'},{tag:'.append(88)',text:'Add score 88 to the end'},{tag:'len(scores)',text:'Count the players'}],
+      it:[{tag:'punteggi[0]',text:'Punteggio del primo giocatore'},{tag:'.append(88)',text:'Aggiunge 88 alla fine'},{tag:'len(punteggi)',text:'Conta i giocatori'}],
+      ar:[{tag:'نقاط[0]',text:'نقاط اللاعب الأول'},{tag:'.append(88)',text:'يضيف 88 في النهاية'},{tag:'len(نقاط)',text:'يعد اللاعبين'}]},
+    challenge:{title:{en:'🏆 Scores Challenge',it:'🏆 Sfida Punteggi',ar:'🏆 تحدي النقاط'},
+      desc:{en:'Create a scores list with 4 numbers. Add a perfect score of 100. Print "The winner scored X" using scores[0]. Print total players.',
+        it:'Crea una lista punteggi con 4 numeri. Aggiungi 100. Stampa "Il vincitore: X" con punteggi[0]. Stampa il totale.',
+        ar:'أنشئ قائمة بـ 4 أرقام. أضف 100. اطبع "الفائز: X" باستخدام نقاط[0]. اطبع العدد الكلي.'},
+      startCode:{en:`scores = []  # Add 4 numbers!\n\n# Add 100, print winner, print count\n`,it:`punteggi = []  # 4 numeri!\n\n# Aggiungi 100, stampa vincitore\n`,ar:`نقاط = []  # 4 أرقام!\n\n# أضف 100، اطبع الفائز\n`}}}
+};
+
+// ═══════════════════════════════════════════════════════════════
+// LOOPS SCENARIO DATA
+// ═══════════════════════════════════════════════════════════════
+const LOOPS_SCENARIOS = {
+  countdown:{id:'countdown',
+    label:{en:'🚀 Countdown',it:'🚀 Conto alla rovescia',ar:'🚀 العد التنازلي'},
+    code:{en:`print("Launching rocket!")\n\nfor i in range(5):\n    print("T minus", 5 - i)\n\nprint("🚀 BLAST OFF!")`,
+      it:`print("Lancio del razzo!")\n\nfor i in range(5):\n    print("T meno", 5 - i)\n\nprint("🚀 VIA!")`,
+      ar:`print("إطلاق الصاروخ!")\n\nfor i in range(5):\n    print("T ناقص", 5 - i)\n\nprint("🚀 الانطلاق!")`},
+    hints:{en:[{tag:'for i in range(5)',text:'Runs 5 times: i = 0, 1, 2, 3, 4'},{tag:'5 - i',text:'Counts down: 5, 4, 3, 2, 1'},{tag:'range(5)',text:'Creates numbers 0 up to (not including) 5'}],
+      it:[{tag:'for i in range(5)',text:'Gira 5 volte: i = 0, 1, 2, 3, 4'},{tag:'5 - i',text:'Conta al contrario: 5, 4, 3, 2, 1'},{tag:'range(5)',text:'Crea numeri da 0 a 4'}],
+      ar:[{tag:'for i in range(5)',text:'تُشغَّل 5 مرات: i = 0, 1, 2, 3, 4'},{tag:'5 - i',text:'يعد تنازلياً: 5, 4, 3, 2, 1'},{tag:'range(5)',text:'ينشئ أرقاماً من 0 إلى 4'}]},
+    challenge:{title:{en:'🚀 Countdown Challenge',it:'🚀 Sfida Conto Rovescia',ar:'🚀 تحدي العد التنازلي'},
+      desc:{en:'Write a 10-step countdown from 10 to 1, then print "🎇 HAPPY NEW YEAR!". Use range(10).',
+        it:'Scrivi un conto di 10 da 10 a 1, poi stampa "🎇 FELICE ANNO NUOVO!". Usa range(10).',
+        ar:'اكتب عداً تنازلياً من 10 إلى 1، ثم اطبع "🎇 سنة سعيدة!". استخدم range(10).'},
+      startCode:{en:`# Count down from 10 to 1 then celebrate!\nfor i in range(10):\n    # Hint: print 10 - i\n    pass\n`,it:`# Conta da 10 a 1 poi festeggia!\nfor i in range(10):\n    # Suggerimento: stampa 10 - i\n    pass\n`,ar:`# عد من 10 إلى 1 ثم احتفل!\nfor i in range(10):\n    # تلميح: اطبع 10 - i\n    pass\n`}}},
+  stamps:{id:'stamps',
+    label:{en:'📱 Notifications',it:'📱 Notifiche',ar:'📱 الإشعارات'},
+    code:{en:`apps = ["WhatsApp", "Instagram", "TikTok", "Gmail"]\n\nfor app in apps:\n    print("New notification from", app)\n\nprint("All", len(apps), "apps notified!")`,
+      it:`app = ["WhatsApp", "Instagram", "TikTok", "Gmail"]\n\nfor a in app:\n    print("Nuova notifica da", a)\n\nprint("Tutte", len(app), "app notificate!")`,
+      ar:`تطبيقات = ["واتساب", "انستغرام", "تيك توك", "جيميل"]\n\nfor تطبيق in تطبيقات:\n    print("إشعار جديد من", تطبيق)\n\nprint("تم إشعار", len(تطبيقات), "تطبيقات!")`},
+    hints:{en:[{tag:'for app in apps',text:'app gets each item one by one'},{tag:'len(apps)',text:'Count items in the list'},{tag:'print("..."+app)',text:'Print + current list item'}],
+      it:[{tag:'for a in app',text:'a prende ogni elemento uno alla volta'},{tag:'len(app)',text:'Conta gli elementi'},{tag:'print("..."+a)',text:'Stampa + elemento corrente'}],
+      ar:[{tag:'for تطبيق in تطبيقات',text:'يأخذ كل عنصر بدوره'},{tag:'len(تطبيقات)',text:'يعد العناصر'},{tag:'print("..."+تطبيق)',text:'اطبع + العنصر الحالي'}]},
+    challenge:{title:{en:'📱 Notifications Challenge',it:'📱 Sfida Notifiche',ar:'📱 تحدي الإشعارات'},
+      desc:{en:'Create a list of 5 apps. Loop through them and print "🔔 [app] wants your attention!". At the end, print "You have X notifications".',
+        it:'Crea una lista di 5 app. Cicla e stampa "🔔 [app] vuole la tua attenzione!". Alla fine: "Hai X notifiche".',
+        ar:'أنشئ قائمة بـ 5 تطبيقات. كرر وطبع "🔔 [تطبيق] يريد انتباهك!". في النهاية: "لديك X إشعار".'},
+      startCode:{en:`apps = []  # Add 5 apps!\n\nfor app in apps:\n    # Print notification message\n    pass\n\n# Print total count\n`,it:`app = []  # 5 app!\n\nfor a in app:\n    # Messaggio di notifica\n    pass\n\n# Stampa totale\n`,ar:`تطبيقات = []  # 5 تطبيقات!\n\nfor تطبيق in تطبيقات:\n    # رسالة الإشعار\n    pass\n\n# اطبع الإجمالي\n`}}},
+  stars:{id:'stars',
+    label:{en:'⭐ Star Rater',it:'⭐ Valutazione',ar:'⭐ التقييم بالنجوم'},
+    code:{en:`rating = 4\n\nprint("Your rating:")\nfor i in range(rating):\n    print("⭐", end=" ")\nprint()\nprint("You gave", rating, "out of 5 stars!")`,
+      it:`voto = 4\n\nprint("Il tuo voto:")\nfor i in range(voto):\n    print("⭐", end=" ")\nprint()\nprint("Hai dato", voto, "stelle su 5!")`,
+      ar:`تقييم = 4\n\nprint("تقييمك:")\nfor i in range(تقييم):\n    print("⭐", end=" ")\nprint()\nprint("أعطيت", تقييم, "نجوم من 5!")`},
+    hints:{en:[{tag:'range(rating)',text:'Runs once for each star'},{tag:'end=" "',text:'Stays on the same line instead of new line'},{tag:'print()',text:'An empty print() creates a new line'}],
+      it:[{tag:'range(voto)',text:'Gira una volta per ogni stella'},{tag:'end=" "',text:'Resta sulla stessa riga'},{tag:'print()',text:'print() vuoto va a capo'}],
+      ar:[{tag:'range(تقييم)',text:'يُشغَّل مرة لكل نجمة'},{tag:'end=" "',text:'يبقى في نفس السطر'},{tag:'print()',text:'print() فارغ ينتقل لسطر جديد'}]},
+    challenge:{title:{en:'⭐ Star Challenge',it:'⭐ Sfida Stelle',ar:'⭐ تحدي النجوم'},
+      desc:{en:'Print a 5-star rating where stars below the rating show "☆" and stars AT or below show "⭐". user_rating = 3.',
+        it:'Stampa 5 stelle: "⭐" fino a user_rating e "☆" dopo. user_rating = 3.',
+        ar:'اطبع 5 نجوم: "⭐" حتى user_rating و"☆" بعده. user_rating = 3.'},
+      startCode:{en:`user_rating = 3\n\nfor i in range(5):\n    if i < user_rating:\n        print("⭐", end=" ")\n    else:\n        print("☆", end=" ")\nprint()\n`,it:`user_rating = 3\n\nfor i in range(5):\n    if i < user_rating:\n        print("⭐", end=" ")\n    else:\n        print("☆", end=" ")\nprint()\n`,ar:`user_rating = 3\n\nfor i in range(5):\n    if i < user_rating:\n        print("⭐", end="")\n    else:\n        print("☆", end="")\nprint()\n`}}},
+  times_table:{id:'times_table',
+    label:{en:'✖️ Times Table',it:'✖️ Tabelline',ar:'✖️ جدول الضرب'},
+    code:{en:`number = 3\n\nprint("Times table for", number)\nfor i in range(1, 11):\n    result = number * i\n    print(number, "x", i, "=", result)`,
+      it:`numero = 3\n\nprint("Tabellina del", numero)\nfor i in range(1, 11):\n    risultato = numero * i\n    print(numero, "x", i, "=", risultato)`,
+      ar:`رقم = 3\n\nprint("جدول ضرب", رقم)\nfor i in range(1, 11):\n    نتيجة = رقم * i\n    print(رقم, "x", i, "=", نتيجة)`},
+    hints:{en:[{tag:'range(1, 11)',text:'Starts at 1, goes up to (not including) 11'},{tag:'number * i',text:'Multiply the table number by the counter'},{tag:'result',text:'Store the answer in a variable'}],
+      it:[{tag:'range(1, 11)',text:'Da 1 a 10 (11 non incluso)'},{tag:'numero * i',text:'Moltiplica il numero per il contatore'},{tag:'risultato',text:'Salva il risultato in una variabile'}],
+      ar:[{tag:'range(1, 11)',text:'من 1 إلى 10 (11 غير مشمول)'},{tag:'رقم * i',text:'اضرب الرقم في العداد'},{tag:'نتيجة',text:'خزّن الجواب في متغير'}]},
+    challenge:{title:{en:'✖️ Times Table Challenge',it:'✖️ Sfida Tabelline',ar:'✖️ تحدي جدول الضرب'},
+      desc:{en:'Print the 7 times table from 1 to 10. Then at the end print "7 x 10 = 70 — that\'s the biggest!".',
+        it:'Stampa la tabellina del 7 da 1 a 10. Poi alla fine: "7 x 10 = 70 — il più grande!".',
+        ar:'اطبع جدول ضرب 7 من 1 إلى 10. ثم في النهاية: "7 × 10 = 70 — الأكبر!".'},
+      startCode:{en:`for i in range(1, 11):\n    # Print: 7 x i = result\n    pass\n\n# Print the final message\n`,it:`for i in range(1, 11):\n    # Stampa: 7 x i = risultato\n    pass\n\n# Messaggio finale\n`,ar:`for i in range(1, 11):\n    # اطبع: 7 × i = النتيجة\n    pass\n\n# الرسالة الأخيرة\n`}}}
+};
+
+// ═══════════════════════════════════════════════════════════════
+// FREE PYTHON SNIPPETS
+// ═══════════════════════════════════════════════════════════════
+const FREE_SNIPPETS = {
+  en:[
+    {label:'Hello World',code:`name = "World"\nprint("Hello,", name)\nprint("Python is awesome!")` },
+    {label:'If/Else',code:`age = 12\nif age >= 10:\n    print("You are at least 10!")\nelse:\n    print("You are under 10!")` },
+    {label:'List Loop',code:`fruits = ["apple", "banana", "cherry"]\nfor fruit in fruits:\n    print("I love", fruit)` },
+    {label:'Counter',code:`count = 0\nfor i in range(5):\n    count = count + 1\n    print("Count:", count)\nprint("Done! Final:", count)` },
+    {label:'Times Table',code:`for i in range(1, 11):\n    print("3 x", i, "=", 3 * i)` },
+  ],
+  it:[
+    {label:'Ciao Mondo',code:`nome = "Mondo"\nprint("Ciao,", nome)\nprint("Python è fantastico!")` },
+    {label:'Se/Altrimenti',code:`eta = 12\nif eta >= 10:\n    print("Hai almeno 10 anni!")\nelse:\n    print("Hai meno di 10 anni!")` },
+    {label:'Ciclo Lista',code:`frutti = ["mela", "banana", "ciliegia"]\nfor frutto in frutti:\n    print("Adoro", frutto)` },
+    {label:'Contatore',code:`contatore = 0\nfor i in range(5):\n    contatore = contatore + 1\n    print("Conto:", contatore)\nprint("Fatto! Finale:", contatore)` },
+    {label:'Tabellina',code:`for i in range(1, 11):\n    print("3 x", i, "=", 3 * i)` },
+  ],
+  ar:[
+    {label:'مرحبا بالعالم',code:`اسم = "العالم"\nprint("مرحباً،", اسم)\nprint("بايثون رائع!")` },
+    {label:'إذا/وإلا',code:`عمر = 12\nif عمر >= 10:\n    print("عمرك 10 سنوات على الأقل!")\nelse:\n    print("عمرك أقل من 10!")` },
+    {label:'حلقة قائمة',code:`فواكه = ["تفاح", "موز", "كرز"]\nfor فاكهة in فواكه:\n    print("أحب", فاكهة)` },
+    {label:'عداد',code:`عداد = 0\nfor i in range(5):\n    عداد = عداد + 1\n    print("العداد:", عداد)\nprint("انتهى! النهاية:", عداد)` },
+    {label:'جدول ضرب',code:`for i in range(1, 11):\n    print("3 ×", i, "=", 3 * i)` },
+  ]
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TOPIC SWITCHING
+// ═══════════════════════════════════════════════════════════════
+function setTopic(topic) {
+  currentTopic = topic;
+  ['free','vars','lists','loops'].forEach(id=>{
+    document.getElementById('content-'+id).classList.toggle('visible', id===topic);
+    const tab=document.getElementById('tab-'+id);
+    const activeClass = 'active-'+id;
+    ['active-free','active-vars','active-lists','active-loops'].forEach(c=>tab.classList.remove(c));
+    if(id===topic) tab.classList.add(activeClass);
+  });
 }
 
-function setMode(mode) {
-  currentMode = mode;
-  document.getElementById('tab-guided').classList.toggle('active', mode==='guided');
-  document.getElementById('tab-challenge').classList.toggle('active', mode==='challenge');
-  document.getElementById('sliderSection').style.display = mode==='guided'?'':'none';
-  document.getElementById('hintsBox').style.display = mode==='guided'?'':'none';
-  document.getElementById('challengeSection').style.display = mode==='challenge'?'':'none';
-  if (mode==='guided') { updateCodeFromSliders(); buildHints(); }
-  else { loadChallenge(); }
-}
-
-function buildScenarioPicker() {
-  const el = document.getElementById('scenarioPicker');
-  el.innerHTML='';
-  SCENARIOS.forEach(s => {
+// ═══════════════════════════════════════════════════════════════
+// FREE PYTHON
+// ═══════════════════════════════════════════════════════════════
+function buildSnippets() {
+  const row = document.getElementById('snippetRow');
+  row.innerHTML='';
+  (FREE_SNIPPETS[currentLang]||FREE_SNIPPETS.en).forEach(s=>{
     const btn=document.createElement('button');
-    btn.className='scenario-btn'+(s.id===currentScenario.id?' active':'');
-    btn.textContent=s.label;
-    btn.onclick=()=>selectScenario(s);
+    btn.className='snippet-btn'; btn.textContent=s.label;
+    btn.onclick=()=>{ document.getElementById('freeCode').value=s.code; };
+    row.appendChild(btn);
+  });
+}
+function runFreeCode() {
+  const code=document.getElementById('freeCode').value;
+  const consoleEl=document.getElementById('freeConsole');
+  try {
+    const ops=[];
+    const out=[]; simRun(code,{},out,ops);
+    consoleEl.innerHTML=out.length?out.map(l=>`<span style="color:var(--green)">&gt; ${escHtml(l)}</span>`).join('<br>'):`<span class="info"># ${t('noOutput')}</span>`;
+    if(out.length)burst();
+  } catch(e){
+    consoleEl.innerHTML=`<span class="err">❌ ${t('errorLabel')}: ${escHtml(e.message)}</span>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// VARS & CONDITIONS
+// ═══════════════════════════════════════════════════════════════
+function getVarsScenarios() {
+  return Object.values(VARS_SCENARIOS_RAW).map(s=>({
+    ...s, label:s.label[currentLang],
+    vars:s.vars.map(v=>({...v,label:v.label[currentLang]})),
+    code:s['code_'+currentLang]||s.code_en,
+    hints:s.hints[currentLang]||s.hints.en,
+    challenge:{...s.challenge,title:s.challenge.title[currentLang],desc:s.challenge.desc[currentLang],startCode:s.challenge.startCode[currentLang]}
+  }));
+}
+function setVarsMode(mode) {
+  varsMode=mode;
+  document.getElementById('vtab-guided').classList.toggle('active',mode==='guided');
+  document.getElementById('vtab-challenge').classList.toggle('active',mode==='challenge');
+  document.getElementById('vSliderSection').style.display=mode==='guided'?'':'none';
+  document.getElementById('vHintsBox').style.display=mode==='guided'?'':'none';
+  document.getElementById('vChallengeSection').style.display=mode==='challenge'?'':'none';
+  if(mode==='guided'){updateVarsCode();buildVarsHints();}else loadVarsChallenge();
+}
+function buildVarsPicker(){
+  const el=document.getElementById('vScenarioPicker'); el.innerHTML='';
+  getVarsScenarios().forEach(s=>{
+    const btn=document.createElement('button');
+    btn.className='scenario-btn'+(s.id===currentVarsScenario?.id?' active':'');
+    btn.textContent=s.label; btn.onclick=()=>selectVarsScenario(s);
     el.appendChild(btn);
   });
 }
-
-function selectScenario(s) {
-  currentScenario=s;
-  varValues={};
+function selectVarsScenario(s){
+  currentVarsScenario=s; varValues={};
   s.vars.forEach(v=>{varValues[v.name]=v.default;});
-  buildScenarioPicker();
-  buildSliders();
-  buildHints();
-  if (currentMode==='guided') updateCodeFromSliders();
-  else loadChallenge();
-  resetPhone();
+  buildVarsPicker(); buildVarsSliders(); buildVarsHints();
+  if(varsMode==='guided')updateVarsCode(); else loadVarsChallenge();
+  resetVarsPhone();
 }
-
-function buildSliders() {
-  const el=document.getElementById('sliderArea');
-  el.innerHTML='';
-  currentScenario.vars.forEach(v=>{
-    const row=document.createElement('div');
-    row.className='var-row';
-    row.innerHTML=`<div class="var-label"><span>${v.name}</span><span id="val_${v.name}">${varValues[v.name]}</span></div>
-      <input type="range" min="${v.min}" max="${v.max}" value="${varValues[v.name]}" oninput="updateVar('${v.name}',this.value)">`;
+function buildVarsSliders(){
+  const el=document.getElementById('vSliderArea'); el.innerHTML='';
+  currentVarsScenario.vars.forEach(v=>{
+    const row=document.createElement('div'); row.className='var-row';
+    row.innerHTML=`<div class="var-label"><span>${v.name}</span><span id="vval_${v.name}">${varValues[v.name]}</span></div>
+      <input type="range" min="${v.min}" max="${v.max}" value="${varValues[v.name]}" oninput="updateVarVal('${v.name}',this.value)">`;
     el.appendChild(row);
   });
 }
-
-function updateVar(name,val) {
+function updateVarVal(name,val){
   varValues[name]=parseInt(val);
-  document.getElementById('val_'+name).textContent=val;
-  updateCodeFromSliders();
+  document.getElementById('vval_'+name).textContent=val;
+  updateVarsCode();
 }
-
-function updateCodeFromSliders() {
-  let code=currentScenario.code;
-  currentScenario.vars.forEach(v=>{code=code.replaceAll(`{${v.name}}`,varValues[v.name]);});
-  document.getElementById('codeArea').value=code;
+function updateVarsCode(){
+  let code=currentVarsScenario.code;
+  currentVarsScenario.vars.forEach(v=>{code=code.replaceAll(`{${v.name}}`,varValues[v.name]);});
+  document.getElementById('vCodeArea').value=code;
 }
-
-function buildHints() {
-  const el=document.getElementById('hintsBox');
-  const t=LANG[currentLangCode];
-  el.innerHTML=`<div class="section-label">💡 ${t.labelHints}</div>`+
-    currentScenario.hints.map(h=>`<div class="hint-row"><span class="tag">${h.tag}</span><span>${h.text}</span></div>`).join('');
+function buildVarsHints(){
+  const el=document.getElementById('vHintsBox');
+  el.innerHTML=`<div class="section-label">💡 ${t('labelHints')}</div>`+
+    currentVarsScenario.hints.map(h=>`<div class="hint-row"><span class="tag">${h.tag}</span><span>${h.text}</span></div>`).join('');
 }
-
-function loadChallenge() {
-  const ch = currentScenario.challenge;
-  const el = document.getElementById('challengeBox');
-  const t = LANG[currentLangCode];
-  el.innerHTML=`<div class="challenge-badge">🏆 ${t.challengeBadge}</div>
+function loadVarsChallenge(){
+  const ch=currentVarsScenario.challenge, el=document.getElementById('vChallengeBox');
+  el.innerHTML=`<div class="challenge-badge">🏆 ${t('challengeBadge')}</div>
     <div class="challenge-title">${ch.title}</div>
     <div class="challenge-desc">${ch.desc}</div>
-    <button class="challenge-check" onclick="checkChallenge()">✅ ${t.btnCheck}</button>
-    <div id="challengeResult"></div>`;
-  document.getElementById('codeArea').value = ch.startCode || `# ${currentScenario.label}\n\n`;
+    <button class="challenge-check" onclick="checkVarsChallenge()">✅ ${t('btnCheck')}</button>
+    <div id="vChallengeResult"></div>`;
+  document.getElementById('vCodeArea').value=ch.startCode||`# ${currentVarsScenario.label}\n\n`;
 }
-
-function checkChallenge() {
-  const code = document.getElementById('codeArea').value;
-  const out=[], env={};
-  const t=LANG[currentLangCode];
+function checkVarsChallenge(){
+  const code=document.getElementById('vCodeArea').value, out=[];
   try {
-    simRun(code,env,out);
-    const resultEl=document.getElementById('challengeResult');
-    if (out.length>0) {
-      resultEl.className='challenge-result pass';
-      resultEl.textContent='🎉 '+t.challengePass+' '+out.join(' | ');
-      burst();
-      playSound('battery_full');
-    } else {
-      resultEl.className='challenge-result fail';
-      resultEl.textContent='🤔 '+t.challengeNoOutput;
-    }
-  } catch(e) {
-    document.getElementById('challengeResult').className='challenge-result fail';
-    document.getElementById('challengeResult').textContent='❌ '+t.errorLabel+': '+e.message;
+    simRun(code,{},out,null);
+    const res=document.getElementById('vChallengeResult');
+    if(out.length){res.className='challenge-result pass';res.textContent='🎉 '+t('challengePass')+' '+out.join(' | ');burst();playSound('battery_full');}
+    else{res.className='challenge-result fail';res.textContent='🤔 '+t('challengeNoOutput');}
+  } catch(e){
+    document.getElementById('vChallengeResult').className='challenge-result fail';
+    document.getElementById('vChallengeResult').textContent='❌ '+t('errorLabel')+': '+e.message;
   }
 }
-
-// ═══════════════════════════════════════════════════════════════
-// RUN CODE
-// ═══════════════════════════════════════════════════════════════
-function runCode() {
-  const code=document.getElementById('codeArea').value;
-  const consoleEl=document.getElementById('consoleOut');
-  const t=LANG[currentLangCode];
+function runVarsCode(){
+  const code=document.getElementById('vCodeArea').value, consoleEl=document.getElementById('vConsole');
   try {
-    const result=interpretPython(code);
-    consoleEl.innerHTML=result.output.map(l=>`<span style="color:var(--green)">&gt; ${escHtml(l)}</span>`).join('<br>')||`<span class="info"># ${t.noOutput}</span>`;
-    updatePhone(result);
-    if (result.output.length>0) burst();
-  } catch(e) {
-    consoleEl.innerHTML=`<span class="err">❌ ${t.errorLabel}: ${escHtml(e.message)}</span>`;
-  }
+    const out=[],env={};simRun(code,env,out,null);
+    consoleEl.innerHTML=out.length?out.map(l=>`<span style="color:var(--green)">&gt; ${escHtml(l)}</span>`).join('<br>'):`<span class="info"># ${t('noOutput')}</span>`;
+    updateVarsPhone({output:out,env});
+    if(out.length)burst();
+  } catch(e){ consoleEl.innerHTML=`<span class="err">❌ ${t('errorLabel')}: ${escHtml(e.message)}</span>`; }
 }
-
-// ═══════════════════════════════════════════════════════════════
-// PHONE RENDERER
-// ═══════════════════════════════════════════════════════════════
-function resetPhone() {
-  const screen=document.getElementById('phoneScreen');
-  const t=LANG[currentLangCode];
+function resetVarsPhone(){
+  const screen=document.getElementById('vPhoneScreen');
   screen.style.background='linear-gradient(160deg,#1a1930 0%,#0f0e17 100%)';
-  document.getElementById('phoneState').outerHTML=`<div class="phone-state" id="phoneState">
+  document.getElementById('vPhoneState').outerHTML=`<div class="phone-state" id="vPhoneState">
     <div class="phone-emoji">📱</div>
-    <div class="phone-msg">${t.phoneDefault}</div>
-    <div class="phone-sub">${t.phoneSub}</div>
+    <div class="phone-msg">${t('phoneDefault')}</div>
+    <div class="phone-sub">${t('phoneSub')}</div>
   </div>`;
-  setIsland(false,'');
+  const isl=document.getElementById('vPhoneIsland'); if(isl)isl.classList.remove('expand');
 }
-
-function setIsland(expand,text) {
-  const el=document.getElementById('phoneIsland');
-  const t=document.getElementById('islandText');
-  el.classList.toggle('expand',expand);
-  if (t) t.textContent=text||'LIVE';
+function setVarsIsland(expand,text){
+  const el=document.getElementById('vPhoneIsland'); if(!el)return;
+  const tx=document.getElementById('vIslandText');
+  el.classList.toggle('expand',expand); if(tx)tx.textContent=text||'LIVE';
 }
-
-function notifBubble(icon,title,body) {
-  return `<div class="notif-bubble" style="margin-top:8px;">
-    <div class="notif-icon">${icon}</div>
-    <div class="notif-text"><div class="notif-title">${title}</div><div class="notif-body">${body}</div></div>
-  </div>`;
+function notif(icon,title,body){
+  return `<div class="notif-bubble" style="margin-top:6px;"><div class="notif-icon">${icon}</div><div class="notif-text"><div class="notif-title">${title}</div><div class="notif-body">${body}</div></div></div>`;
 }
-
-function updatePhone(result) {
-  const screen=document.getElementById('phoneScreen');
-  const stateEl=document.getElementById('phoneState');
-  const env=result.env, sid=currentScenario.id;
+function updateVarsPhone(result){
+  const screen=document.getElementById('vPhoneScreen'), stateEl=document.getElementById('vPhoneState');
+  const env=result.env, sid=currentVarsScenario.id;
   let html='', bg='linear-gradient(160deg,#1a1930,#0f0e17)';
-
-  if (sid==='battery') {
+  if(sid==='battery'){
     const pct=Math.max(0,Math.min(100,env.battery??0));
     const col=pct<10?'#ff4444':pct<30?'#ffaa00':'#6bff9e';
-    let emoji='🔋',msg='',sub='',snd='battery_ok';
-    if (pct===0)   {emoji='⚫';msg='Phone is OFF';sub='0% — No power';bg='#050510';snd='battery_dead';}
-    else if(pct<10){emoji='🪫';msg='CRITICAL!';sub='Plug in NOW!';bg='linear-gradient(160deg,#3a0a0a,#1a0505)';snd='battery_critical';}
-    else if(pct<30){emoji='⚠️';msg='Low Battery';sub=`${pct}% remaining`;bg='linear-gradient(160deg,#2a1a00,#1a0f00)';snd='battery_low';}
-    else if(pct<70){emoji='🔋';msg='Battery Okay';sub=`${pct}% — Looking good`;bg='linear-gradient(160deg,#0a1a2a,#0a0f1a)';snd='battery_ok';}
-    else           {emoji='⚡';msg='Fully Charged!';sub=`${pct}% — Amazing!`;bg='linear-gradient(160deg,#0a2a15,#051a0a)';snd='battery_full';}
-    playSound(snd); setIsland(true,'BATTERY');
-    html=`<div class="phone-state" id="phoneState">
-      <div class="phone-emoji">${emoji}</div><div class="phone-msg">${msg}</div>
-      <div style="position:relative;display:inline-block;margin-top:5px;">
-        <div class="battery-visual"><div class="battery-fill" style="width:${pct}%;background:${col};"></div></div>
-        <div class="battery-tip"></div>
-      </div>
-      <div class="phone-sub">${sub}</div>${notifBubble(emoji,'Battery',result.output[0]||'')}
-    </div>`;
-
-  } else if (sid==='wifi') {
-    const sig=env.signal??0;
-    const bars=sig<1?0:sig<25?1:sig<60?2:sig<85?3:4;
-    const barH=[8,14,20,26];
-    let emoji=bars===0?'❌':'📶', msg=result.output[0]||'', snd='wifi_ok';
+    let emoji='🔋',snd='battery_ok';
+    if(pct===0){emoji='⚫';bg='#050510';snd='battery_dead';}
+    else if(pct<10){emoji='🪫';bg='linear-gradient(160deg,#3a0a0a,#1a0505)';snd='battery_critical';}
+    else if(pct<30){emoji='⚠️';bg='linear-gradient(160deg,#2a1a00,#1a0f00)';snd='battery_low';}
+    else if(pct<70){emoji='🔋';bg='linear-gradient(160deg,#0a1a2a,#0a0f1a)';}
+    else{emoji='⚡';bg='linear-gradient(160deg,#0a2a15,#051a0a)';snd='battery_full';}
+    playSound(snd);setVarsIsland(true,'BATTERY');
+    html=`<div class="phone-state" id="vPhoneState"><div class="phone-emoji">${emoji}</div>
+      <div style="position:relative;display:inline-block;margin-top:4px;"><div class="battery-visual"><div class="battery-fill" style="width:${pct}%;background:${col};"></div></div><div class="battery-tip"></div></div>
+      <div class="phone-msg">${result.output[0]||''}</div><div class="phone-sub">${pct}%</div>${notif(emoji,'Battery',result.output[0]||'')}</div>`;
+  } else if(sid==='wifi'){
+    const sig=env.signal??0; const bars=sig<1?0:sig<25?1:sig<60?2:sig<85?3:4;
+    const barH=[8,13,18,24]; let snd='wifi_ok';
     if(bars===0){bg='linear-gradient(160deg,#1a0a0a,#0f0505)';snd='wifi_none';}
     else if(bars<2){bg='linear-gradient(160deg,#1a1500,#0f0e00)';snd='wifi_weak';}
-    else if(bars<4){bg='linear-gradient(160deg,#0a1a10,#051008)';snd='wifi_ok';}
+    else if(bars<4){bg='linear-gradient(160deg,#0a1a10,#051008)';}
     else{bg='linear-gradient(160deg,#0a2a10,#051a08)';snd='wifi_great';}
-    playSound(snd); setIsland(true,'WIFI');
+    playSound(snd);setVarsIsland(true,'WIFI');
     const wBars=barH.map((h,i)=>`<div class="wifi-bar ${i<bars?'on':''}" style="height:${h}px;"></div>`).join('');
-    html=`<div class="phone-state" id="phoneState">
-      <div class="phone-emoji">${emoji}</div>
-      <div class="wifi-bars">${wBars}</div>
-      <div class="phone-msg" style="margin-top:8px;">${msg}</div>
-      <div class="phone-sub">Signal: ${sig}%</div>
-    </div>`;
-
-  } else if (sid==='alarm') {
-    const hour=env.hour??0;
-    const displayH=hour%12||12, ampm=hour<12?'AM':'PM';
-    const timeStr=`${displayH}:00 ${ampm}`;
+    html=`<div class="phone-state" id="vPhoneState"><div class="phone-emoji">${bars===0?'❌':'📶'}</div><div class="wifi-bars">${wBars}</div><div class="phone-msg" style="margin-top:7px;">${result.output[0]||''}</div><div class="phone-sub">Signal: ${sig}%</div></div>`;
+  } else if(sid==='alarm'){
+    const hour=env.hour??0; const dh=hour%12||12, ap=hour<12?'AM':'PM';
     let snd='alarm_sleep';
     if(hour===7){bg='linear-gradient(160deg,#3a0a1a,#1a0510)';snd='alarm_ringing';}
     else if(hour<7){bg='linear-gradient(160deg,#050520,#020210)';}
     else if(hour<9){bg='linear-gradient(160deg,#1a1500,#0f0e05)';snd='alarm_morning';}
     else{bg='linear-gradient(160deg,#2a0a0a,#1a0505)';snd='alarm_late';}
-    playSound(snd); setIsland(hour===7,hour===7?'ALARM':'');
-    if(hour===7) {
-      html=`<div class="phone-state" id="phoneState">
-        <div class="alarm-ring" style="background:#2a0a1a;border:3px solid var(--accent);">⏰</div>
-        <div class="phone-msg" style="color:var(--accent);font-size:1rem;">WAKE UP!!</div>
-        <div class="phone-sub">Alarm ringing — ${timeStr}</div>
-        ${notifBubble('⏰','Alarm',result.output[0]||'')}
-      </div>`;
-    } else {
-      html=`<div class="phone-state" id="phoneState">
-        <div class="idle-clock">${timeStr}</div>
-        <div class="idle-date">Hour: ${hour}</div>
-        <div class="phone-sub" style="margin-top:10px;">${result.output[0]||''}</div>
-      </div>`;
-    }
-
-  } else if (sid==='messages') {
-    const msgs=env.messages??0;
-    let snd='messages_none';
+    playSound(snd);setVarsIsland(hour===7,'ALARM');
+    if(hour===7){html=`<div class="phone-state" id="vPhoneState"><div class="alarm-ring" style="background:#2a0a1a;border:3px solid var(--accent);">⏰</div><div class="phone-msg" style="color:var(--accent);">WAKE UP!!</div><div class="phone-sub">${dh}:00 ${ap}</div>${notif('⏰','Alarm',result.output[0]||'')}</div>`;}
+    else{html=`<div class="phone-state" id="vPhoneState"><div class="idle-clock">${dh}:00 ${ap}</div><div class="phone-sub" style="margin-top:8px;">${result.output[0]||''}</div></div>`;}
+  } else if(sid==='messages'){
+    const msgs=env.messages??0; let snd='messages_none';
     if(msgs===0){bg='linear-gradient(160deg,#1a1930,#0f0e17)';}
     else if(msgs===1){bg='linear-gradient(160deg,#0a1a2a,#05100f)';snd='messages_one';}
     else if(msgs<10){bg='linear-gradient(160deg,#0a1a2a,#05100f)';snd='messages_few';}
     else{bg='linear-gradient(160deg,#1a0a2a,#0f0515)';snd='messages_many';}
-    playSound(snd); setIsland(msgs>0,'MSG');
-    const badge=msgs>0?`<div style="background:var(--accent);color:#fff;font-size:0.75rem;font-weight:900;
-      width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-      position:absolute;top:-5px;right:-5px;">${msgs>99?'99+':msgs}</div>`:'';
-    html=`<div class="phone-state" id="phoneState">
-      <div style="position:relative;display:inline-block;">
-        <div style="font-size:3.8rem;">💬</div>${badge}
-      </div>
-      <div class="phone-msg">${result.output[0]||''}</div>
-      <div class="phone-sub">${msgs} unread message${msgs!==1?'s':''}</div>
-      ${msgs>0?notifBubble('💬','Messages',`${msgs} new message${msgs!==1?'s':''}`):''}
-    </div>`;
-
-  } else if (sid==='storage') {
-    const gb=env.free_gb??0, total=128;
-    const usedPct=Math.round(((total-gb)/total)*100);
-    const fillCol=gb===0?'#ff4444':gb<5?'#ffaa00':'#6bff9e';
-    let emoji=gb===0?'❌':gb<5?'⚠️':'💾', snd='storage_plenty';
+    playSound(snd);setVarsIsland(msgs>0,'MSG');
+    const badge=msgs>0?`<div style="background:var(--accent);color:#fff;font-size:0.7rem;font-weight:900;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:absolute;top:-4px;right:-4px;">${msgs>99?'99+':msgs}</div>`:'';
+    html=`<div class="phone-state" id="vPhoneState"><div style="position:relative;display:inline-block;"><div style="font-size:3.2rem;">💬</div>${badge}</div><div class="phone-msg">${result.output[0]||''}</div><div class="phone-sub">${msgs} unread</div>${msgs>0?notif('💬','Messages',`${msgs} new`):''}`;
+  } else if(sid==='storage'){
+    const gb=env.free_gb??0,total=128,usedPct=Math.round(((total-gb)/total)*100);
+    const fillCol=gb===0?'#ff4444':gb<5?'#ffaa00':'#6bff9e'; let snd='storage_plenty';
     if(gb===0){bg='linear-gradient(160deg,#2a0a0a,#100505)';snd='storage_full';}
     else if(gb<5){bg='linear-gradient(160deg,#1a1000,#0f0800)';snd='storage_danger';}
     else if(gb<20){bg='linear-gradient(160deg,#0a1520,#050a10)';snd='storage_some';}
-    else{bg='linear-gradient(160deg,#0a1a10,#050f08)';snd='storage_plenty';}
-    playSound(snd); setIsland(gb<5,'STORAGE');
-    html=`<div class="phone-state" id="phoneState">
-      <div class="phone-emoji">${emoji}</div>
-      <div class="phone-msg">${result.output[0]||''}</div>
-      <div style="width:140px;background:#1a1a3a;border-radius:8px;height:13px;margin:7px 0;overflow:hidden;">
-        <div style="width:${usedPct}%;height:100%;background:${fillCol};border-radius:8px;transition:width .6s;"></div>
-      </div>
-      <div class="phone-sub">${gb} GB free of ${total} GB</div>
-    </div>`;
-
-  } else if (sid==='flashlight') {
-    const br=env.brightness??0;
-    let snd='flashlight_off';
-    if(br===0){bg='#020208';}
-    else if(br<30){bg=`linear-gradient(160deg,#0a0a20,#050510)`;snd='flashlight_dim';}
-    else if(br<70){bg=`linear-gradient(160deg,#1a1a3a,#0f0f20)`;snd='flashlight_medium';}
-    else{bg=`linear-gradient(160deg,#ffffff,#e8e8ff)`;snd='flashlight_full';}
-    playSound(snd); setIsland(br>0,'TORCH');
-    const textCol=br>=70?'#1a1a2e':'#fff';
-    const beamHTML=br>0?`<div class="flash-beam" style="opacity:${br/100};"></div>`:'';
-    html=`<div class="phone-state" id="phoneState" style="color:${textCol};">
-      ${beamHTML}
+    else{bg='linear-gradient(160deg,#0a1a10,#050f08)';}
+    playSound(snd);setVarsIsland(gb<5,'STORAGE');
+    html=`<div class="phone-state" id="vPhoneState"><div class="phone-emoji">${gb===0?'❌':gb<5?'⚠️':'💾'}</div><div class="phone-msg">${result.output[0]||''}</div><div style="width:130px;background:#1a1a3a;border-radius:7px;height:11px;margin:6px 0;overflow:hidden;"><div style="width:${usedPct}%;height:100%;background:${fillCol};border-radius:7px;"></div></div><div class="phone-sub">${gb} GB free</div></div>`;
+  } else if(sid==='flashlight'){
+    const br=env.brightness??0; let snd='flashlight_off';
+    if(br===0){bg='#020208';}else if(br<30){bg='linear-gradient(160deg,#0a0a20,#050510)';snd='flashlight_dim';}
+    else if(br<70){bg='linear-gradient(160deg,#1a1a3a,#0f0f20)';snd='flashlight_medium';}
+    else{bg='linear-gradient(160deg,#ffffff,#e8e8ff)';snd='flashlight_full';}
+    playSound(snd);setVarsIsland(br>0,'TORCH');
+    const tCol=br>=70?'#1a1a2e':'#fff';
+    html=`<div class="phone-state" id="vPhoneState" style="color:${tCol};">${br>0?`<div class="flash-beam" style="opacity:${br/100};"></div>`:''}
       <div class="phone-emoji" style="filter:${br>0?`brightness(${1+br/60})`:'none'}">${br===0?'🔦':'💡'}</div>
-      <div class="phone-msg" style="color:${textCol};">${result.output[0]||''}</div>
-      <div class="phone-sub" style="color:${textCol};opacity:.6;">Brightness: ${br}%</div>
-      <div style="width:120px;background:${br>=70?'#ccccee':'#1a1a3a'};border-radius:8px;height:10px;margin-top:6px;overflow:hidden;">
-        <div style="width:${br}%;height:100%;background:${br>=70?'#4444cc':'#fffaaa'};border-radius:8px;transition:width .4s;"></div>
-      </div>
-    </div>`;
-
-  } else if (sid==='gps') {
-    const spd=env.speed??0;
-    let snd='gps_parked', arrow='⬤';
-    if(spd===0){bg='linear-gradient(160deg,#0a1520,#050a10)';}
-    else if(spd<20){bg='linear-gradient(160deg,#0a1a10,#050f08)';snd='gps_walk';}
+      <div class="phone-msg" style="color:${tCol};">${result.output[0]||''}</div>
+      <div style="width:110px;background:${br>=70?'#ccccee':'#1a1a3a'};border-radius:7px;height:9px;margin-top:5px;overflow:hidden;"><div style="width:${br}%;height:100%;background:${br>=70?'#4444cc':'#fffaaa'};border-radius:7px;"></div></div></div>`;
+  } else if(sid==='gps'){
+    const spd=env.speed??0; let snd='gps_parked';
+    if(spd===0){}else if(spd<20){bg='linear-gradient(160deg,#0a1a10,#050f08)';snd='gps_walk';}
     else if(spd<60){bg='linear-gradient(160deg,#0a1a2a,#050a15)';snd='gps_city';}
     else if(spd<100){bg='linear-gradient(160deg,#0a0a2a,#050510)';snd='gps_highway';}
     else{bg='linear-gradient(160deg,#2a0a0a,#150505)';snd='gps_toofast';}
-    playSound(snd); setIsland(spd>0,'GPS');
-    // position dot on map based on speed
-    const dotX = Math.min(80, 10+spd*0.6);
-    html=`<div class="phone-state" id="phoneState">
-      <div class="phone-emoji">🗺️</div>
-      <div class="gps-map">
-        <div class="gps-road-h"></div><div class="gps-road-v"></div>
-        <div class="gps-pulse" style="left:${dotX-8}px;top:30px;"></div>
-        <div class="gps-dot" style="left:${dotX}px;top:37px;"></div>
-      </div>
-      <div class="phone-msg">${result.output[0]||''}</div>
-      <div class="phone-sub">Speed: ${spd} km/h</div>
-    </div>`;
-
-  } else if (sid==='volume') {
-    const vol=env.volume??0;
-    let snd='volume_mute';
-    if(vol===0){bg='linear-gradient(160deg,#1a1930,#0f0e17)';}
-    else if(vol<20){bg='linear-gradient(160deg,#0a1520,#050a10)';snd='volume_quiet';}
-    else if(vol<50){bg='linear-gradient(160deg,#0a1a10,#050f08)';snd='volume_normal';}
+    playSound(snd);setVarsIsland(spd>0,'GPS');
+    const dotX=Math.min(90,10+spd*0.6);
+    html=`<div class="phone-state" id="vPhoneState"><div class="phone-emoji">🗺️</div><div class="gps-map"><div class="gps-road-h"></div><div class="gps-road-v"></div><div class="gps-pulse" style="left:${dotX-8}px;top:28px;"></div><div class="gps-dot" style="left:${dotX}px;top:33px;"></div></div><div class="phone-msg">${result.output[0]||''}</div><div class="phone-sub">Speed: ${spd} km/h</div></div>`;
+  } else if(sid==='volume'){
+    const vol=env.volume??0; let snd='volume_mute';
+    if(vol===0){}else if(vol<20){snd='volume_quiet';}else if(vol<50){bg='linear-gradient(160deg,#0a1a10,#050f08)';snd='volume_normal';}
     else if(vol<80){bg='linear-gradient(160deg,#1a1500,#0f0e00)';snd='volume_loud';}
     else{bg='linear-gradient(160deg,#2a1a00,#151000)';snd='volume_max';}
-    playSound(snd); setIsland(vol>60,'VOL');
-    const numBars=10;
-    const activeBars=Math.round(vol/100*numBars);
-    const barColors=['#6bff9e','#6bff9e','#6bff9e','#6bff9e','#6bff9e','#6bff9e','#ffe66d','#ffe66d','#ff9944','#ff4444'];
-    const volBars=Array.from({length:numBars},(_,i)=>{
-      const h=8+i*4, active=i<activeBars;
-      return `<div class="vol-bar-item" style="height:${active?h:4}px;background:${active?barColors[i]:'#2a2a4e'};"></div>`;
-    }).join('');
-    html=`<div class="phone-state" id="phoneState">
-      <div class="phone-emoji">${vol===0?'🔇':vol<40?'🔈':vol<70?'🔉':'🔊'}</div>
-      <div class="vol-bars">${volBars}</div>
-      <div class="phone-msg" style="margin-top:6px;">${result.output[0]||''}</div>
-      <div class="phone-sub">Volume: ${vol}%</div>
-    </div>`;
+    playSound(snd);setVarsIsland(vol>60,'VOL');
+    const n=10,a=Math.round(vol/100*n),barCols=['#6bff9e','#6bff9e','#6bff9e','#6bff9e','#6bff9e','#6bff9e','#ffe66d','#ffe66d','#ff9944','#ff4444'];
+    const vBars=Array.from({length:n},(_,i)=>`<div class="vol-bar-item" style="height:${i<a?8+i*4:4}px;background:${i<a?barCols[i]:'#2a2a4e'};"></div>`).join('');
+    html=`<div class="phone-state" id="vPhoneState"><div class="phone-emoji">${vol===0?'🔇':vol<40?'🔈':vol<70?'🔉':'🔊'}</div><div class="vol-bars">${vBars}</div><div class="phone-msg" style="margin-top:5px;">${result.output[0]||''}</div><div class="phone-sub">Volume: ${vol}%</div></div>`;
   }
-
-  screen.style.background = bg;
-  stateEl.outerHTML = html;
+  screen.style.background=bg;
+  stateEl.outerHTML=html;
 }
 
 // ═══════════════════════════════════════════════════════════════
-// BOOT
+// LISTS
 // ═══════════════════════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded',()=>{
+function getListsScenarios(){
+  return Object.values(LISTS_SCENARIOS).map(s=>({...s,label:s.label[currentLang],code:s.code[currentLang],hints:s.hints[currentLang]||s.hints.en,challenge:{...s.challenge,title:s.challenge.title[currentLang],desc:s.challenge.desc[currentLang],startCode:s.challenge.startCode[currentLang]}}));
+}
+function setListsMode(mode){
+  listsMode=mode;
+  document.getElementById('ltab-guided').classList.toggle('active',mode==='guided');
+  document.getElementById('ltab-challenge').classList.toggle('active',mode==='challenge');
+  document.getElementById('lGuidedInfo').style.display=mode==='guided'?'':'none';
+  document.getElementById('lHintsBox').style.display=mode==='guided'?'':'none';
+  document.getElementById('lChallengeSection').style.display=mode==='challenge'?'':'none';
+  if(mode==='guided')loadListsScenario();else loadListsChallenge();
+}
+function buildListsPicker(){
+  const el=document.getElementById('lScenarioPicker'); el.innerHTML='';
+  getListsScenarios().forEach(s=>{
+    const btn=document.createElement('button');
+    btn.className='scenario-btn'+(s.id===currentListsScenario?.id?' active':'');
+    btn.textContent=s.label; btn.onclick=()=>selectListsScenario(s);
+    el.appendChild(btn);
+  });
+}
+function selectListsScenario(s){
+  currentListsScenario=s; buildListsPicker();
+  if(listsMode==='guided')loadListsScenario(); else loadListsChallenge();
+  resetListsPhone();
+}
+function loadListsScenario(){
+  document.getElementById('lCodeArea').value=currentListsScenario.code;
+  buildListsHints();
+}
+function buildListsHints(){
+  const el=document.getElementById('lHintsBox');
+  el.innerHTML=`<div class="section-label">💡 ${t('labelHints')}</div>`+
+    currentListsScenario.hints.map(h=>`<div class="hint-row"><span class="tag">${h.tag}</span><span>${h.text}</span></div>`).join('');
+}
+function loadListsChallenge(){
+  const ch=currentListsScenario.challenge,el=document.getElementById('lChallengeBox');
+  el.innerHTML=`<div class="challenge-badge">🏆 ${t('challengeBadge')}</div>
+    <div class="challenge-title">${ch.title}</div><div class="challenge-desc">${ch.desc}</div>
+    <button class="challenge-check" onclick="checkListsChallenge()">✅ ${t('btnCheck')}</button>
+    <div id="lChallengeResult"></div>`;
+  document.getElementById('lCodeArea').value=ch.startCode;
+}
+function checkListsChallenge(){
+  const code=document.getElementById('lCodeArea').value,out=[],ops=[];
+  try{
+    simRun(code,{},out,ops);
+    const res=document.getElementById('lChallengeResult');
+    if(out.length){res.className='challenge-result pass';res.textContent='🎉 '+t('challengePass')+' '+out.join(' | ');burst();playSound('list_done');}
+    else{res.className='challenge-result fail';res.textContent='🤔 '+t('challengeNoOutput');}
+  }catch(e){document.getElementById('lChallengeResult').className='challenge-result fail';document.getElementById('lChallengeResult').textContent='❌ '+t('errorLabel')+': '+e.message;}
+}
+function runListsCode(){
+  const code=document.getElementById('lCodeArea').value,consoleEl=document.getElementById('lConsole');
+  try{
+    const out=[],ops=[],env={};simRun(code,env,out,ops);
+    consoleEl.innerHTML=out.length?out.map(l=>`<span style="color:var(--green)">&gt; ${escHtml(l)}</span>`).join('<br>'):`<span class="info"># ${t('noOutput')}</span>`;
+    updateListViz(env,ops);
+    updateListsPhone(out,env,ops);
+    if(out.length)burst();
+  }catch(e){consoleEl.innerHTML=`<span class="err">❌ ${t('errorLabel')}: ${escHtml(e.message)}</span>`;}
+}
+function updateListViz(env,ops){
+  const vizEl=document.getElementById('lVizItems'),logEl=document.getElementById('lVizLog');
+  // find last list in env
+  let arr=null,arrName='';
+  Object.entries(env).forEach(([k,v])=>{if(Array.isArray(v)){arr=v;arrName=k;}});
+  if(!arr){vizEl.innerHTML='<span style="color:var(--muted);font-size:0.78rem;font-family:\'Space Mono\',monospace;">No list found in your code</span>';logEl.textContent='';return;}
+  vizEl.innerHTML=arr.map((item,i)=>`<div class="list-item-box"><span class="idx">[${i}]</span><span>${escHtml(String(item))}</span></div>`).join('');
+  const lastOp=ops.length?ops[ops.length-1]:null;
+  if(lastOp) logEl.textContent=lastOp.op+': '+arrName+'['+lastOp.arr.length+' items]';
+}
+function resetListsPhone(){
+  const screen=document.getElementById('lPhoneScreen');
+  screen.style.background='linear-gradient(160deg,#1a1930,#0f0e17)';
+  document.getElementById('lPhoneState').outerHTML=`<div class="phone-state" id="lPhoneState"><div class="phone-emoji">📋</div><div class="phone-msg">Run code to see<br>your list!</div><div class="phone-sub">Lists keep things organized 📦</div></div>`;
+  document.getElementById('lPhoneIsland').classList.remove('expand');
+}
+function updateListsPhone(output,env,ops){
+  const screen=document.getElementById('lPhoneScreen'),stateEl=document.getElementById('lPhoneState');
+  let arr=null,arrName='';
+  Object.entries(env).forEach(([k,v])=>{if(Array.isArray(v)){arr=v;arrName=k;}});
+  screen.style.background='linear-gradient(160deg,#0a1a2a,#050a15)';
+  document.getElementById('lPhoneIsland').classList.add('expand');
+  playSound('list_done');
+  const items=arr?arr.slice(0,6):[];
+  const listHTML=items.map((item,i)=>`<div class="phone-list-item"><span class="item-idx">[${i}]</span><span>${escHtml(String(item))}</span></div>`).join('');
+  const moreHTML=arr&&arr.length>6?`<div class="phone-sub">+${arr.length-6} more...</div>`:'';
+  const listName=arr?`<div class="phone-sub" style="color:var(--blue);margin-bottom:4px;">${arrName} (${arr.length} items)</div>`:'';
+  document.getElementById('lPhoneState').outerHTML=`<div class="phone-state" id="lPhoneState">
+    <div class="phone-emoji">📋</div>
+    ${listName}
+    <div class="phone-list-container">${listHTML}</div>
+    ${moreHTML}
+    ${output[0]?`<div class="phone-msg" style="margin-top:6px;font-size:0.7rem;">${escHtml(output[0])}</div>`:''}
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// LOOPS
+// ═══════════════════════════════════════════════════════════════
+function getLoopsScenarios(){
+  return Object.values(LOOPS_SCENARIOS).map(s=>({...s,label:s.label[currentLang],code:s.code[currentLang],hints:s.hints[currentLang]||s.hints.en,challenge:{...s.challenge,title:s.challenge.title[currentLang],desc:s.challenge.desc[currentLang],startCode:s.challenge.startCode[currentLang]}}));
+}
+function setLoopsMode(mode){
+  loopsMode=mode;
+  document.getElementById('ootab-guided').classList.toggle('active',mode==='guided');
+  document.getElementById('ootab-challenge').classList.toggle('active',mode==='challenge');
+  document.getElementById('ooGuidedInfo').style.display=mode==='guided'?'':'none';
+  document.getElementById('ooHintsBox').style.display=mode==='guided'?'':'none';
+  document.getElementById('ooChallengeSection').style.display=mode==='challenge'?'':'none';
+  if(mode==='guided')loadLoopsScenario(); else loadLoopsChallenge();
+}
+function buildLoopsPicker(){
+  const el=document.getElementById('ooScenarioPicker'); el.innerHTML='';
+  getLoopsScenarios().forEach(s=>{
+    const btn=document.createElement('button');
+    btn.className='scenario-btn'+(s.id===currentLoopsScenario?.id?' active':'');
+    btn.textContent=s.label; btn.onclick=()=>selectLoopsScenario(s);
+    el.appendChild(btn);
+  });
+}
+function selectLoopsScenario(s){
+  currentLoopsScenario=s; buildLoopsPicker();
+  if(loopsMode==='guided')loadLoopsScenario(); else loadLoopsChallenge();
+  resetLoopsPhone();
+}
+function loadLoopsScenario(){
+  document.getElementById('ooCodeArea').value=currentLoopsScenario.code;
+  buildLoopsHints();
+}
+function buildLoopsHints(){
+  const el=document.getElementById('ooHintsBox');
+  el.innerHTML=`<div class="section-label">💡 ${t('labelHints')}</div>`+
+    currentLoopsScenario.hints.map(h=>`<div class="hint-row"><span class="tag">${h.tag}</span><span>${h.text}</span></div>`).join('');
+}
+function loadLoopsChallenge(){
+  const ch=currentLoopsScenario.challenge,el=document.getElementById('ooChallengeBox');
+  el.innerHTML=`<div class="challenge-badge">🏆 ${t('challengeBadge')}</div>
+    <div class="challenge-title">${ch.title}</div><div class="challenge-desc">${ch.desc}</div>
+    <button class="challenge-check" onclick="checkLoopsChallenge()">✅ ${t('btnCheck')}</button>
+    <div id="ooChallengeResult"></div>`;
+  document.getElementById('ooCodeArea').value=ch.startCode;
+}
+function checkLoopsChallenge(){
+  const code=document.getElementById('ooCodeArea').value,out=[],ops=[];
+  try{
+    simRun(code,{},out,ops);
+    const res=document.getElementById('ooChallengeResult');
+    if(out.length){res.className='challenge-result pass';res.textContent='🎉 '+t('challengePass')+' '+out.slice(0,3).join(' | ')+(out.length>3?'...':'');burst();playSound('loop_done');}
+    else{res.className='challenge-result fail';res.textContent='🤔 '+t('challengeNoOutput');}
+  }catch(e){document.getElementById('ooChallengeResult').className='challenge-result fail';document.getElementById('ooChallengeResult').textContent='❌ '+t('errorLabel')+': '+e.message;}
+}
+function runLoopsCode(){
+  const code=document.getElementById('ooCodeArea').value,consoleEl=document.getElementById('ooConsole');
+  try{
+    const out=[],ops=[],env={};simRun(code,env,out,ops);
+    consoleEl.innerHTML=out.length?out.map(l=>`<span style="color:var(--green)">&gt; ${escHtml(l)}</span>`).join('<br>'):`<span class="info"># ${t('noOutput')}</span>`;
+    updateLoopViz(ops,out);
+    updateLoopsPhone(out,env,ops);
+    if(out.length)burst();
+  }catch(e){consoleEl.innerHTML=`<span class="err">❌ ${t('errorLabel')}: ${escHtml(e.message)}</span>`;}
+}
+function updateLoopViz(ops,out){
+  const track=document.getElementById('ooLoopTrack'),counter=document.getElementById('ooLoopCounter');
+  const loopSteps=ops.filter(o=>o.op==='loopStep');
+  if(!loopSteps.length){track.innerHTML='<span style="color:var(--muted);font-size:0.78rem;font-family:\'Space Mono\',monospace;">No loop found in code</span>';counter.textContent='';return;}
+  track.innerHTML=loopSteps.map((s,i)=>`<div class="loop-step done"><span>${escHtml(String(s.val)).slice(0,5)}</span></div>`).join('');
+  counter.textContent=`${loopSteps.length} iterations · ${out.length} prints`;
+}
+function resetLoopsPhone(){
+  const screen=document.getElementById('ooPhoneScreen');
+  screen.style.background='linear-gradient(160deg,#1a1930,#0f0e17)';
+  document.getElementById('ooPhoneState').outerHTML=`<div class="phone-state" id="ooPhoneState"><div class="phone-emoji">🔁</div><div class="phone-msg">Run code to start<br>the loop!</div><div class="phone-sub">Loops repeat things automatically ⚡</div></div>`;
+  document.getElementById('ooPhoneIsland').classList.remove('expand');
+}
+function updateLoopsPhone(output,env,ops){
+  const screen=document.getElementById('ooPhoneScreen'),stateEl=document.getElementById('ooPhoneState');
+  const loopSteps=ops.filter(o=>o.op==='loopStep');
+  const total=loopSteps.length;
+  screen.style.background='linear-gradient(160deg,#0a0a2a,#050510)';
+  document.getElementById('ooPhoneIsland').classList.add('expand');
+  playSound('loop_done');
+  const pct=total?100:0;
+  const dotsHTML=loopSteps.slice(0,12).map((s,i)=>`<div class="phone-loop-dot done">${escHtml(String(s.val)).slice(0,3)}</div>`).join('');
+  const moreStr=total>12?`<div class="phone-sub">+${total-12} more</div>`:'';
+  document.getElementById('ooPhoneState').outerHTML=`<div class="phone-state" id="ooPhoneState">
+    <div class="phone-emoji">🔁</div>
+    <div class="phone-sub" style="color:var(--blue);">Loop ran ${total} time${total!==1?'s':''}</div>
+    <div class="phone-loop-steps">${dotsHTML}</div>
+    ${moreStr}
+    <div class="phone-loop-progress"><div class="phone-loop-bar" style="width:${pct}%;"></div></div>
+    ${output[output.length-1]?`<div class="phone-msg" style="margin-top:5px;font-size:0.7rem;">${escHtml(output[output.length-1])}</div>`:''}
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// LANG
+// ═══════════════════════════════════════════════════════════════
+function setLang(lang){
+  currentLang=lang;
+  document.documentElement.lang=lang;
+  document.body.dir=lang==='ar'?'rtl':'ltr';
+  ['it','en','ar'].forEach(l=>document.getElementById('btn-'+l)?.classList.toggle('active',l===lang));
+  document.getElementById('headerSub').textContent=t('headerSub');
+  document.getElementById('freeWelcomeTitle').textContent=t('freeWelcomeTitle');
+  document.getElementById('freeWelcomeDesc').textContent=t('freeWelcomeDesc');
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t(k)!==k)el.innerHTML=t(k);});
+  buildSnippets();
+  // rebuild vars
+  const prevVars=currentVarsScenario?.id;
+  const vScens=getVarsScenarios(); currentVarsScenario=vScens.find(s=>s.id===prevVars)||vScens[0];
+  varValues={}; currentVarsScenario.vars.forEach(v=>{varValues[v.name]=v.default;});
+  buildVarsPicker(); buildVarsSliders();
+  if(varsMode==='guided'){updateVarsCode();buildVarsHints();}else loadVarsChallenge();
+  // rebuild lists
+  const prevLists=currentListsScenario?.id;
+  const lScens=getListsScenarios(); currentListsScenario=lScens.find(s=>s.id===prevLists)||lScens[0];
+  buildListsPicker();
+  if(listsMode==='guided'){loadListsScenario();}else loadListsChallenge();
+  // rebuild loops
+  const prevLoops=currentLoopsScenario?.id;
+  const ooScens=getLoopsScenarios(); currentLoopsScenario=ooScens.find(s=>s.id===prevLoops)||ooScens[0];
+  buildLoopsPicker();
+  if(loopsMode==='guided'){loadLoopsScenario();}else loadLoopsChallenge();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONFETTI
+// ═══════════════════════════════════════════════════════════════
+function burst(){
   const container=document.getElementById('confetti');
   const colors=['#ff6b6b','#6bff9e','#ffe66d','#6bc5ff','#c77dff','#ff6bbf'];
-  for(let i=0;i<35;i++) {
-    const el=document.createElement('div');
-    el.className='confetti-piece';
-    el.style.cssText=`left:${10+Math.random()*80}%;top:-10px;background:${colors[~~(Math.random()*colors.length)]};
-      transform:rotate(${Math.random()*360}deg);animation-duration:${0.8+Math.random()*0.9}s;
-      animation-delay:${Math.random()*0.3}s;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;`;
-    container.appendChild(el);
-    setTimeout(()=>el.remove(),2200);
-  }
-});
-
-function escHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-// ═══════════════════════════════════════════════════════════════
-// I18N — 3 LANGUAGES
-// ═══════════════════════════════════════════════════════════════
-const LANG = {
-  it: {
-    pageTitle: "CodeKids – Fai Reagire il Tuo Telefono!",
-    headerSub: "🚀 Scrivi codice Python → Guarda il tuo iPhone reagire in tempo reale!",
-    tabGuided: "🧩 Modalità Guidata",
-    tabChallenge: "🏆 Modalità Sfida",
-    labelScenario: "🎯 Scegli uno Scenario",
-    labelVars: "🎛️ Imposta le Variabili",
-    labelMission: "🏆 La Tua Missione",
-    labelCode: "✍️ Scrivi il tuo Codice Python",
-    labelHints: "Suggerimenti",
-    btnRun: "Esegui il Codice!",
-    btnCheck: "Controlla la mia risposta!",
-    challengeBadge: "SFIDA",
-    challengePass: "Ottimo! Il tuo codice ha stampato:",
-    challengeNoOutput: "Il codice è girato ma non ha stampato nulla. Hai messo print()?",
-    soundNone: "Nessun suono",
-    soundDone: "Fatto",
-    noOutput: "Nessun output",
-    errorLabel: "Errore",
-    labelConsole: "📋 Console di Output",
-    consolePlaceholder: "# L'output di print() apparirà qui...",
-    labelPhone: "📱 iPhone 17",
-    phoneDefault: "Scegli uno scenario<br>e premi Esegui!",
-    phoneSub: "Il tuo telefono reagirà al codice 👆",
-  },
-  en: {
-    pageTitle: "CodeKids – Make Your Phone React!",
-    headerSub: "🚀 Write Python code → Watch your iPhone react in real time!",
-    tabGuided: "🧩 Guided Mode",
-    tabChallenge: "🏆 Challenge Mode",
-    labelScenario: "🎯 Choose a Scenario",
-    labelVars: "🎛️ Set Your Variables",
-    labelMission: "🏆 Your Mission",
-    labelCode: "✍️ Write Your Python Code",
-    labelHints: "Hints",
-    btnRun: "Run Code!",
-    btnCheck: "Check My Answer!",
-    challengeBadge: "CHALLENGE",
-    challengePass: "Great job! Your code ran and printed:",
-    challengeNoOutput: "Your code ran but printed nothing. Did you add print()?",
-    soundNone: "No sound yet",
-    soundDone: "Done",
-    noOutput: "No output",
-    errorLabel: "Error",
-    labelConsole: "📋 Output Console",
-    consolePlaceholder: "# Your print() output will appear here...",
-    labelPhone: "📱 iPhone 17",
-    phoneDefault: "Pick a scenario<br>and press Run!",
-    phoneSub: "Your phone will react to your code 👆",
-  },
-  ar: {
-    pageTitle: "كودكيدز – اجعل هاتفك يتفاعل!",
-    headerSub: "🚀 اكتب كود بايثون ← شاهد هاتفك يتفاعل في الوقت الحقيقي!",
-    tabGuided: "🧩 الوضع الإرشادي",
-    tabChallenge: "🏆 وضع التحدي",
-    labelScenario: "🎯 اختر سيناريو",
-    labelVars: "🎛️ اضبط المتغيرات",
-    labelMission: "🏆 مهمتك",
-    labelCode: "✍️ اكتب كود بايثون",
-    labelHints: "تلميحات",
-    btnRun: "تشغيل الكود!",
-    btnCheck: "تحقق من إجابتي!",
-    challengeBadge: "تحدي",
-    challengePass: "أحسنت! كودك طبع:",
-    challengeNoOutput: "الكود عمل لكنه لم يطبع شيئاً. هل أضفت print()؟",
-    soundNone: "لا يوجد صوت بعد",
-    soundDone: "تم",
-    noOutput: "لا يوجد إخراج",
-    errorLabel: "خطأ",
-    labelConsole: "📋 وحدة الإخراج",
-    consolePlaceholder: "# مخرجات print() ستظهر هنا...",
-    labelPhone: "📱 iPhone 17",
-    phoneDefault: "اختر سيناريو<br>واضغط تشغيل!",
-    phoneSub: "هاتفك سيتفاعل مع كودك 👆",
-  }
-};
-
-function setLang(lang) {
-  currentLangCode = lang;
-  document.documentElement.lang = lang;
-  document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
-  const t = LANG[lang];
-  document.title = t.pageTitle;
-
-  // Update lang button states
-  ['it','en','ar'].forEach(l => {
-    const btn = document.getElementById('btn-' + l);
-    if (btn) btn.classList.toggle('active', l === lang);
-  });
-
-  // Update all static i18n elements
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (t[key] !== undefined) el.innerHTML = t[key];
-  });
-
-  // Rebuild dynamic UI with new lang
-  SCENARIOS = getScenariosForLang(lang);
-  const prevId = currentScenario ? currentScenario.id : SCENARIOS[0].id;
-  currentScenario = SCENARIOS.find(s => s.id === prevId) || SCENARIOS[0];
-  buildScenarioPicker();
-  buildSliders();
-  if (currentMode === 'guided') { updateCodeFromSliders(); buildHints(); }
-  else loadChallenge();
-
-  // Refresh console placeholder
-  const consoleEl = document.getElementById('consoleOut');
-  if (consoleEl && consoleEl.querySelector('.info')) {
-    consoleEl.innerHTML = `<span class="info">${t.consolePlaceholder}</span>`;
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════
-// CONFETTI BURST
-// ═══════════════════════════════════════════════════════════════
-function burst() {
-  const container = document.getElementById('confetti');
-  const colors = ['#ff6b6b','#6bff9e','#ffe66d','#6bc5ff','#c77dff','#ff6bbf'];
-  for (let i = 0; i < 40; i++) {
-    const el = document.createElement('div');
-    el.className = 'confetti-piece';
-    el.style.cssText = `left:${10+Math.random()*80}%;top:-10px;background:${colors[~~(Math.random()*colors.length)]};
-      transform:rotate(${Math.random()*360}deg);animation-duration:${0.8+Math.random()*0.9}s;
-      animation-delay:${Math.random()*0.4}s;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;`;
-    container.appendChild(el);
-    setTimeout(() => el.remove(), 2200);
+  for(let i=0;i<38;i++){
+    const el=document.createElement('div'); el.className='confetti-piece';
+    el.style.cssText=`left:${10+Math.random()*80}%;top:-10px;background:${colors[~~(Math.random()*colors.length)]};transform:rotate(${Math.random()*360}deg);animation-duration:${0.8+Math.random()*0.9}s;animation-delay:${Math.random()*0.4}s;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;`;
+    container.appendChild(el); setTimeout(()=>el.remove(),2200);
   }
 }
 
 // ═══════════════════════════════════════════════════════════════
 // CLOCK
 // ═══════════════════════════════════════════════════════════════
-function updateClock() {
-  const now = new Date();
-  const h = String(now.getHours()).padStart(2,'0');
-  const m = String(now.getMinutes()).padStart(2,'0');
-  const el = document.getElementById('phoneTime');
-  if (el) el.textContent = h + ':' + m;
+function updateClock(){
+  const now=new Date(),h=String(now.getHours()).padStart(2,'0'),m=String(now.getMinutes()).padStart(2,'0');
+  ['vPhoneTime','lPhoneTime','ooPhoneTime'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=h+':'+m;});
 }
 
 // ═══════════════════════════════════════════════════════════════
 // BOOT
 // ═══════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded',()=>{
-  updateClock();
-  setInterval(updateClock,1000);
-  setLang('it');
-  document.getElementById('codeArea').addEventListener('keydown',function(e){
-    if(e.key==='Tab'){e.preventDefault();const s=this.selectionStart;
-      this.value=this.value.slice(0,s)+'    '+this.value.slice(this.selectionEnd);
-      this.selectionStart=this.selectionEnd=s+4;}
+  // tab order: vars is default visible
+  setTopic('vars');
+  // init lang (sets up all scenarios)
+  setLang('en');
+  // clock
+  updateClock(); setInterval(updateClock,1000);
+  // confetti on load
+  const container=document.getElementById('confetti'),colors=['#ff6b6b','#6bff9e','#ffe66d','#6bc5ff','#c77dff','#ff6bbf'];
+  for(let i=0;i<30;i++){const el=document.createElement('div');el.className='confetti-piece';el.style.cssText=`left:${10+Math.random()*80}%;top:-10px;background:${colors[~~(Math.random()*colors.length)]};transform:rotate(${Math.random()*360}deg);animation-duration:${0.8+Math.random()*0.9}s;animation-delay:${Math.random()*0.3}s;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;`;container.appendChild(el);setTimeout(()=>el.remove(),2200);}
+  // tab key in code areas
+  document.querySelectorAll('.code-area').forEach(ta=>{
+    ta.addEventListener('keydown',function(e){
+      if(e.key==='Tab'){e.preventDefault();const s=this.selectionStart;this.value=this.value.slice(0,s)+'    '+this.value.slice(this.selectionEnd);this.selectionStart=this.selectionEnd=s+4;}
+    });
   });
 });
 </script>
